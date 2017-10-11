@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : Sep 27, 2017, 9:10:55 AM
-    Author     : grafao
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -41,9 +35,23 @@
                  <div class="form-group">
                      <label for="grafo">Estrutura do Grafo</label>
                      <textarea class="form-control" rows="5" id="grafo" name="grafo"></textarea>
-                 </div> 
-                <input type="submit" name="enviar" value="Gerar Grafo" />
+                 </div>
+                <div class="form-group">
+                     <label for="path">Caminho para Download</label>
+                     <input class="form-control" id="path" name="path-arquivo" />
+                 </div>
+                <input type="submit" name="enviar" value="Gerar Grafo" class="button button-green"/>
             </form>
+            <div class="row">
+                <h2>Enviar um grafo (Formato XML)</h2>
+                <form method="POST" action="UploadController" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="arquivo">Selecione um arquivo: </label>
+                        <input type="file" id="arquivo" name="grafo"/>
+                    </div>
+                    <input type="submit" name="enviar" value="Carregar Grafo" class="button button-blue"/>
+                </form>
+            </div>
         </div>
     </body>
 </html>
