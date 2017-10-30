@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 public class Grafo {
 
@@ -64,5 +65,29 @@ public class Grafo {
 
     public void setArestas(ArrayList<Aresta> arestas) {
         this.arestas = arestas;
+    }
+
+    public void apagaArestas(ArrayList<Aresta> aresta) {
+        for (Aresta arestaAtual : aresta) {
+            this.arestas.remove(aresta);
+        }
+    }
+
+    public void adicionaAresta(ArrayList<Aresta> aresta) {
+        for (Aresta arestaAtual : aresta) {
+            this.arestas.add(arestaAtual);
+        }
+    }
+    
+    public void adicionaNos(ArrayList<No> no){
+        for (No noAtual : no) {
+            this.nos.add(noAtual);
+        }
+    }
+    
+    public void apagaNos(ArrayList<No> no) {
+        for (No noAtual : no) {
+            this.arestas.remove(no);
+        }
     }
 }
