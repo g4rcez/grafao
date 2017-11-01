@@ -44,7 +44,7 @@
             </form>
             <div class="row">
                 <h2>Enviar um grafo (Formato XML)</h2>
-                <form method="POST" action="UploadController" enctype="multipart/form-data">
+                <form method="POST" action="upload" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="arquivo">Selecione um arquivo: </label>
                         <input type="file" id="arquivo" name="grafo"/>

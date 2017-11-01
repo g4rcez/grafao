@@ -1,6 +1,5 @@
 package controller;
 
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -187,35 +186,6 @@ public class GrafoCreateController extends HttpServlet {
         } else {
             output.println("XML do Grafo " + this.getNomeDoGrafo() + " não criado");
         }
-    }
-    
-    public void adicionaAresta (Grafo webGrafo, ArrayList<Aresta> arestas, File arquivo ){
-        
-        webGrafo = WorkerXml.grafoFromFile(arquivo);
-        webGrafo.adicionaAresta(arestas);
-        WorkerXml.saveFileForGrafo(webGrafo, nomeDoGrafo);
-    }
-    
-    public void removerAresta (Grafo webGrafo, ArrayList<Aresta> arestas, File arquivo ){
-        webGrafo = WorkerXml.grafoFromFile(arquivo);
-        webGrafo.apagaArestas(arestas);
-        WorkerXml.saveFileForGrafo(webGrafo, nomeDoGrafo);
-    }
-    
-    public void adicionaVertice(Grafo webGrafo, ArrayList<No> nos, File arquivo){
-        webGrafo = WorkerXml.grafoFromFile(arquivo);
-        webGrafo.adicionaNos(nos);
-        defineAndReturnArestas();
-        isValidQuantidadeDeNos();
-        WorkerXml.saveFileForGrafo(webGrafo, nomeDoGrafo);
-    }
-    
-    public void removeVertice(Grafo webGrafo, ArrayList<No> nos, File arquivo){
-        webGrafo = WorkerXml.grafoFromFile(arquivo);
-        webGrafo.apagaNos(nos);
-        defineAndReturnArestas();
-        isValidQuantidadeDeNos();
-        WorkerXml.saveFileForGrafo(webGrafo, nomeDoGrafo);
     }
 
     @Override

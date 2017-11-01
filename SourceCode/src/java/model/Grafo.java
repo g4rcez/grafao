@@ -1,7 +1,8 @@
 package model;
 
+import controller.GrafoCreateController;
+import java.io.File;
 import java.util.ArrayList;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 public class Grafo {
 
@@ -78,16 +79,17 @@ public class Grafo {
             this.arestas.add(arestaAtual);
         }
     }
-    
-    public void adicionaNos(ArrayList<No> no){
+
+    public void adicionaNos(ArrayList<No> no) {
         for (No noAtual : no) {
             this.nos.add(noAtual);
         }
     }
-    
+
     public void apagaNos(ArrayList<No> no) {
         for (No noAtual : no) {
             this.arestas.remove(no);
         }
     }
+
 }
