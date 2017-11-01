@@ -168,8 +168,7 @@ public class GrafoUpdateController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest requisicao, HttpServletResponse resposta)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest requisicao, HttpServletResponse resposta) throws ServletException, IOException {
         Grafo grafo = null;
         PrintWriter output = resposta.getWriter();
         if (!ServletFileUpload.isMultipartContent(requisicao)) {

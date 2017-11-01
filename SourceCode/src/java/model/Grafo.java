@@ -1,8 +1,9 @@
 package model;
 
-import controller.GrafoCreateController;
-import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Grafo {
 
@@ -74,10 +75,10 @@ public class Grafo {
         }
     }
 
-    public void adicionaAresta(ArrayList<Aresta> aresta) {
-        for (Aresta arestaAtual : aresta) {
-            this.arestas.add(arestaAtual);
-        }
+    public void adicionarAresta(Aresta aresta) {
+        List<Aresta> arestasExistentes = this.getArestas();
+        arestasExistentes.add(aresta);
+        this.setArestas((ArrayList<Aresta>) arestasExistentes);
     }
 
     public void adicionaNos(ArrayList<No> no) {
@@ -90,6 +91,27 @@ public class Grafo {
         for (No noAtual : no) {
             this.arestas.remove(no);
         }
+    }
+
+    public int getOrdem() {
+        return this.getArestas().size();
+    }
+
+    public Map<No, Integer> getGraus() {
+        Map<No, Integer> grausDosNos = new HashMap<>();
+        for (No no : this.nos) {
+            int grau = 0;
+            for (Aresta aresta : this.arestas) {
+                if (aresta.getDestino().getId().equals(no.getId())) {
+                    grau++;
+                }
+                if (aresta.getOrigem().getId().equals(no.getId())) {
+                    grau++;
+                }
+                grausDosNos.put(no, grau);
+            }
+        }
+        return grausDosNos;
     }
 
 }

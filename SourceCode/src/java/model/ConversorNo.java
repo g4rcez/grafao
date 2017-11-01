@@ -5,8 +5,8 @@ import com.thoughtworks.xstream.converters.SingleValueConverter;
 public class ConversorNo implements SingleValueConverter {
 
     @Override
-    public String toString(Object o) {
-        return ((No) o).getId();
+    public String toString(Object object) {
+        return ((No) object).getId();
     }
 
     @Override
