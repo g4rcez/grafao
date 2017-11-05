@@ -2,29 +2,30 @@ package model;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class WorkerXml {
 
-    private static XStream workerXml = new XStream(new DomDriver("UTF-8", new XmlFriendlyReplacer("__", "_")));
-
+    private static XStream workerXml = new XStream(new DomDriver());
+    
     /**
      * Constrói o XML de acordo com o padrão do GraphML
      *
      */
     public static void constructXml() {
         workerXml.alias("graph", Grafo.class);
+        workerXml.alias("node", No.class);
+        workerXml.alias("edge", Aresta.class);
+        workerXml.registerLocalConverter(Aresta.class, "origem", new ConversorNo());
+        workerXml.registerLocalConverter(Aresta.class, "destino", new ConversorNo());
+        workerXml.aliasField("source", Aresta.class, "origem");
+        workerXml.aliasField("target", Aresta.class, "destino");
         workerXml.useAttributeFor(Grafo.class, "tipo");
         workerXml.useAttributeFor(Grafo.class, "tipoAresta");
         workerXml.useAttributeFor(Grafo.class, "id");
         workerXml.aliasField("edgedefault", Grafo.class, "tipo");
-        workerXml.alias("node", No.class);
-        workerXml.alias("edge", Aresta.class);
         workerXml.addImplicitCollection(Grafo.class, "nos", No.class);
         workerXml.addImplicitCollection(Grafo.class, "arestas", Aresta.class);
         workerXml.useAttributeFor(No.class, "id");
@@ -32,10 +33,6 @@ public class WorkerXml {
         workerXml.useAttributeFor(Aresta.class, "origem");
         workerXml.useAttributeFor(Aresta.class, "destino");
         workerXml.useAttributeFor(Aresta.class, "valor");
-        workerXml.registerLocalConverter(Aresta.class, "origem", new ConversorNo());
-        workerXml.registerLocalConverter(Aresta.class, "destino", new ConversorNo());
-        workerXml.aliasField("source", Aresta.class, "origem");
-        workerXml.aliasField("target", Aresta.class, "destino");
     }
 
     /**
@@ -49,12 +46,12 @@ public class WorkerXml {
         constructXml();
         try {
             String arquivoString = pathDoArquivo + "/" + grafo.getId() + ".xml";
-            arquivoString = arquivoString.replace("//", "/").replace("\\\\", "\\");
+            arquivoString = arquivoString.replace("//", "/").replace("\\\\","\\");
             File arquivo = new File(arquivoString);
-            if (!arquivo.exists()) {
+            if (!arquivo.exists()){
                 arquivo.createNewFile();
                 FileWriter writer = new FileWriter(arquivo, true);
-                writer.write(WorkerXml.writeGrafoInXmlString(grafo) + "\n\r\n\r");
+                writer.write(WorkerXml.writeGrafoInXmlString(grafo));
                 writer.flush();
                 return true;
             }
@@ -63,7 +60,7 @@ public class WorkerXml {
         }
         return false;
     }
-
+    
     /**
      *
      * @param grafo -> Grafo
@@ -77,35 +74,27 @@ public class WorkerXml {
             return error.getMessage();
         }
     }
-
+    
     /**
-     * Esta função irá limpar todos os dados do WorkerXML para que possam ser
+     * Esta função irá limpar todos os dados do WorkerXML para que possam ser 
      * criados novos grafos
      */
-    public static void clearWorkerXml() {
+    public static void clearWorkerXml(){
         workerXml = new XStream(new DomDriver());
     }
-
-    public static Grafo grafoFromFile(File arquivo) throws IOException {
+    
+    /**
+     *
+     * @param arquivo
+     * @return
+     * @throws java.io.IOException
+     */
+    public static Grafo grafoFromFile(File arquivo) throws IOException{
         constructXml();
-        System.out.println("Path do Arquivo: " + arquivo.getAbsoluteFile());
-        Grafo grafo = null;
-        String grafoString = "";
-        try {
-            try (FileReader arq = new FileReader(arquivo.getAbsoluteFile())) {
-                BufferedReader lerArq = new BufferedReader(arq);
-                String linha = lerArq.readLine();
-                while (linha != null) {
-                    grafoString += linha;
-                    System.out.println(linha);
-                    linha = lerArq.readLine();
-                }
-                arq.close();
-                return (Grafo) workerXml.fromXML(grafoString);
-            }
-        } catch (IOException exception) {
-            System.out.println(exception.getMessage());
+        boolean created = arquivo.createNewFile();
+        if(created){
+            return (Grafo) workerXml.fromXML(arquivo);
         }
-        return grafo;
+        return null;
     }
 }

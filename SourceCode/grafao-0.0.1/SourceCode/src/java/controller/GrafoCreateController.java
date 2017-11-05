@@ -3,7 +3,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -96,7 +95,7 @@ public class GrafoCreateController extends HttpServlet {
         for (String ligacao : ligacoesInformadas) {
             No origem = new No(ligacao.split("-")[0].trim());
             No destino = new No(ligacao.split("-")[1].trim());
-            Aresta aresta = new Aresta(origem.getId() + "->" + destino.getId(), origem, destino);
+            Aresta aresta = new Aresta(origem.getId() + "---" + destino.getId(), origem, destino);
             this.setArestas(aresta);
             if (!origem.getId().isEmpty() || !destino.getId().isEmpty()) {
                 ligacoes += "<li>" + origem.getId() + "->" + destino.getId() + "</li>";
@@ -126,63 +125,65 @@ public class GrafoCreateController extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
-     * @param response servlet response
+     * @param requisicao servlet request
+     * @param resposta servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher view = request.getRequestDispatcher("grafo.jsp");
-        System.out.println("Passou aqui");
-        view.forward(request, response);
+    protected void processRequest(HttpServletRequest requisicao, HttpServletResponse resposta) throws ServletException, IOException {
+        resposta.setContentType("text/html;charset=UTF-8");
+        PrintWriter output = resposta.getWriter();
+        output.println("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>\n"
+                + "<link href='assets/bootstrap/beautify.min.css' rel='stylesheet'>"
+                + "<link href='assets/bootstrap/font-awesome.min.css' rel='stylesheet'>"
+                + "<script src='assets/bootstrap/beautify.min.js'></script>"
+                + "<link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>"
+                + "<title>Grafão</title>\n"
+                + "<style>body{font-family: 'Nunito', sans-serif;}</style></head><body><div class=\"container\">"
+        );
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet(HttpServletRequest requisicao, HttpServletResponse resposta) throws ServletException, IOException {
+        processRequest(requisicao, resposta);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.setNomeDoGrafo(request);
-        this.setNotacoes(request);
-        this.setQuantidadeDeNos(request);
-        this.setPathDownload(request);
+    protected void doPost(HttpServletRequest requisicao, HttpServletResponse resposta) throws ServletException, IOException {
+        PrintWriter output = resposta.getWriter();
+        this.setNomeDoGrafo(requisicao);
+        this.setNotacoes(requisicao);
+        this.setQuantidadeDeNos(requisicao);
+        this.setPathDownload(requisicao);
         if (this.getNomeDoGrafo().isEmpty() && this.getNotacoes().isEmpty()) {
-            request.setAttribute("grafo-vazio", "<h2>Nome do Grafo Vazio não pode</h2>");
+            output.println("<h2>Nome do Grafo Vazio não pode</h2>");
         } else {
+            output.println("<h2>Nome do Grafo: " + this.nomeDoGrafo + "</h2>");
             if (this.isValidQuantidadeDeNos()) {
                 try {
                     this.defineAndReturnArestas();
                     String caminho = this.getPathDownload() + "/";
                     Grafo webGrafo = new Grafo(this.getNomeDoGrafo(), "Tipo", true, this.getNos(), this.getArestas());
-                    createXmlForDownload(webGrafo, caminho, request);
-                    String grafo = WorkerXml.writeGrafoInXmlString(webGrafo).replaceAll("<", "&lt;").replaceAll(">", "&gt;<br>");
-                    request.setAttribute("grafoVisual", grafo);
-                    System.out.println("Grafo: "+grafo);
-                    request.setAttribute("sucesso", "Nome do Grafo: <strong>" + this.nomeDoGrafo + "</strong>");
+                    output.println("O grafo " + this.getNomeDoGrafo() + " foi criado com sucesso");
+                    createXmlForDownload(webGrafo, caminho, output);
                 } catch (Exception error) {
-                    System.out.println(error.getMessage());
-                    request.setAttribute("erroCriado", error);
+                    output.println(error);
                 }
             } else {
-                System.out.println("Criando nada não champz");
-                request.setAttribute("incoerencia", "Incoerência nos nós");
+                output.println("Incoerência nos nós");
             }
         }
-        request.setAttribute("tipo", "download");
-        processRequest(request, response);
+        processRequest(requisicao, resposta);
     }
 
-    public void createXmlForDownload(Grafo webGrafo, String caminho, HttpServletRequest request) {
+    public void createXmlForDownload(Grafo webGrafo, String caminho, PrintWriter output) {
         if (WorkerXml.saveFileForGrafo(webGrafo, caminho)) {
-            request.setAttribute("download", "file://" + caminho + webGrafo.getId() + ".xml");
-            System.out.println("file://" + caminho + webGrafo.getId() + ".xml");
-            request.setAttribute("downloadTry", "<br><br>Caso não consiga abrir, acesse o link: file://" + caminho + webGrafo.getId() + ".xml");
+            output.println("<a class='button button-blue'"
+                    + "href=file:///" + caminho + webGrafo.getId()
+                    + ".xml target='_blank'>Download XML</a>");
+            output.println("<br><br>Caso não consiga abrir, acesse o link: file://" + caminho + webGrafo.getId() + ".xml");
         } else {
-            System.out.println("Deu ruim no donwload");
-            request.setAttribute("naoCriado", "XML do Grafo " + this.getNomeDoGrafo() + " não criado");
+            output.println("XML do Grafo " + this.getNomeDoGrafo() + " não criado");
         }
     }
 

@@ -35,6 +35,10 @@ public class Aresta {
         this.destino = destino;
     }
 
+    public Aresta() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getId() {
         return id;
     }
@@ -78,16 +82,6 @@ public class Aresta {
             if (aresta.getId().equals(id)) {
                 return aresta;
             }
-        }
-        return null;
-    }
-
-    public No getNoAdjacente(No no) {
-        if (no.getId().equals(this.getDestino().getId())) {
-            return this.getOrigem();
-        }
-        if (no.getId().equals(this.getOrigem().getId())) {
-            return this.getDestino();
         }
         return null;
     }
