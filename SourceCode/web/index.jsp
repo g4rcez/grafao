@@ -36,6 +36,13 @@
                             <input type="number" class="form-control" id="nos" name="nos" placeholder="Número de nós que contém o grafo">
                         </div>
                         <div class="form-group">
+                            <label for="nos">Direcionado:</label>
+                            <select name="direcionado">
+                                <option value="directed">Direcionado</option>
+                                <option value="undirected">Não Direcionado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="grafo">Estrutura do Grafo</label>
                             <textarea class="form-control" rows="5" id="grafo" name="grafo" placeholder="Estrutura do grafo"></textarea>
                         </div>

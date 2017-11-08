@@ -30,9 +30,9 @@ public class Aresta {
      * @param destino
      */
     public Aresta(String id, No origem, No destino) {
-        this.id = id;
-        this.origem = origem;
-        this.destino = destino;
+        this.setId(id);
+        this.setDestino(destino);
+        this.setOrigem(origem);
     }
 
     public String getId() {

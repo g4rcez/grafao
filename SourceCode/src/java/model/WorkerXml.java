@@ -12,11 +12,21 @@ import java.io.IOException;
 public class WorkerXml {
 
     private static XStream workerXml = new XStream(new DomDriver("UTF-8", new XmlFriendlyReplacer("__", "_")));
+    private static Grafo grafo = null;
 
     /**
      * Constrói o XML de acordo com o padrão do GraphML
      *
+     * @return
      */
+    public static Grafo getGrafo() {
+        return WorkerXml.grafo;
+    }
+
+    private static void setGrafo(Grafo graph) {
+        WorkerXml.grafo = graph;
+    }
+
     public static void constructXml() {
         workerXml.alias("graph", Grafo.class);
         workerXml.useAttributeFor(Grafo.class, "tipo");
@@ -36,6 +46,7 @@ public class WorkerXml {
         workerXml.registerLocalConverter(Aresta.class, "destino", new ConversorNo());
         workerXml.aliasField("source", Aresta.class, "origem");
         workerXml.aliasField("target", Aresta.class, "destino");
+        workerXml.aliasField("value", Aresta.class, "valor");
     }
 
     /**
@@ -56,6 +67,7 @@ public class WorkerXml {
                 FileWriter writer = new FileWriter(arquivo, true);
                 writer.write(WorkerXml.writeGrafoInXmlString(grafo) + "\n\r\n\r");
                 writer.flush();
+                setGrafo(grafo);
                 return true;
             }
         } catch (IOException error) {
@@ -72,6 +84,7 @@ public class WorkerXml {
     public static String writeGrafoInXmlString(Grafo grafo) {
         try {
             constructXml();
+            setGrafo(grafo);
             return workerXml.toXML(grafo);
         } catch (Exception error) {
             return error.getMessage();
@@ -106,6 +119,7 @@ public class WorkerXml {
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
+        setGrafo(grafo);
         return grafo;
     }
 }

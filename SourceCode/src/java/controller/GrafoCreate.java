@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,17 +14,26 @@ import model.No;
 import model.WorkerXml;
 
 @WebServlet(name = "GrafoCreateController", urlPatterns = "/criar")
-public class GrafoCreateController extends HttpServlet {
+public class GrafoCreate extends HttpServlet {
 
     private int quantidadeDeNos;
     private String nomeDoGrafo;
     private String notacoes;
     private String download;
+    private String direcionado;
     private ArrayList<No> nos = new ArrayList<>();
     private ArrayList<Aresta> arestas = new ArrayList<>();
 
     public String getNomeDoGrafo() {
         return nomeDoGrafo;
+    }
+
+    public String getDirecionado() {
+        return direcionado;
+    }
+
+    public void setDirecionado(String direcionado) {
+        this.direcionado = direcionado;
     }
 
     public void setNomeDoGrafo(HttpServletRequest requisicao) {
@@ -87,26 +95,30 @@ public class GrafoCreateController extends HttpServlet {
                     + "<h3 class='text-center'>" + erro + "</h3>";
         }
     }
-    
+
     /**
      * Cria os nós origem e destino para um futuro grafo gerado
+     *
      * @return
      */
     private String iteratorDeArestas(String[] ligacoesInformadas, String ligacoes) {
+        int cont=0;
         for (String ligacao : ligacoesInformadas) {
             No origem = new No(ligacao.split("-")[0].trim());
             No destino = new No(ligacao.split("-")[1].trim());
-            Aresta aresta = new Aresta(origem.getId() + "->" + destino.getId(), origem, destino);
+            Aresta aresta = new Aresta("A"+cont, origem, destino);
             this.setArestas(aresta);
             if (!origem.getId().isEmpty() || !destino.getId().isEmpty()) {
                 ligacoes += "<li>" + origem.getId() + "->" + destino.getId() + "</li>";
             }
+            cont+=1;
         }
         return ligacoes;
     }
 
     /**
      * Verifica a quantidade de nós através dos caracteres
+     *
      * @return
      */
     public boolean isValidQuantidadeDeNos() {
@@ -148,6 +160,7 @@ public class GrafoCreateController extends HttpServlet {
         this.setNomeDoGrafo(request);
         this.setNotacoes(request);
         this.setQuantidadeDeNos(request);
+        this.setDirecionado(request.getParameter("direcionado"));
         this.setPathDownload(request);
         if (this.getNomeDoGrafo().isEmpty() && this.getNotacoes().isEmpty()) {
             request.setAttribute("grafo-vazio", "<h2>Nome do Grafo Vazio não pode</h2>");
@@ -156,11 +169,11 @@ public class GrafoCreateController extends HttpServlet {
                 try {
                     this.defineAndReturnArestas();
                     String caminho = this.getPathDownload() + "/";
-                    Grafo webGrafo = new Grafo(this.getNomeDoGrafo(), "Tipo", true, this.getNos(), this.getArestas());
+                    Grafo webGrafo = new Grafo(this.getNomeDoGrafo(), this.getDirecionado(), true, this.getNos(), this.getArestas());
                     createXmlForDownload(webGrafo, caminho, request);
                     String grafo = WorkerXml.writeGrafoInXmlString(webGrafo).replaceAll("<", "&lt;").replaceAll(">", "&gt;<br>");
                     request.setAttribute("grafoVisual", grafo);
-                    System.out.println("Grafo: "+grafo);
+                    System.out.println("Grafo: " + grafo);
                     request.setAttribute("sucesso", "Nome do Grafo: <strong>" + this.nomeDoGrafo + "</strong>");
                 } catch (Exception error) {
                     System.out.println(error.getMessage());

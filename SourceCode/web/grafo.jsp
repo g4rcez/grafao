@@ -25,7 +25,33 @@
                 </div>
                 <div class="row">
                     <div id="adicionarAresta" class="collapse">
-                        <h2>Form pra adicionar aresta</h2>
+                        <div class="container">
+                            <div class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
+                                <h2>Form pra adicionar aresta</h2>
+                                <form method="POST" action="novaAresta" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="nos">Origem:</label>
+                                        <input class="form-control" id="origem" name="origem" placeholder="Nó de origem">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nos">Destino:</label>
+                                        <input class="form-control" id="destino" name="destino" placeholder="Nó de destino">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nos">Valor da Aresta:</label>
+                                        <input class="form-control" id="valor" name="valor" placeholder="Valor da aresta">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" name="enviar" value="Adicionar" class="button button-green" />
+                                    </div>
+                                    
+                                </form>
+                                <p>
+                                    ${destino}
+                                    ${origem}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     <div id="removerAresta" class="collapse">
                         <h2>Form pra adicionar aresta</h2>
@@ -41,7 +67,7 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-lg-6">
-                <div class="container">
+                <div class="container-fluid">
                     <c:if test="${tipo == 'download'}">
                         <h2>${sucesso}</h2>
                         <a href="${download}" class="btn btn-primary">
@@ -63,7 +89,7 @@
                 </div>
             </div>
             <div class="col-md-6 col-lg-6">
-                <div class="container">
+                <div class="container-fluid">
                     <h2>Xml Gerado</h2>
                     <code>
                         ${grafoVisual}

@@ -17,7 +17,7 @@ import model.WorkerXml;
 
 @WebServlet(urlPatterns = "/upload")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 50)
-public class UploadController extends HttpServlet {
+public class UploadGrafo extends HttpServlet {
 
     private static final String saveDirectory = "uploadFiles";
     
