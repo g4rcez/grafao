@@ -163,6 +163,7 @@ public class GrafoCreate extends HttpServlet {
         this.setDirecionado(request.getParameter("direcionado"));
         this.setPathDownload(request);
         if (this.getNomeDoGrafo().isEmpty() && this.getNotacoes().isEmpty()) {
+            WorkerXml.clearWorkerXml();
             request.setAttribute("grafo-vazio", "<h2>Nome do Grafo Vazio não pode</h2>");
         } else {
             if (this.isValidQuantidadeDeNos()) {
@@ -171,30 +172,25 @@ public class GrafoCreate extends HttpServlet {
                     String caminho = this.getPathDownload() + "/";
                     Grafo webGrafo = new Grafo(this.getNomeDoGrafo(), this.getDirecionado(), true, this.getNos(), this.getArestas());
                     createXmlForDownload(webGrafo, caminho, request);
-                    String grafo = WorkerXml.writeGrafoInXmlString(webGrafo).replaceAll("<", "&lt;").replaceAll(">", "&gt;<br>");
+                    String grafo = WorkerXml.grafoToHtmlReadable(webGrafo);
                     request.setAttribute("grafoVisual", grafo);
-                    System.out.println("Grafo: " + grafo);
                     request.setAttribute("sucesso", "Nome do Grafo: <strong>" + this.nomeDoGrafo + "</strong>");
                 } catch (Exception error) {
                     System.out.println(error.getMessage());
                     request.setAttribute("erroCriado", error);
                 }
             } else {
-                System.out.println("Criando nada não champz");
+                WorkerXml.clearWorkerXml();
                 request.setAttribute("incoerencia", "Incoerência nos nós");
             }
         }
-        request.setAttribute("tipo", "download");
         processRequest(request, response);
     }
 
     public void createXmlForDownload(Grafo webGrafo, String caminho, HttpServletRequest request) {
         if (WorkerXml.saveFileForGrafo(webGrafo, caminho)) {
-            request.setAttribute("download", "file://" + caminho + webGrafo.getId() + ".xml");
-            System.out.println("file://" + caminho + webGrafo.getId() + ".xml");
-            request.setAttribute("downloadTry", "<br><br>Caso não consiga abrir, acesse o link: file://" + caminho + webGrafo.getId() + ".xml");
+            request.setAttribute("pathFile", caminho + webGrafo.getId() + ".xml");
         } else {
-            System.out.println("Deu ruim no donwload");
             request.setAttribute("naoCriado", "XML do Grafo " + this.getNomeDoGrafo() + " não criado");
         }
     }

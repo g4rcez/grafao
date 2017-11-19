@@ -20,14 +20,13 @@ import model.WorkerXml;
 public class UploadGrafo extends HttpServlet {
 
     private static final String saveDirectory = "uploadFiles";
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher view = request.getRequestDispatcher("grafo.jsp");
-        System.out.println("Passou aqui");
         view.forward(request, response);
     }
-    
+
     /**
      * handles file upload
      *
@@ -54,24 +53,21 @@ public class UploadGrafo extends HttpServlet {
             nomeDoArquivo = savePath + File.separator + fileName;
             try {
                 part.write(nomeDoArquivo + arquivo);
-                System.out.println("Arquivo + nome do arquivo: " + nomeDoArquivo +" "+ arquivo);
-                System.out.println("Nome do arquivo" + nomeDoArquivo);
             } catch (IOException error) {
+                WorkerXml.clearWorkerXml();
                 System.out.println("Olha o erro: " + error.getMessage());
             }
         }
         arquivo = arquivo.trim().replace("null", "");
-        System.out.println("Arquivo: " + arquivo);
-        File pathDoArquivo = new File(fileSaveDir + "/" + arquivo+arquivo);
+        File pathDoArquivo = new File(fileSaveDir + "/" + arquivo + arquivo);
         Grafo grafo = WorkerXml.grafoFromFile(pathDoArquivo);
         output.println(fileSaveDir + "/" + arquivo + arquivo);
-        request.setAttribute("tipo", "upload");
         request.setAttribute("pathFile", fileSaveDir + "/" + arquivo + arquivo);
         request.setAttribute("grafo", grafo.getId());
         request.setAttribute("sucesso", "Nome do Grafo: <strong>" + grafo.getId() + "</strong>");
-        String grafoVisual = WorkerXml.writeGrafoInXmlString(grafo).replaceAll("<", "&lt;").replaceAll(">", "&gt;<br>");
+        String grafoVisual = WorkerXml.grafoToHtmlReadable(grafo);
         request.setAttribute("grafoVisual", grafoVisual);
-        System.out.println(WorkerXml.writeGrafoInXmlString(grafo));
+        WorkerXml.setGrafo(grafo);
         processRequest(request, response);
     }
 

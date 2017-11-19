@@ -19,9 +19,8 @@
                 <h2>Operações</h2>
                 <div class="btn-group">
                     <a class="btn btn-primary" data-toggle="collapse" data-target="#adicionarAresta">Adicionar Aresta</a>
-                    <a class="btn btn-primary" data-toggle="collapse" data-target="#removerAresta">Remover Aresta</a>
-                    <a class="btn btn-success" data-toggle="collapse" data-target="#adicionarNo">Adicionar Nó</a>
-                    <a class="btn btn-success" data-toggle="collapse" data-target="#removerNo">Remover Nó</a>
+                    <a class="btn btn-success" href="infografo">Gerar Informações</a>
+                    <a class="btn btn-danger" data-toggle="collapse" data-target="#removerNo">Remover Aresta</a>
                 </div>
                 <div class="row">
                     <div id="adicionarAresta" class="collapse">
@@ -44,7 +43,7 @@
                                     <div class="form-group">
                                         <input type="submit" name="enviar" value="Adicionar" class="button button-green" />
                                     </div>
-                                    
+
                                 </form>
                                 <p>
                                     ${destino}
@@ -68,24 +67,13 @@
         <div class="row">
             <div class="col-md-6 col-lg-6">
                 <div class="container-fluid">
-                    <c:if test="${tipo == 'download'}">
-                        <h2>${sucesso}</h2>
-                        <a href="${download}" class="btn btn-primary">
-                            <i class="fa fa-download"> Download</i>
-                        </a>
-                        <p>Caso não consiga baixar, acesse este link:
-                            <strong>${download}</strong>
-                        </p>
-                    </c:if>
-                    <c:if test="${tipo == 'upload'}">
-                        <h2>${sucesso}</h2>
-                        <a href="${pathFile}" class="btn btn-primary">
-                            <i class="fa fa-download"> Download</i>
-                        </a>
-                        <p>Caso não consiga baixar, acesse este link:
-                            <strong style="word-break: break-all;word-wrap: break-word">${pathFile}</strong>
-                        </p>
-                    </c:if>
+                    <h2>${sucesso}</h2>
+                    <a href="file://${pathFile}" class="btn btn-primary" target="_blank">
+                        <i class="fa fa-download"> Download</i>
+                    </a>
+                    <p>Caso não consiga baixar, acesse este link:
+                        <strong>file://${pathFile}</strong>
+                    </p>
                 </div>
             </div>
             <div class="col-md-6 col-lg-6">

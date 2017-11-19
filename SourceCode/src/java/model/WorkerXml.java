@@ -23,7 +23,7 @@ public class WorkerXml {
         return WorkerXml.grafo;
     }
 
-    private static void setGrafo(Grafo graph) {
+    public static void setGrafo(Grafo graph) {
         WorkerXml.grafo = graph;
     }
 
@@ -121,5 +121,9 @@ public class WorkerXml {
         }
         setGrafo(grafo);
         return grafo;
+    }
+    
+    public static String grafoToHtmlReadable(Grafo grafo){
+        return writeGrafoInXmlString(grafo).replaceAll("<", "&lt;").replaceAll(">", "&gt;<br>");
     }
 }
