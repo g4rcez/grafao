@@ -1,5 +1,7 @@
 package controller;
 
+import br.com.davesmartins.graphviewlib.ViewGraph;
+import br.com.davesmartins.graphviewlib.erro.EGraphViewExcpetion;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -169,13 +171,15 @@ public class GrafoCreate extends HttpServlet {
             if (this.isValidQuantidadeDeNos()) {
                 try {
                     this.defineAndReturnArestas();
-                    String caminho = this.getPathDownload() + "/";
+                    String caminho = this.getPathDownload() + "\\";
                     Grafo webGrafo = new Grafo(this.getNomeDoGrafo(), this.getDirecionado(), true, this.getNos(), this.getArestas());
                     createXmlForDownload(webGrafo, caminho, request);
+                    caminho = caminho + webGrafo.getId() + ".xml";
+                    ViewGraph.generateViewGraphByInage(caminho);
                     String grafo = WorkerXml.grafoToHtmlReadable(webGrafo);
                     request.setAttribute("grafoVisual", grafo);
                     request.setAttribute("sucesso", "Nome do Grafo: <strong>" + this.nomeDoGrafo + "</strong>");
-                } catch (Exception error) {
+                } catch (EGraphViewExcpetion error) {
                     System.out.println(error.getMessage());
                     request.setAttribute("erroCriado", error);
                 }
