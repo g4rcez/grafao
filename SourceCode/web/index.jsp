@@ -10,6 +10,8 @@
         <script src="${path}/assets/bootstrap/beautify.min.js"></script>
         <link href="${path}/assets/main.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <title>Grafão</title>
     </head>
     <body>
@@ -18,39 +20,31 @@
             <div class="container">
                 <div class="col-md-6 col-lg-6">
                     <h1 class="text-center">Criar um Grafo</h1>
-                    <p>
-                        Para criar um grafo, informe os nós da seguinte forma:
-                    <ul>
-                        <li>A-B, A-C</li>
-                        <li>A liga com B, A liga com C.</li>
-                    </ul>
-                    </p>
-
-                    <form method="POST" action="criar">
-                        <div class="form-group">
-                            <label for="nome">Nome do Grafo:</label>
-                            <input class="form-control" id="nome" name="nome" placeholder="Nome do grafo">
+                    <form action="${path}/criar" method="post" onsubmit="verificaValorAresta()">
+                        <p>
+                          <input type="text" id="nomeGrafo" class="form-control" size="20" name="nomeDoGrafo" value="" placeholder="Nome do Grafo" />
+                            <label for="gDirecionado"><input type="checkbox" name="direcionado" id="gDirecionado" value="directed">Direcionado [GraphML directed]</label>
+                            <label for="gValorado"><input type="checkbox" name="valorado" id="gValorado" value="valorado">Valorado [valor da aresta]</label>
+                          </p>
+                        <div id="formulario">
+                            <p>
+                                <input type="text" class="form-control" id="no" size="20" name="nos" value="" placeholder="Insira nome do Nó" />
+                                <span class="help-block">O nome do nó deve ser único</span>
+                            </p>
                         </div>
-                        <div class="form-group">
-                            <label for="nos">Número de nós:</label>
-                            <input type="number" class="form-control" id="nos" name="nos" placeholder="Número de nós que contém o grafo">
+                        <button id="adiconaCampo" class="button button-green">
+                          <strong><i class="fa fa-plus"></i> Adicionar Nó</strong>
+                        </button>
+                        <div class="espacos"></div>
+                        <p>Arestas(par ordenado):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span id="txtValor" style="display: none">Valor:</span></p><br />
+                        <div id="arestas">
+                            <input class="" type="text" id="aresta" name="arestas" value="" size="20" placeholder="A,B"/>
+                            <input class="" type="number" id="valorAresta" name="valorAresta" value="" placeholder="10" style="display: none"/>
                         </div>
-                        <div class="form-group">
-                            <label for="nos">Direcionado:</label>
-                            <select name="direcionado">
-                                <option value="directed">Direcionado</option>
-                                <option value="undirected">Não Direcionado</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="grafo">Estrutura do Grafo</label>
-                            <textarea class="form-control" rows="5" id="grafo" name="grafo" placeholder="Estrutura do grafo"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="path">Caminho para Download</label>
-                            <input class="form-control" id="path" name="path-arquivo" placeholder="Caminho onde será salvo o arquivo..." />
-                        </div>
-                        <input type="submit" name="enviar" value="Gerar Grafo" class="button button-green" />
+                        <p><button id="adiconaAresta" class="button button-green">
+                          <strong><i class="fa fa-plus"></i>Adicionar Aresta</strong>
+                        </button></p>
+                        <input type="submit" name="bntIncluir" value="Enviar" class="button button-blue center-block"/>
                     </form>
                 </div>
                 <div class="col-md-6 col-lg-6">
@@ -70,6 +64,6 @@
                 </div>
             </div>
         </div>
+        <script src="${path}/assets/main.js"></script>
     </body>
-
 </html>

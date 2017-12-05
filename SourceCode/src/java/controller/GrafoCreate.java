@@ -4,6 +4,8 @@ import br.com.davesmartins.graphviewlib.ViewGraph;
 import br.com.davesmartins.graphviewlib.erro.EGraphViewExcpetion;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,189 +20,126 @@ import model.WorkerXml;
 @WebServlet(name = "GrafoCreateController", urlPatterns = "/criar")
 public class GrafoCreate extends HttpServlet {
 
-    private int quantidadeDeNos;
-    private String nomeDoGrafo;
-    private String notacoes;
-    private String download;
-    private String direcionado;
-    private ArrayList<No> nos = new ArrayList<>();
-    private ArrayList<Aresta> arestas = new ArrayList<>();
-
-    public String getNomeDoGrafo() {
-        return nomeDoGrafo;
-    }
-
-    public String getDirecionado() {
-        return direcionado;
-    }
-
-    public void setDirecionado(String direcionado) {
-        this.direcionado = direcionado;
-    }
-
-    public void setNomeDoGrafo(HttpServletRequest requisicao) {
-        this.nomeDoGrafo = requisicao.getParameter("nome");
-    }
-
-    public int getQuantidadeDeNos() {
-        return quantidadeDeNos;
-    }
-
-    public void setPathDownload(HttpServletRequest requisicao) {
-        if (requisicao.getParameter("path-arquivo").isEmpty()) {
-            this.download = System.getProperty("user.home");
-        } else {
-            this.download = requisicao.getParameter("path-arquivo");
-        }
-    }
-
-    public String getPathDownload() {
-        return this.download;
-    }
-
-    public void setQuantidadeDeNos(HttpServletRequest requisicao) {
-        this.quantidadeDeNos = Integer.valueOf(requisicao.getParameter("nos"));
-    }
-
-    public String getNotacoes() {
-        return notacoes;
-    }
-
-    public void setNotacoes(HttpServletRequest requisicao) {
-        this.notacoes = requisicao.getParameter("grafo");
-    }
-
-    public ArrayList<No> getNos() {
-        return this.nos;
-    }
-
-    public void setNos(No no) {
-        this.nos.add(no);
-    }
-
-    public ArrayList<Aresta> getArestas() {
-        return this.arestas;
-    }
-
-    public void setArestas(Aresta arestas) {
-        this.arestas.add(arestas);
-    }
-
-    public String defineAndReturnArestas() {
-        String ligacoes = "<ul>";
-        String[] ligacoesInformadas = this.getNotacoes().split(",");
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
-            ligacoes += iteratorDeArestas(ligacoesInformadas, ligacoes) + "</ul>";
-            return ligacoes;
-        } catch (java.lang.ArrayIndexOutOfBoundsException erro) {
-            return "<h2 class='text-center' style='color:#980606'>Formato não padrão</h2>"
-                    + "<h3 class='text-center'>" + erro + "</h3>";
+            processRequest(request, response);
+        } catch (IOException | EGraphViewExcpetion ex) {
+            Logger.getLogger(GrafoCreate.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    /**
-     * Cria os nós origem e destino para um futuro grafo gerado
-     *
-     * @return
-     */
-    private String iteratorDeArestas(String[] ligacoesInformadas, String ligacoes) {
-        int cont=0;
-        for (String ligacao : ligacoesInformadas) {
-            No origem = new No(ligacao.split("-")[0].trim());
-            No destino = new No(ligacao.split("-")[1].trim());
-            Aresta aresta = new Aresta("A"+cont, origem, destino);
-            this.setArestas(aresta);
-            if (!origem.getId().isEmpty() || !destino.getId().isEmpty()) {
-                ligacoes += "<li>" + origem.getId() + "->" + destino.getId() + "</li>";
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, EGraphViewExcpetion {
+        RequestDispatcher view = request.getRequestDispatcher("/infografo.jsp");
+        String caminho = this.getServletContext().getRealPath("");
+        request.setAttribute("mensagem", "Grafo salvo com Sucesso!");
+        String nos[] = request.getParameterValues("nos");
+        String tipo = request.getParameter("direcionado");
+        String valorado = request.getParameter("valorado");
+        String id = request.getParameter("nomeDoGrafo");
+        String arestas[] = request.getParameterValues("arestas");
+        ArrayList<No> listaNos = new ArrayList();
+        ArrayList<Aresta> listaArestas = new ArrayList();
+        No ponto = null;
+        String no1 = null;
+        String no2 = null;
+        Aresta aresta = null;
+        Grafo grafo = null;
+        boolean tipoAresta = false;
+        int i = 1;
+
+        if (tipo == null) {
+            tipo = "undirected";
+        }
+
+        for (String no : nos) {
+            ponto = new No(no.toUpperCase());
+            listaNos.add(ponto);
+        }
+        if ("valorado".equals(valorado)) {
+            tipoAresta = true;
+            String valorArestasString[] = request.getParameterValues("valorAresta");
+            ArrayList<Integer> valoresAresta = GrafoCreate.toInt(valorArestasString);
+            for (String a : arestas) {
+                for (int b : valoresAresta) {
+                    a = a.toUpperCase();
+                    a = a.replaceAll(" ", "");
+                    String[] resultado = a.split(",", 2);
+                    no1 = resultado[0];
+                    no2 = resultado[1];
+                    aresta = new Aresta("Aresta " + i, No.getNoById(no1, listaNos), No.getNoById(no2, listaNos), b);
+                    listaArestas.add(aresta);
+                    valoresAresta.remove((Object) b);
+                    i++;
+                    break;
+                }
             }
-            cont+=1;
-        }
-        return ligacoes;
-    }
-
-    /**
-     * Verifica a quantidade de nós através dos caracteres
-     *
-     * @return
-     */
-    public boolean isValidQuantidadeDeNos() {
-        char[] string = this.getNotacoes().replace(",", "").replace("-", "").replace(" ", "").toCharArray();
-        ArrayList jaExistente = new ArrayList<>();
-        for (char letra : string) {
-            if (!jaExistente.contains(letra)) {
-                jaExistente.add(letra);
-                No no = new No(Character.toString(letra));
-                this.setNos(no);
+        } else {
+            for (String a : arestas) {
+                a = a.toUpperCase();
+                a = a.replaceAll(" ", "");
+                String[] resultado = a.split(",", 2);
+                no1 = resultado[0];
+                no2 = resultado[1];
+                aresta = new Aresta("A" + i, No.getNoById(no1, listaNos), No.getNoById(no2, listaNos));
+                listaArestas.add(aresta);
+                i++;
             }
         }
-        return jaExistente.size() == this.getQuantidadeDeNos();
+        grafo = new Grafo(id, tipo, tipoAresta, listaNos, listaArestas);
+        caminho = caminho + grafo.getId().replaceAll(" ", "") + ".xml";
+        System.out.println(caminho);
+        createXmlForDownload(grafo, caminho, request);
+        ViewGraph.generateViewGraphByInage(caminho);
+        String grafoHTML = WorkerXml.grafoToHtmlReadable(grafo);
+        request.setAttribute("grafoVisual", grafoHTML);
+        request.setAttribute("sucesso", "Nome do Grafo: <strong>" + grafo.getId() + "</strong>");
+        view.forward(request, response);
     }
 
+    private static ArrayList<Integer> toInt(String valorArestasString[]) {
+        ArrayList<Integer> lista = new ArrayList<>();
+        int valorInt;
+        for (String valor : valorArestasString) {
+            valorInt = Integer.parseInt(valor);
+            lista.add(valorInt);
+        }
+        return lista;
+    }
+    
+    public void createXmlForDownload(Grafo webGrafo, String caminho, HttpServletRequest request) {
+        if (WorkerXml.saveFileForGrafo(webGrafo, caminho)) {
+            request.setAttribute("pathFile", caminho + webGrafo.getId() + ".xml");
+        } else {
+            request.setAttribute("naoCriado", "XML do Grafo não criado");
+        }
+}
+
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher view = request.getRequestDispatcher("grafo.jsp");
-        System.out.println("Passou aqui");
-        view.forward(request, response);
-    }
-
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.setNomeDoGrafo(request);
-        this.setNotacoes(request);
-        this.setQuantidadeDeNos(request);
-        this.setDirecionado(request.getParameter("direcionado"));
-        this.setPathDownload(request);
-        if (this.getNomeDoGrafo().isEmpty() && this.getNotacoes().isEmpty()) {
-            WorkerXml.clearWorkerXml();
-            request.setAttribute("grafo-vazio", "<h2>Nome do Grafo Vazio não pode</h2>");
-        } else {
-            if (this.isValidQuantidadeDeNos()) {
-                try {
-                    this.defineAndReturnArestas();
-                    String caminho = this.getPathDownload() + "\\";
-                    Grafo webGrafo = new Grafo(this.getNomeDoGrafo(), this.getDirecionado(), true, this.getNos(), this.getArestas());
-                    createXmlForDownload(webGrafo, caminho, request);
-                    caminho = caminho + webGrafo.getId() + ".xml";
-                    ViewGraph.generateViewGraphByInage(caminho);
-                    String grafo = WorkerXml.grafoToHtmlReadable(webGrafo);
-                    request.setAttribute("grafoVisual", grafo);
-                    request.setAttribute("sucesso", "Nome do Grafo: <strong>" + this.nomeDoGrafo + "</strong>");
-                } catch (EGraphViewExcpetion error) {
-                    System.out.println(error.getMessage());
-                    request.setAttribute("erroCriado", error);
-                }
-            } else {
-                WorkerXml.clearWorkerXml();
-                request.setAttribute("incoerencia", "Incoerência nos nós");
-            }
-        }
-        processRequest(request, response);
-    }
-
-    public void createXmlForDownload(Grafo webGrafo, String caminho, HttpServletRequest request) {
-        if (WorkerXml.saveFileForGrafo(webGrafo, caminho)) {
-            request.setAttribute("pathFile", caminho + webGrafo.getId() + ".xml");
-        } else {
-            request.setAttribute("naoCriado", "XML do Grafo " + this.getNomeDoGrafo() + " não criado");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (EGraphViewExcpetion ex) {
+            Logger.getLogger(GrafoCreate.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
-        return "Controller para criação de XML";
+        return "Short description";
     }
 }

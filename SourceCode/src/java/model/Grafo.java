@@ -87,11 +87,11 @@ public class Grafo {
         this.arestas.add(aresta);
         this.nos.stream().distinct().collect(Collectors.toList());
     }
-    
+
     public void adicionarAresta(Aresta aresta) {
-        List<Aresta> arestas = this.getArestas();
-        arestas.add(aresta);
-        this.setArestas((ArrayList<Aresta>) arestas);
+        List<Aresta> arestasLocal = this.getArestas();
+        arestasLocal.add(aresta);
+        this.setArestas((ArrayList<Aresta>) arestasLocal);
     }
 
     public void adicionaNos(No no) {
@@ -104,7 +104,7 @@ public class Grafo {
 
     public Map<No, Integer> getGraus() {
         Map<No, Integer> grausDosNos = new HashMap<>();
-        for (No no : this.nos) {
+        this.nos.forEach((no) -> {
             int grau = 0;
             for (Aresta aresta : this.arestas) {
                 if (aresta.getDestino().getId().equals(no.getId())) {
@@ -115,13 +115,13 @@ public class Grafo {
                 }
                 grausDosNos.put(no, grau);
             }
-        }
+        });
         return grausDosNos;
     }
 
     public Map<No, Integer> getGrausDeEmissao() {
-        Map<No, Integer> grausDosNos = new HashMap<No, Integer>();
-        for (No no : this.nos) {
+        Map<No, Integer> grausDosNos = new HashMap<>();
+        this.nos.forEach((no) -> {
             int grau = 0;
             for (Aresta aresta : this.arestas) {
                 if (aresta.getOrigem().getId().equals(no.getId())) {
@@ -129,13 +129,13 @@ public class Grafo {
                 }
                 grausDosNos.put(no, grau);
             }
-        }
+        });
         return grausDosNos;
     }
 
     public Map<No, Integer> getGrausDeRecepcao() {
         Map<No, Integer> grausDosNos = new HashMap<>();
-        for (No no : this.nos) {
+        this.nos.forEach((no) -> {
             int grau = 0;
             for (Aresta aresta : this.arestas) {
                 if (aresta.getDestino().getId().equals(no.getId())) {
@@ -143,32 +143,32 @@ public class Grafo {
                 }
                 grausDosNos.put(no, grau);
             }
-        }
+        });
         return grausDosNos;
     }
 
     public List<Aresta> getArestasDoNoAtual(No no) {
         List<Aresta> arestasDoNoAtual = new ArrayList<>();
-        for (Aresta aresta : this.getArestas()) {
-            if (aresta.getOrigem().getId().equals(no.getId()) || aresta.getDestino().getId().equals(no.getId())) {
-                arestasDoNoAtual.add(aresta);
-            }
-        }
+        this.getArestas().stream().filter((aresta) -> (aresta.getOrigem().getId().equals(no.getId()) || aresta.getDestino().getId().equals(no.getId()))).forEachOrdered((aresta) -> {
+            arestasDoNoAtual.add(aresta);
+        });
         return arestasDoNoAtual;
     }
 
     public int[][] getMatrizAdjacencia() {
         int matriz[][] = new int[this.nos.size()][this.nos.size()];
-        Map<String, Integer> nosDoGrafo = new HashMap<String, Integer>();
+        Map<String, Integer> nosDoGrafo = new HashMap<>();
         int i = 0;
         for (No no : this.nos) {
             nosDoGrafo.put(no.getId(), i);
             i++;
         }
-        for (Aresta aresta : this.arestas) {
+        this.arestas.stream().map((aresta) -> {
             matriz[nosDoGrafo.get(aresta.getOrigem().getId())][nosDoGrafo.get(aresta.getDestino().getId())] = 1;
+            return aresta;
+        }).forEachOrdered((aresta) -> {
             matriz[nosDoGrafo.get(aresta.getDestino().getId())][nosDoGrafo.get(aresta.getOrigem().getId())] = 1;
-        }
+        });
         return matriz;
     }
 
@@ -186,10 +186,12 @@ public class Grafo {
             arestasDoGrafo.put(aresta.getId(), i);
             i++;
         }
-        for (Aresta aresta : this.arestas) {
+        this.arestas.stream().map((aresta) -> {
             matriz[nosDoGrafo.get(aresta.getOrigem().getId())][arestasDoGrafo.get(aresta.getId())] = 1;
+            return aresta;
+        }).forEachOrdered((aresta) -> {
             matriz[nosDoGrafo.get(aresta.getDestino().getId())][arestasDoGrafo.get(aresta.getId())] = 1;
-        }
+        });
         return matriz;
     }
 
@@ -241,43 +243,39 @@ public class Grafo {
     }
 
     public Map<String, List<String>> getNosSucessores() {
-        Map<String, List<String>> listaNosSucessores = new HashMap<String, List<String>>();
-        for (No no : this.getNos()) {
+        Map<String, List<String>> listaNosSucessores = new HashMap<>();
+        this.getNos().forEach((no) -> {
             listaNosSucessores.put(no.getId(), this.getNosSucessores(no));
-        }
+        });
         return listaNosSucessores;
     }
 
     public List<String> getNosSucessores(No no) {
-        List<String> nosSucessores = new ArrayList<String>();
-        for (Aresta aresta : this.getArestas()) {
-            if (aresta.getOrigem().getId().equals(no.getId())) {
-                nosSucessores.add(aresta.getDestino().getId());
-            }
-        }
+        List<String> nosSucessores = new ArrayList<>();
+        this.getArestas().stream().filter((aresta) -> (aresta.getOrigem().getId().equals(no.getId()))).forEachOrdered((aresta) -> {
+            nosSucessores.add(aresta.getDestino().getId());
+        });
         return nosSucessores;
     }
 
     public List<String> getNosAntecessores(No no) {
-        List<String> nosAntecessores = new ArrayList<String>();
-        for (Aresta aresta : this.getArestas()) {
-            if (aresta.getDestino().getId().equals(no.getId())) {
-                nosAntecessores.add(aresta.getOrigem().getId());
-            }
-        }
+        List<String> nosAntecessores = new ArrayList<>();
+        this.getArestas().stream().filter((aresta) -> (aresta.getDestino().getId().equals(no.getId()))).forEachOrdered((aresta) -> {
+            nosAntecessores.add(aresta.getOrigem().getId());
+        });
         return nosAntecessores;
     }
 
     public Map<String, List<String>> getNosAntecessores() {
-        Map<String, List<String>> listaNosAntecessores = new HashMap<String, List<String>>();
-        for (No no : this.getNos()) {
+        Map<String, List<String>> listaNosAntecessores = new HashMap<>();
+        this.getNos().forEach((no) -> {
             listaNosAntecessores.put(no.getId(), this.getNosAntecessores(no));
-        }
+        });
         return listaNosAntecessores;
     }
 
     public boolean getTipoAresta() {
         return tipoAresta;
     }
-    
+
 }

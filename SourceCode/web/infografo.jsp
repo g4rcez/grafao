@@ -1,44 +1,69 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Página do ${grafo.id}</title>
         <link href="${path}/assets/bootstrap/beautify.min.css" rel="stylesheet">
         <link href="${path}/assets/bootstrap/font-awesome.min.css" rel="stylesheet">
         <script src="${path}/assets/bootstrap/beautify.min.js"></script>
         <link href="${path}/assets/main.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-        <title>Grafão</title>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script src="${path}/assets/main.js"></script>
     </head>
     <body>
-        <h1 class="text-center">${grafo}</h1>
-        <div class="row"></div>
+        <c:if test="${not empty mensagem}">
+            <h2 id="mensagem">${mensagem}</h2>
+        </c:if> 
+        <div class="margem">
+            <a href="inserirGrafo.jsp" class="corBotao botoes">Inserir Grafo</a>
+            <a href="carregarGrafo.jsp" class="corBotao botoes">Carregar Grafo</a>
 
-        <div class="col-md-12 col-lg-12">
-            <div class="container-fluid">
-                <h2>Xml Gerado</h2>
+            <c:if test="${not empty grafo}">
+                <a href="editarGrafo.jsp" class="corBotao botoes">Editar Grafo</a> <br /><br />
+                <form action="DownloadGrafo" enctype="multipart/form-data" method="post" class="semQuebraDeLinha">
+                    <input type="hidden" name="idGrafo" value="${grafo.id}" />
+                    <input type="submit" value="Download" class="bnt"/> 
+                    <a href="visualizaGrafoCanvas.jsp" class="bnt">Ver Grafo</a>
+                </form>
+                <form action="GeraInformacoesGrafo" method="post" class="semQuebraDeLinha">
+                    <input type="submit" value="Informações do Grafo" class="bnt"/>
+                </form>
+                <br /><br />
+                <form action="CalcularDijkstra" method="post">
+                    <input type="submit" value="Calcular Dijkstra" class="corBotao botoes" />
+                    Nó de Origem:
+                    <select name="noOrigem" class="bnt">
+                        <c:forEach items="${grafo.nos}" var="no">
+                            <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
+                        </c:forEach>
+                    </select>
+                    &nbsp;Nó de Destino:
+                    <select name="noDestino" class="bnt">
+                        <option value="todosNos">Todos os nós</option>
+                        <c:forEach items="${grafo.nos}" var="no">
+                            <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
+                        </c:forEach>
+                    </select>
+                </form><br />
+                <c:if test="${grafo.tipo == 'undirected' && grafo.tipoAresta}">
+                    <form action="AlgoritmoDeKruskalController" method="post">
+                        <input type="submit" value="Árvore Geradora Mínima - Algoritmo de Kruskal" class="corBotao botoes" />
+                    </form> <br />
+                    <form action="AlgoritmoDePrimController" method="post">
+                        <input type="submit" value="Árvore Geradora Mínima - Algoritmo de Prim" class="corBotao botoes" />
+                    </form>
+                </c:if>
+            </c:if>
+        </div>
+            <div class="row">
                 <code>
-                    ${grafoVisual}
+                    ${grafoHTML}
                 </code>
             </div>
-        </div>
-        <div class="col-md-12 col-lg-12">
-            <h1>Informações sobre o grafo ${nome}</h1>
-            <ul>
-                <li>Ordem do grafo: ${ordem}</li>
-                <li>Tipo do grafo: ${tipo}</li>
-                <li>Matriz de Incidência: 
-                    <c:forEach items="${incidencia}" var="incidenciaInt">
-                        ${incidenciaInt}
-                    </c:forEach>
-                </li>
-                <li>Matriz de Adjacência: <c:forEach items="${adjacencia}" var="adjacenciaInt">
-                        ${adjacenciaInt},
-                    </c:forEach>
-                </li>
-            </ul>
-        </div>
     </body>
 </html>
