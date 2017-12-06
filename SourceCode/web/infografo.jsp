@@ -16,54 +16,78 @@
         <script src="${path}/assets/main.js"></script>
     </head>
     <body>
-        <c:if test="${not empty mensagem}">
-            <h2 id="mensagem">${mensagem}</h2>
-        </c:if> 
-        <div class="margem">
-            <a href="inserirGrafo.jsp" class="corBotao botoes">Inserir Grafo</a>
-            <a href="carregarGrafo.jsp" class="corBotao botoes">Carregar Grafo</a>
-
-            <c:if test="${not empty grafo}">
-                <a href="editarGrafo.jsp" class="corBotao botoes">Editar Grafo</a> <br /><br />
-                <form action="DownloadGrafo" enctype="multipart/form-data" method="post" class="semQuebraDeLinha">
-                    <input type="hidden" name="idGrafo" value="${grafo.id}" />
-                    <input type="submit" value="Download" class="bnt"/> 
-                    <a href="visualizaGrafoCanvas.jsp" class="bnt">Ver Grafo</a>
-                </form>
-                <form action="GeraInformacoesGrafo" method="post" class="semQuebraDeLinha">
-                    <input type="submit" value="Informações do Grafo" class="bnt"/>
-                </form>
-                <br /><br />
-                <form action="CalcularDijkstra" method="post">
-                    <input type="submit" value="Calcular Dijkstra" class="corBotao botoes" />
-                    Nó de Origem:
-                    <select name="noOrigem" class="bnt">
-                        <c:forEach items="${grafo.nos}" var="no">
-                            <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
-                        </c:forEach>
-                    </select>
-                    &nbsp;Nó de Destino:
-                    <select name="noDestino" class="bnt">
-                        <option value="todosNos">Todos os nós</option>
-                        <c:forEach items="${grafo.nos}" var="no">
-                            <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
-                        </c:forEach>
-                    </select>
-                </form><br />
-                <c:if test="${grafo.tipo == 'undirected' && grafo.tipoAresta}">
-                    <form action="AlgoritmoDeKruskalController" method="post">
-                        <input type="submit" value="Árvore Geradora Mínima - Algoritmo de Kruskal" class="corBotao botoes" />
-                    </form> <br />
-                    <form action="AlgoritmoDePrimController" method="post">
-                        <input type="submit" value="Árvore Geradora Mínima - Algoritmo de Prim" class="corBotao botoes" />
-                    </form>
-                </c:if>
-            </c:if>
-        </div>
+        <div class="container-fluid">
             <div class="row">
-                <code>
-                    ${grafoHTML}
-                </code>
+                <div class="container">
+                    <c:if test="${not empty mensagem}">
+                        <h2 id="mensagem">${mensagem}</h2>
+                    </c:if> 
+                </div>
             </div>
-    </body>
+
+            <div class="row">
+                <div class="container-fluid">
+                    <div class="col-lg-6 col-md-6">
+                        <c:if test="${not empty grafo}">
+                            <form action="DownloadGrafo" enctype="multipart/form-data" method="post" class="form-inline">
+                                <a href="inserirGrafo.jsp" class="button button-green">Inserir Grafo</a>
+                                <a href="carregarGrafo.jsp" class="button button-blue">Carregar Grafo</a>
+                                <a href="editarGrafo.jsp" class="button button-orange">Editar Grafo</a>
+                                <input type="hidden" name="idGrafo" value="${grafo.id}" />
+                                <input type="submit" value="Download" class="button button-green"/> 
+                                <a href="visualizaGrafoCanvas.jsp" class="button button-blue">Ver Grafo</a>
+                            </form>
+                            <div class="espacos"></div>
+                            <form action="GeraInformacoesGrafo" method="post" class="form-inline">
+                                <input type="submit" value="Informações do Grafo" class="button button-cyan" />
+                            </form>
+                            <div class="espacos"></div>
+                            <form action="CalcularDijkstra" method="post" class="form-inline">
+                                <input type="submit" value="Calcular Dijkstra" class="button button-blue" />
+                                <div class="form-group">
+                                    Nó de Origem:
+                                    <select name="noOrigem" class="form-control-static">
+                                        <c:forEach items="${grafo.nos}" var="no">
+                                            <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    Nó de Destino:
+                                    <select name="noDestino" class="form-control-static">
+                                        <option value="todosNos">Todos os nós</option>
+                                        <c:forEach items="${grafo.nos}" var="no">
+                                            <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </form>
+                            <div class="espacos"></div>
+                            <div class="espacos"></div>
+                            <c:if test="${grafo.tipo == 'undirected' && grafo.tipoAresta}">
+                                <h2>Algoritmos de Grafo</h2>
+                                <!--                        <form action="AlgoritmoDeKruskalController" method="post" class="form-inline">
+                                                            <input type="submit" value="Algoritmo de Kruskal" class="button button-black" />
+                                                        </form>-->
+                                <a href="${path}/prim" class="button button-black">Algoritmo de Prim</a>
+                                <a href="#" class="button button-black">Algoritmo de Kruskal</a>
+                                <!--                        <form action="AlgoritmoDePrimController" method="post" class="form-inline">
+                                                            <input type="submit" value="Algoritmo de Prim" class="button button-black" />
+                                                        </form>-->
+                            </c:if>
+                        </c:if>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <h2>XML Gerado</h2>
+                        <code>
+                            ${grafoHTML}
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
 </html>

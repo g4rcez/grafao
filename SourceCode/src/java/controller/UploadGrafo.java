@@ -22,7 +22,7 @@ public class UploadGrafo extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher view = request.getRequestDispatcher("grafo.jsp");
+        RequestDispatcher view = request.getRequestDispatcher("infografo.jsp");
         view.forward(request, response);
     }
 
@@ -60,12 +60,10 @@ public class UploadGrafo extends HttpServlet {
         arquivo = arquivo.trim().replace("null", "");
         File pathDoArquivo = new File(fileSaveDir + "/" + arquivo + arquivo);
         Grafo grafo = WorkerXml.grafoFromFile(pathDoArquivo);
-        output.println(fileSaveDir + "/" + arquivo + arquivo);
-        request.setAttribute("pathFile", fileSaveDir + "/" + arquivo + arquivo);
-        request.setAttribute("grafo", grafo.getId());
-        request.setAttribute("sucesso", "Nome do Grafo: <strong>" + grafo.getId() + "</strong>");
+        request.getSession().setAttribute("grafo", grafo);
+        request.setAttribute("mensagem", "Nome do Grafo: <strong>" + grafo.getId() + "</strong>");
         String grafoVisual = WorkerXml.grafoToHtmlReadable(grafo);
-        request.setAttribute("grafoVisual", grafoVisual);
+        request.setAttribute("grafoHTML", grafoVisual);
         WorkerXml.setGrafo(grafo);
         processRequest(request, response);
     }

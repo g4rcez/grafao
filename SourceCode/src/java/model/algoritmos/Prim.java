@@ -24,7 +24,7 @@ public class Prim {
         this.grafo = givenGrafo;
     }
     
-    public Grafo algoritmoDePrim() {
+    public Grafo algoritmoDePrim(Grafo grafo) {
         Grafo subGrafo = new Grafo(grafo.getId(), grafo.getTipo(), grafo.getTipoAresta(), new ArrayList<>(), new ArrayList<>());
         List<String> verticesDoGrafo = new ArrayList<>();
         grafo.getNos().forEach((no) -> {

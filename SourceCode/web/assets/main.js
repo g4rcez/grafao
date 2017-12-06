@@ -1,14 +1,10 @@
-//função para ocultar a mensagem do index apos 4s;
-$(document).ready(function () {
-    setTimeout("$('#mensagem').hide(500)", 4000);
-});
-//função para adicionar elementos no inserirGrafo, verifica se ele é valorado ou nao e insere o input de forma adequada;
 $(function () {
     var i = 1;
     var j = 1;
     $('#adiconaCampo').live('click', function () {
-        $('<p><input type="text" id="no' + i + '" size="20" name="nos" value="" placeholder="Insira nome do Nó" /> \n\
-            <a href="#" id="removerNo" class="bnt bntExcluir">Remove</a></p>').appendTo(formulario);
+        $('<p><input type="text" id="no' + i + '" size="20" name="nos" value="" class="form-control" placeholder="Insira nome do Nó" /> \n\
+            <span class="help-block">O nome do nó deve ser único</span><a href="#" id="removerNo" class="button button-red"><i class="fa fa-minus" aria-hidden="true"></i> Remove</a>\n\
+            </p>').appendTo(formulario);
         $("#no" + i).focus();
         i++;
         return false;
@@ -25,7 +21,6 @@ $(function () {
         j++;
         return false;
     });
-
     $('#removerNo').live('click', function () {
         if (i > 1) {
             $(this).parents('p').remove();
@@ -40,8 +35,6 @@ $(function () {
         }
         return false;
     });
-
-    //função para mostrar valor do primeiro input;
     $("#gValorado").click(function () {
         if (!$("#valorAresta").is(':visible')) {
             $("#valorAresta").show("fast");

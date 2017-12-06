@@ -59,10 +59,9 @@ public class WorkerXml {
     public static boolean saveFileForGrafo(Grafo grafo, String pathDoArquivo) {
         constructXml();
         try {
-            String arquivoString = pathDoArquivo + "/" + grafo.getId() + ".xml";
-            arquivoString = arquivoString.replace("//", "/").replace("\\\\", "\\");
-            File arquivo = new File(arquivoString);
+            File arquivo = new File(pathDoArquivo);
             if (!arquivo.exists()) {
+                System.out.println(arquivo.getCanonicalPath());
                 arquivo.createNewFile();
                 FileWriter writer = new FileWriter(arquivo, true);
                 writer.write(WorkerXml.writeGrafoInXmlString(grafo) + "\n\r\n\r");

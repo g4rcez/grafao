@@ -1,0 +1,7 @@
+<graph id="dsa" edgedefault="undirected" tipoAresta="true">
+  <node id="A"/>
+  <node id="B"/>
+  <edge id="Aresta 1" source="A" target="B" value="8"/>
+</graph>
+
+

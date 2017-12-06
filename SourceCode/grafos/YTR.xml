@@ -1,0 +1,7 @@
+<graph id="YTR" edgedefault="undirected" tipoAresta="false">
+  <node id="A"/>
+  <node id="B"/>
+  <edge id="A1" source="B" target="A"/>
+</graph>
+
+

@@ -1,21 +1,26 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
-import model.Grafo;
-import model.No;
-import model.No;
-import model.WorkerXml;
-import model.WorkerXml;
+import model.algoritmos.Prim;
 
-@WebServlet(name = "AdicionarAresta", urlPatterns = {"/novaAresta"})
-public class AdicionarAresta extends HttpServlet {
+/**
+ *
+ * @author garcez
+ */
+@WebServlet(name = "PrimController", urlPatterns = {"/prim"})
+public class PrimController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,8 +33,11 @@ public class AdicionarAresta extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher view = request.getRequestDispatcher("grafo.jsp");
-        view.forward(request, response);
+        Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
+        Prim prim = new Prim(grafo);
+        Grafo subGrafo = prim.algoritmoDePrim(grafo);
+        request.setAttribute("grafo", subGrafo);
+        getServletContext().getRequestDispatcher("/grafoco.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -42,7 +50,8 @@ public class AdicionarAresta extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -55,20 +64,8 @@ public class AdicionarAresta extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String origem = request.getParameter("origem").trim();
-        String destino = request.getParameter("destino").trim();
-        Grafo grafo = WorkerXml.getGrafo();
-        No noOrigem = new No(origem);
-        No noDestino = new No(destino);
-        int valor = 0;
-        try {
-            valor = Integer.parseInt(request.getParameter("valor"));
-            grafo.adicionarAresta(noOrigem, noDestino, valor);
-        } catch (NullPointerException exception) {
-            grafo.adicionarAresta(noOrigem, noDestino);
-        }   
-        request.setAttribute("grafoVisual", WorkerXml.writeGrafoInXmlString(grafo).replaceAll("<", "&lt;").replaceAll(">", "&gt;<br>"));
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -80,6 +77,6 @@ public class AdicionarAresta extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
 
 }

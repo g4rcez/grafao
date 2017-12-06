@@ -22,10 +22,10 @@
                     <h1 class="text-center">Criar um Grafo</h1>
                     <form action="${path}/criar" method="post" onsubmit="verificaValorAresta()">
                         <p>
-                          <input type="text" id="nomeGrafo" class="form-control" size="20" name="nomeDoGrafo" value="" placeholder="Nome do Grafo" />
+                            <input type="text" id="nomeGrafo" class="form-control" size="20" name="nomeDoGrafo" value="" placeholder="Nome do Grafo" />
                             <label for="gDirecionado"><input type="checkbox" name="direcionado" id="gDirecionado" value="directed">Direcionado [GraphML directed]</label>
                             <label for="gValorado"><input type="checkbox" name="valorado" id="gValorado" value="valorado">Valorado [valor da aresta]</label>
-                          </p>
+                        </p>
                         <div id="formulario">
                             <p>
                                 <input type="text" class="form-control" id="no" size="20" name="nos" value="" placeholder="Insira nome do Nó" />
@@ -33,7 +33,7 @@
                             </p>
                         </div>
                         <button id="adiconaCampo" class="button button-green">
-                          <strong><i class="fa fa-plus"></i> Adicionar Nó</strong>
+                            <strong><i class="fa fa-plus"></i> Adicionar Nó</strong>
                         </button>
                         <div class="espacos"></div>
                         <p>Arestas(par ordenado):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span id="txtValor" style="display: none">Valor:</span></p><br />
@@ -42,8 +42,8 @@
                             <input class="" type="number" id="valorAresta" name="valorAresta" value="" placeholder="10" style="display: none"/>
                         </div>
                         <p><button id="adiconaAresta" class="button button-green">
-                          <strong><i class="fa fa-plus"></i>Adicionar Aresta</strong>
-                        </button></p>
+                                <strong><i class="fa fa-plus"></i>Adicionar Aresta</strong>
+                            </button></p>
                         <input type="submit" name="bntIncluir" value="Enviar" class="button button-blue center-block"/>
                     </form>
                 </div>

@@ -31,7 +31,7 @@ public class GrafoCreate extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, EGraphViewExcpetion {
         RequestDispatcher view = request.getRequestDispatcher("/infografo.jsp");
-        String caminho = this.getServletContext().getRealPath("");
+        String caminho = this.getServletContext().getRealPath("") + "../../grafos/";
         request.setAttribute("mensagem", "Grafo salvo com Sucesso!");
         String nos[] = request.getParameterValues("nos");
         String tipo = request.getParameter("direcionado");
@@ -88,12 +88,12 @@ public class GrafoCreate extends HttpServlet {
         }
         grafo = new Grafo(id, tipo, tipoAresta, listaNos, listaArestas);
         caminho = caminho + grafo.getId().replaceAll(" ", "") + ".xml";
-        System.out.println(caminho);
         createXmlForDownload(grafo, caminho, request);
         ViewGraph.generateViewGraphByInage(caminho);
         String grafoHTML = WorkerXml.grafoToHtmlReadable(grafo);
-        request.setAttribute("grafoVisual", grafoHTML);
-        request.setAttribute("sucesso", "Nome do Grafo: <strong>" + grafo.getId() + "</strong>");
+        request.setAttribute("grafoHTML", grafoHTML);
+        request.getSession().setAttribute("grafo", grafo);
+        request.setAttribute("sucesso", grafo.getId() + " <strong>" + grafo.getId() + "</strong>");
         view.forward(request, response);
     }
 
