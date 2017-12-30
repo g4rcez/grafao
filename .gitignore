@@ -425,4 +425,6 @@ __pycache__/
 # should be stored in the .pubxml.user file.
 
 # End of https://www.gitignore.io/api/vim,netbeans,intellij,notepadpp,sublimetext,visualstudio,visualstudiocode
-/SourceCode/nbproject/private/
+SourceCode/nbproject/private/
+SourceCode/.idea
+SourceCode/.vscode
