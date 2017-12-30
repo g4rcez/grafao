@@ -100,7 +100,6 @@ public class Interceptor implements Filter {
         HttpServletRequest requestFilter = (HttpServletRequest) request;
         String url = requestFilter.getScheme() + "://" + requestFilter.getServerName() + ":" + requestFilter.getServerPort() + requestFilter.getContextPath();
         request.setAttribute("path", url);
-        System.out.println("Uri gerada: " + url);
         request.setCharacterEncoding("UTF-8");
         chain.doFilter(request, response);
     }

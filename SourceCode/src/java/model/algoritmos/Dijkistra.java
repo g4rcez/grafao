@@ -10,13 +10,12 @@ import model.Grafo;
 import model.No;
 
 public class Dijkistra {
-    
+
     private Grafo grafo = null;
 
     public Dijkistra(Grafo givenGrafo) {
         this.grafo = givenGrafo;
     }
-    
 
     public Map<String, String> calcularDijkstra(No inicio) {
         Map<String, Integer> dijkstraListaEstimativas = new HashMap<>();
@@ -89,7 +88,7 @@ public class Dijkistra {
         Collections.reverse(caminho);
         return caminho;
     }
-    
+
     public List<Aresta> getArestasQueSaemDoNoAtualDijkstra(No no, List<String> listaVarridos) {
         List<Aresta> arestasDoNoAtual = new ArrayList();
         for (Aresta aresta : grafo.getArestas()) {

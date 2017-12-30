@@ -8,10 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
-import model.Grafo;
 import model.No;
-import model.No;
-import model.WorkerXml;
 import model.WorkerXml;
 
 @WebServlet(name = "AdicionarAresta", urlPatterns = {"/novaAresta"})
@@ -28,7 +25,7 @@ public class AdicionarAresta extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher view = request.getRequestDispatcher("grafo.jsp");
+        RequestDispatcher view = request.getRequestDispatcher("/grafo.jsp");
         view.forward(request, response);
     }
 

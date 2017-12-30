@@ -5,6 +5,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="${path}/assets/bootstrap/beautify.min.css" rel="stylesheet">
+        <link href="${path}/assets/bootstrap/font-awesome.min.css" rel="stylesheet">
+        <script src="${path}/assets/bootstrap/beautify.min.js"></script>
+        <link href="${path}/assets/main.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Visualizar Grafo</title>
         <link rel="stylesheet" href="css/style.css">
         <script type="text/javascript" src="${path}/assets/vendor/raphael.js"></script>
@@ -23,12 +31,11 @@
                 <c:otherwise>false</c:otherwise>
             </c:choose>
             <c:forEach items="${grafo.nos}" var="no">
-                g.addNode("<c:out value="${no.id}"></c:out>");
+                        g.addNode("<c:out value="${no.id}"></c:out>");
             </c:forEach>
             <c:forEach items="${grafo.arestas}" var = "aresta"> //nao funciona para nos isolados, tente adicionar tds os nos e depois criar as arestas
-                g.addEdge("<c:out value="${aresta.origem.id}"></c:out>", "<c:out value="${aresta.destino.id}"></c:out>", {label: "<c:out value="${aresta.valor}"></c:out>",'label-style' : {'font-size': 17, 'font-weight': 'bolder'}});
+                        g.addEdge("<c:out value="${aresta.origem.id}"></c:out>", "<c:out value="${aresta.destino.id}"></c:out>", {label: "<c:out value="${aresta.valor}"></c:out>", 'label-style': {'font-size': 17, 'font-weight': 'bolder'}});
             </c:forEach>
-                        //var layouter = new Graph.Layout.Ordered(g, topologicalSort(g)); //OUTRA FORMA DE ORGANIZAR O GRAFO
                         var layouter = new Graph.Layout.Spring(g);
                         var renderer = new Graph.Renderer.Raphael('canvas', g, width, height);
                         var layouter = new Graph.Layout.Spring(g);
@@ -47,14 +54,18 @@
         </style>
     </head>
     <body>
-        <h3>Grafo: <c:out value="${grafo.id}"></c:out>
+        <div class="container">
+            <h3>Grafo: ${grafo.id}</h3>
             <p>
-                Reorganizar o Grafo: <button id="reorganizar" class="corBotao" onclick="redraw();">Reorganizar</button>
+                <button id="reorganizar" class="btn btn-info" onclick="redraw();">Reorganizar</button><br><br>
                 Editar o Grafo: <a href="editarGrafo.jsp" class="corBotao botoes">Editar</a>
             </p>
-            <p><a href="/infografo" class="bnt">Voltar</a></p>
-            <div id="canvas"></div> 
-            <br />
-
-    </body>
+            <p><a href="${path}/view" class="bnt">Voltar</a></p>
+            <div class="row">
+                <div id="canvas"></div> 
+            </div>
+        </div>
+        <br />
+    </div>
+</body>
 </html>

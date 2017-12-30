@@ -1,13 +1,16 @@
 package controller;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.util.Collections;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
+import model.NosComparator;
 import model.WorkerXml;
 
 /**
@@ -27,9 +30,33 @@ public class InfoGrafo extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher view = request.getRequestDispatcher("infografo.jsp");
-        view.forward(request, response);
+        Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
+        NosComparator comparator = new NosComparator();
+        Collections.sort(grafo.getNos(), comparator);
+        Map mapaOrganizadoGraus = new TreeMap(comparator);
+        request.setAttribute("tipoGrafoArestas", grafo.getTipoAresta());
+        if (grafo.getTipo().equals("directed")) {
+            Map mapaOrganizadoGrauEmissao = new TreeMap(comparator);
+            Map mapaOrganizadoGrauRecepcao = new TreeMap(comparator);
+
+            mapaOrganizadoGrauEmissao.putAll(grafo.getGrausDeEmissao());
+            request.setAttribute("grauDeEmissao", mapaOrganizadoGrauEmissao);
+
+            mapaOrganizadoGrauRecepcao.putAll(grafo.getGrausDeRecepcao());
+            request.setAttribute("grauDeRecepcao", mapaOrganizadoGrauRecepcao);
+            request.setAttribute("nosAntecessores", grafo.getNosAntecessores());
+            request.setAttribute("nosSucessores", grafo.getNosSucessores());
+
+        }
+        request.setAttribute("mapaVerticesAdj", grafo.mapeamentoVerticesAdjacentes());
+        request.setAttribute("mapaArestasAdj", grafo.getMapaArestasAdjacentes());
+        mapaOrganizadoGraus.putAll(grafo.getGraus());
+        request.setAttribute("nosComGrau", mapaOrganizadoGraus);
+        request.setAttribute("nosComGrauSize", mapaOrganizadoGraus.size());
+        request.setAttribute("ordemGrafo", grafo.getOrdem());
+        request.setAttribute("mapaVerticesIndependentes", grafo.verticesIndependentes());
+        request.setAttribute("mapaArestasIndependentes", grafo.verticesIndependentes());
+        request.getRequestDispatcher("/infos-grafo.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -50,7 +77,7 @@ public class InfoGrafo extends HttpServlet {
         request.setAttribute("adjacencia", grafo.getMatrizAdjacencia());
         request.setAttribute("incidencia", grafo.getMatrizIncidencia());
         request.setAttribute("grafoVisual", WorkerXml.grafoToHtmlReadable(grafo));
-        
+
         processRequest(request, response);
     }
 

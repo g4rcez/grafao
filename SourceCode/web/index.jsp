@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="${path}/assets/bootstrap/beautify.min.css" rel="stylesheet">
@@ -11,7 +10,7 @@
         <link href="${path}/assets/main.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script src="${path}/assets/jquery.min.js" type="text/javascript"></script>
         <title>Grafão</title>
     </head>
     <body>
@@ -20,7 +19,7 @@
             <div class="container">
                 <div class="col-md-6 col-lg-6">
                     <h1 class="text-center">Criar um Grafo</h1>
-                    <form action="${path}/criar" method="post" onsubmit="verificaValorAresta()">
+                    <form action="${path}/view" method="POST" onsubmit="verificaValorAresta()">
                         <p>
                             <input type="text" id="nomeGrafo" class="form-control" size="20" name="nomeDoGrafo" value="" placeholder="Nome do Grafo" />
                             <label for="gDirecionado"><input type="checkbox" name="direcionado" id="gDirecionado" value="directed">Direcionado [GraphML directed]</label>

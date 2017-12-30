@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -16,12 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
 import model.No;
+import model.WorkerXml;
 import model.algoritmos.Dijkistra;
 
-/**
- *
- * @author garcez
- */
 @WebServlet(name = "DijkstraController", urlPatterns = {"/dijkstra"})
 public class DijkstraController extends HttpServlet {
 
@@ -36,7 +27,7 @@ public class DijkstraController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
+        Grafo grafo = WorkerXml.getGrafo();
         Dijkistra dijkstra = new Dijkistra(grafo);
         String nomeNoOrigem = request.getParameter("noOrigem");
         String nomeNoDestino = request.getParameter("noDestino");
@@ -54,7 +45,7 @@ public class DijkstraController extends HttpServlet {
             request.setAttribute("noDestino", nomeNoDestino);
         }
         request.setAttribute("nomeNoOrigem", nomeNoOrigem);
-        getServletContext().getRequestDispatcher("/dijkstra.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/dijkistra.jsp").forward(request, response);
 
     }
 

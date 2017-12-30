@@ -1,0 +1,8 @@
+<graph id="Teste2" edgedefault="undirected" tipoAresta="true">
+  <node id="G"/>
+  <node id="B"/>
+  <edge id="Aresta 1" source="B" target="G" value="20"/>
+  <edge id="Aresta 2" source="G" target="B" value="15"/>
+</graph>
+
+

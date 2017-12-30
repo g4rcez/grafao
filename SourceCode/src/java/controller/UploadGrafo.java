@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import model.Grafo;
 import model.WorkerXml;
+import utils.MiscOperations;
 
 @WebServlet(urlPatterns = "/upload")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 50)
@@ -22,21 +22,6 @@ public class UploadGrafo extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher view = request.getRequestDispatcher("infografo.jsp");
-        view.forward(request, response);
-    }
-
-    /**
-     * handles file upload
-     *
-     * @param request
-     * @param response
-     * @throws javax.servlet.ServletException
-     * @throws java.io.IOException
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter output = response.getWriter();
         String appPath = request.getServletContext().getRealPath("");
         String savePath = appPath + File.separator + saveDirectory;
         String nomeDoArquivo = "";
@@ -60,11 +45,23 @@ public class UploadGrafo extends HttpServlet {
         arquivo = arquivo.trim().replace("null", "");
         File pathDoArquivo = new File(fileSaveDir + "/" + arquivo + arquivo);
         Grafo grafo = WorkerXml.grafoFromFile(pathDoArquivo);
-        request.getSession().setAttribute("grafo", grafo);
-        request.setAttribute("mensagem", "Nome do Grafo: <strong>" + grafo.getId() + "</strong>");
         String grafoVisual = WorkerXml.grafoToHtmlReadable(grafo);
-        request.setAttribute("grafoHTML", grafoVisual);
+        request.getSession().setAttribute("grafo", grafo);
+        request.getSession().setAttribute("grafoHTML", grafoVisual);
         WorkerXml.setGrafo(grafo);
+        response.sendRedirect(MiscOperations.newPathGenerator(request, "view"));
+    }
+
+    /**
+     * handles file upload
+     *
+     * @param request
+     * @param response
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

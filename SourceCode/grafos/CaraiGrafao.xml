@@ -1,0 +1,7 @@
+<graph id="CaraiGrafao" edgedefault="directed" tipoAresta="true">
+  <node id="A"/>
+  <node id="B"/>
+  <edge id="Aresta 1" source="B" target="A" value="70"/>
+</graph>
+
+

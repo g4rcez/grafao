@@ -277,5 +277,65 @@ public class Grafo {
     public boolean getTipoAresta() {
         return tipoAresta;
     }
+    
+    public Map<String, List<String>> mapeamentoVerticesAdjacentes() {
+        Map<Integer, String> posicaoNosDoGrafo = new HashMap<Integer, String>();
+        int[][] matrizAdj = this.getMatrizAdjacencia();
+        int i = 0, j;
+        String nomeNo = null;
+        Map<String, List<String>> mapaVerticesAdj = new HashMap<String, List<String>>();
+        List<String> nosAdj = null;
+
+        for (No no : this.getNos()) {
+            posicaoNosDoGrafo.put(i, no.getId());
+            i++;
+        }
+        i = 0;
+        while (i < this.getNos().size()) {
+            nosAdj = new ArrayList();
+            for (j = 0; j < this.getNos().size(); j++) {
+                if (matrizAdj[j][i] == 1) {
+                    nomeNo = posicaoNosDoGrafo.get(j);
+                    nosAdj.add(nomeNo);
+                }
+            }
+            if (!nosAdj.isEmpty()) {
+                mapaVerticesAdj.put(posicaoNosDoGrafo.get(i), nosAdj);
+            }
+            i++;
+        }
+        return mapaVerticesAdj;
+    }
+    
+    public Map<String, List<No>> verticesIndependentes() {
+        Set<No> gerarNosIndependentes = null;
+        Map<String, List<No>> nosIndependentes = new HashMap<String, List<No>>();
+        List<No> nosAdjacentes = null;
+        List<No> listaNosIndependentes = null;
+        Map<String, List<String>> verticesAdjacentes = this.mapeamentoVerticesAdjacentes();
+
+        for (Map.Entry<String, List<String>> entry : verticesAdjacentes.entrySet()) {
+            String verticeAtual = entry.getKey();
+            List<String> listaVerticesAdjacentes = entry.getValue();
+            gerarNosIndependentes = new HashSet<No>();
+            listaNosIndependentes = new ArrayList();
+            nosAdjacentes = new ArrayList();
+
+            for (String vertice : listaVerticesAdjacentes) {
+                nosAdjacentes.add(this.getNo(vertice));
+            }
+            nosAdjacentes.add(this.getNo(verticeAtual));
+
+            for (No noDoGrafo : this.getNos()) {
+                if (!nosAdjacentes.contains(noDoGrafo)) {
+                    listaNosIndependentes.add(noDoGrafo);
+                }
+            }
+
+            nosIndependentes.put(verticeAtual, listaNosIndependentes);
+        }
+        return nosIndependentes;
+    }
+
 
 }

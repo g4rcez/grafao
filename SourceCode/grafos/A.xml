@@ -1,0 +1,7 @@
+<graph id="A" edgedefault="undirected" tipoAresta="false">
+  <node id="A"/>
+  <node id="BC"/>
+  <edge id="A1" source="A" target="BC"/>
+</graph>
+
+

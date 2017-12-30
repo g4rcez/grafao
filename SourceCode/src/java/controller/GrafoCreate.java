@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +15,7 @@ import model.Aresta;
 import model.Grafo;
 import model.No;
 import model.WorkerXml;
+import utils.MiscOperations;
 
 @WebServlet(name = "GrafoCreateController", urlPatterns = "/criar")
 public class GrafoCreate extends HttpServlet {
@@ -30,9 +30,8 @@ public class GrafoCreate extends HttpServlet {
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, EGraphViewExcpetion {
-        RequestDispatcher view = request.getRequestDispatcher("/infografo.jsp");
+//        RequestDispatcher view = request.getRequestDispatcher("/infografo.jsp");
         String caminho = this.getServletContext().getRealPath("") + "../../grafos/";
-        request.setAttribute("mensagem", "Grafo salvo com Sucesso!");
         String nos[] = request.getParameterValues("nos");
         String tipo = request.getParameter("direcionado");
         String valorado = request.getParameter("valorado");
@@ -90,11 +89,11 @@ public class GrafoCreate extends HttpServlet {
         caminho = caminho + grafo.getId().replaceAll(" ", "") + ".xml";
         createXmlForDownload(grafo, caminho, request);
         ViewGraph.generateViewGraphByInage(caminho);
+        WorkerXml.setGrafo(grafo);
         String grafoHTML = WorkerXml.grafoToHtmlReadable(grafo);
-        request.setAttribute("grafoHTML", grafoHTML);
         request.getSession().setAttribute("grafo", grafo);
-        request.setAttribute("sucesso", grafo.getId() + " <strong>" + grafo.getId() + "</strong>");
-        view.forward(request, response);
+        request.getSession().setAttribute("grafoHTML", grafoHTML);
+        response.sendRedirect(MiscOperations.newPathGenerator(request, "/view"));
     }
 
     private static ArrayList<Integer> toInt(String valorArestasString[]) {
@@ -106,14 +105,14 @@ public class GrafoCreate extends HttpServlet {
         }
         return lista;
     }
-    
+
     public void createXmlForDownload(Grafo webGrafo, String caminho, HttpServletRequest request) {
         if (WorkerXml.saveFileForGrafo(webGrafo, caminho)) {
             request.setAttribute("pathFile", caminho + webGrafo.getId() + ".xml");
         } else {
             request.setAttribute("naoCriado", "XML do Grafo não criado");
         }
-}
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -142,4 +141,5 @@ public class GrafoCreate extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
+
 }
