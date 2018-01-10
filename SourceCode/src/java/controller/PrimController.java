@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
 import model.algoritmos.Prim;
+import utils.MiscOperations;
 
 /**
  *
@@ -34,7 +35,7 @@ public class PrimController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
         Prim prim = new Prim(grafo);
-        Grafo subGrafo = prim.algoritmoDePrim(grafo);
+        Grafo subGrafo = prim.prim(grafo);
         request.setAttribute("grafo", subGrafo);
         getServletContext().getRequestDispatcher("/grafoco.jsp").forward(request, response);
     }

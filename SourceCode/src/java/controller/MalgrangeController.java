@@ -1,25 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
-import model.WorkerXml;
+import model.No;
+import model.algoritmos.Malgrange;
 
 /**
  *
  * @author garcez
  */
-@WebServlet(name = "DrawGrafo", urlPatterns = {"/draw"})
-public class DrawGrafo extends HttpServlet {
+@WebServlet(name = "MalgrangeController", urlPatterns = {"/malgrange"})
+public class MalgrangeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,11 +31,20 @@ public class DrawGrafo extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
         Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
-        request.setAttribute("grafo", grafo);
-        request.setAttribute("grafoHTML", WorkerXml.grafoToHtmlReadable(grafo));
-        request.getRequestDispatcher("/grafoco.jsp").forward(request, response);
+        List<String> nosVisitadosTransitivoD = new ArrayList<>();
+        List<String> nosVisitadosTransitivoI = new ArrayList<>();
+        List<No> nos = grafo.getNos();
+
+        Malgrange malgrange = new Malgrange(grafo);
+
+        List<String> listaTransitivos = malgrange.malgrangeWithTransitivoDireto(0, nos.get(0).getId(), nosVisitadosTransitivoD, grafo.nodePositionInMatrix(), grafo.getMatrizAdjacencia());
+        List<String> listaTransitivosInverso = malgrange.malgrangeWithTransitivoInverso(0, nos.get(0).getId(), nosVisitadosTransitivoI, grafo.nodePositionInMatrix(), grafo.getMatrizAdjacencia());
+        Collections.sort(listaTransitivos);
+        Collections.sort(listaTransitivosInverso);
+        request.setAttribute("listaFConexa", listaTransitivos);
+        request.setAttribute("listaTransitivaInversa", listaTransitivosInverso);
+        request.getRequestDispatcher("/malgrange.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -6,20 +6,22 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
-import model.WorkerXml;
+import model.algoritmos.Largura;
 
 /**
  *
  * @author garcez
  */
-@WebServlet(name = "DrawGrafo", urlPatterns = {"/draw"})
-public class DrawGrafo extends HttpServlet {
+@WebServlet(name = "LarguraController", urlPatterns = {"/largura"})
+public class LarguraController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,11 +34,12 @@ public class DrawGrafo extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
         Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
-        request.setAttribute("grafo", grafo);
-        request.setAttribute("grafoHTML", WorkerXml.grafoToHtmlReadable(grafo));
-        request.getRequestDispatcher("/grafoco.jsp").forward(request, response);
+        String nomeNoRaiz = request.getParameter("noOrigem");
+        List<String> visitados = new ArrayList();
+        Largura largura = new Largura(grafo);
+        request.setAttribute("buscaProfundidade", largura.calculate(nomeNoRaiz, visitados));
+        request.getRequestDispatcher("/resultados.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,0 +1,20 @@
+<graph id="Teste4" edgedefault="undirected" tipoAresta="true">
+  <node id="A"/>
+  <node id="B"/>
+  <node id="C"/>
+  <node id="D"/>
+  <edge id="Aresta 1" source="A" target="D" value="4">
+    <directed>false</directed>
+  </edge>
+  <edge id="Aresta 2" source="A" target="C" value="5">
+    <directed>false</directed>
+  </edge>
+  <edge id="Aresta 3" source="B" target="D" value="8">
+    <directed>false</directed>
+  </edge>
+  <edge id="Aresta 4" source="D" target="C" value="2">
+    <directed>false</directed>
+  </edge>
+</graph>
+
+

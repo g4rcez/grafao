@@ -29,9 +29,16 @@ public class GrafoCreate extends HttpServlet {
         }
     }
 
+    /**
+     * Lib ViewGraph não funciona com este método, apenas em upload graph
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     * @throws EGraphViewExcpetion
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, EGraphViewExcpetion {
-//        RequestDispatcher view = request.getRequestDispatcher("/infografo.jsp");
-        String caminho = this.getServletContext().getRealPath("") + "../../grafos/";
+        MiscOperations.setPathFiles(this.getServletContext().getRealPath("") + "../../grafos/");
         String nos[] = request.getParameterValues("nos");
         String tipo = request.getParameter("direcionado");
         String valorado = request.getParameter("valorado");
@@ -86,9 +93,10 @@ public class GrafoCreate extends HttpServlet {
             }
         }
         grafo = new Grafo(id, tipo, tipoAresta, listaNos, listaArestas);
+        System.out.println("Tipo do grafo" + grafo.getTipo());
+        String caminho = MiscOperations.getPathFiles();
         caminho = caminho + grafo.getId().replaceAll(" ", "") + ".xml";
         createXmlForDownload(grafo, caminho, request);
-        ViewGraph.generateViewGraphByInage(caminho);
         WorkerXml.setGrafo(grafo);
         String grafoHTML = WorkerXml.grafoToHtmlReadable(grafo);
         request.getSession().setAttribute("grafo", grafo);

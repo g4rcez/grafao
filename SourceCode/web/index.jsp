@@ -19,10 +19,12 @@
             <div class="container">
                 <div class="col-md-6 col-lg-6">
                     <h1 class="text-center">Criar um Grafo</h1>
-                    <form action="${path}/view" method="POST" onsubmit="verificaValorAresta()">
+                    <form action="${path}/criar" method="POST" onsubmit="verificaValorAresta()">
                         <p>
                             <input type="text" id="nomeGrafo" class="form-control" size="20" name="nomeDoGrafo" value="" placeholder="Nome do Grafo" />
-                            <label for="gDirecionado"><input type="checkbox" name="direcionado" id="gDirecionado" value="directed">Direcionado [GraphML directed]</label>
+                            <label for="gDirecionado">
+                                <input type="checkbox" name="direcionado" id="gDirecionado" value="directed">
+                                Direcionado [GraphML directed]</label>
                             <label for="gValorado"><input type="checkbox" name="valorado" id="gValorado" value="valorado">Valorado [valor da aresta]</label>
                         </p>
                         <div id="formulario">

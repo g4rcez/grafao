@@ -36,7 +36,7 @@ public class Dijkistra {
         }
         while (listaVarridos.size() != grafo.getNos().size()) {
             listaVarridos.add(noSelecionado);
-            arestasAdjacentes = getArestasQueSaemDoNoAtualDijkstra(No.getNoById(noSelecionado, grafo.getNos()), listaVarridos);
+            arestasAdjacentes = arestasSaemNoAtual(No.getNoById(noSelecionado, grafo.getNos()), listaVarridos);
             if (!arestasAdjacentes.isEmpty()) {
                 if (arestasAdjacentes.get(0).getOrigem().getId().equals(noSelecionado)) {
                     menorEstimativa = dijkstraListaEstimativas.get(arestasAdjacentes.get(0).getDestino().getId());
@@ -56,13 +56,13 @@ public class Dijkistra {
                         }
                     }
                 }
-                noSelecionado = this.menorEstimativaDijkstra(dijkstraListaEstimativas, listaVarridos);
+                noSelecionado = this.menorEstimativa(dijkstraListaEstimativas, listaVarridos);
             }
         }
         return dijkstraListaPrecedentes;
     }
 
-    public String menorEstimativaDijkstra(Map<String, Integer> listaEstimativas, List<String> listaVarridos) {
+    public String menorEstimativa(Map<String, Integer> listaEstimativas, List<String> listaVarridos) {
         String verticeMenor = null;
         int menorEstimativa = Integer.MAX_VALUE;
         for (Map.Entry<String, Integer> mapa : listaEstimativas.entrySet()) {
@@ -89,13 +89,11 @@ public class Dijkistra {
         return caminho;
     }
 
-    public List<Aresta> getArestasQueSaemDoNoAtualDijkstra(No no, List<String> listaVarridos) {
+    public List<Aresta> arestasSaemNoAtual(No no, List<String> listaVarridos) {
         List<Aresta> arestasDoNoAtual = new ArrayList();
-        for (Aresta aresta : grafo.getArestas()) {
-            if ((aresta.getOrigem().getId().equals(no.getId())) && !listaVarridos.contains(aresta.getDestino().getId())) {
-                arestasDoNoAtual.add(aresta);
-            }
-        }
+        grafo.getArestas().stream().filter((aresta) -> ((aresta.getOrigem().getId().equals(no.getId())) && !listaVarridos.contains(aresta.getDestino().getId()))).forEachOrdered((aresta) -> {
+            arestasDoNoAtual.add(aresta);
+        });
         return arestasDoNoAtual;
     }
 }

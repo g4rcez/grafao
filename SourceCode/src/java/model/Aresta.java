@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Aresta {
 
     private String id;
+    private boolean directed;
     private No origem;
     private No destino;
     private Integer valor;
@@ -21,6 +22,22 @@ public class Aresta {
         this.setDestino(destino);
         this.setOrigem(origem);
         this.setValor(valor);
+    }
+
+    public Aresta(String id, No origem, No destino, Integer valor, boolean directed) {
+        this.setId(id);
+        this.setDestino(destino);
+        this.setOrigem(origem);
+        this.setValor(valor);
+        this.setDirected(directed);
+    }
+
+    public boolean isDirected() {
+        return directed;
+    }
+
+    public void setDirected(boolean directed) {
+        this.directed = directed;
     }
 
     /**

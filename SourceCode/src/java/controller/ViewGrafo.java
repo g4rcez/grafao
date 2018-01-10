@@ -1,6 +1,10 @@
 package controller;
 
+import br.com.davesmartins.graphviewlib.ViewGraph;
+import br.com.davesmartins.graphviewlib.erro.EGraphViewExcpetion;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
 import model.WorkerXml;
+import utils.MiscOperations;
 
 /**
  *
@@ -29,6 +34,11 @@ public class ViewGrafo extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
         request.setAttribute("grafo", grafo);
+        try {
+            ViewGraph.generateViewGraphByFrame(MiscOperations.getGraph());
+        } catch (EGraphViewExcpetion ex) {
+            Logger.getLogger(ViewGrafo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         request.setAttribute("grafoHTML", WorkerXml.grafoToHtmlReadable(grafo));
         request.getRequestDispatcher("/infografo.jsp").forward(request, response);
     }

@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +21,8 @@ public class UploadGrafo extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        MiscOperations.setPathFiles(this.getServletContext().getRealPath("") + "../../grafos/");
+        String caminho = MiscOperations.getPathFiles();
         String appPath = request.getServletContext().getRealPath("");
         String savePath = appPath + File.separator + saveDirectory;
         String nomeDoArquivo = "";
@@ -45,6 +46,7 @@ public class UploadGrafo extends HttpServlet {
         arquivo = arquivo.trim().replace("null", "");
         File pathDoArquivo = new File(fileSaveDir + "/" + arquivo + arquivo);
         Grafo grafo = WorkerXml.grafoFromFile(pathDoArquivo);
+        MiscOperations.setGraph(pathDoArquivo.getAbsolutePath());
         String grafoVisual = WorkerXml.grafoToHtmlReadable(grafo);
         request.getSession().setAttribute("grafo", grafo);
         request.getSession().setAttribute("grafoHTML", grafoVisual);

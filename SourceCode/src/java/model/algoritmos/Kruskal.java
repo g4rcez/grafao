@@ -25,8 +25,8 @@ public class Kruskal {
     }
     
 
-    public Grafo algoritmoDeKruskal(Grafo grafo) {
-        Grafo subGrafo = new Grafo(grafo.getId(), grafo.getTipo(), grafo.getTipoAresta(), grafo.getNos(), new ArrayList<>());
+    public Grafo kruskal(Grafo grafo) {
+        Grafo subGrafo = grafo;
         List<Aresta> arestasDoGrafo = new ArrayList<>();
         arestasDoGrafo.addAll(grafo.getArestas());
         Map<String, Integer> nosDoGrafo = new HashMap<>();

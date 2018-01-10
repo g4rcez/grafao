@@ -5,7 +5,10 @@
  */
 package controller;
 
+import br.com.davesmartins.graphviewlib.erro.EGraphViewExcpetion;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,12 +32,13 @@ public class KruskalController extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws br.com.davesmartins.graphviewlib.erro.EGraphViewExcpetion
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, EGraphViewExcpetion {
         response.setContentType("text/html;charset=UTF-8");
         Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
         Kruskal krustal = new Kruskal();
-        Grafo subGrafo = krustal.algoritmoDeKruskal(grafo);
+        Grafo subGrafo = krustal.kruskal(grafo);
         request.setAttribute("grafo", subGrafo);
         getServletContext().getRequestDispatcher("/grafoco.jsp").forward(request, response);
     }
@@ -51,7 +55,11 @@ public class KruskalController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (EGraphViewExcpetion ex) {
+            Logger.getLogger(KruskalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -65,7 +73,11 @@ public class KruskalController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (EGraphViewExcpetion ex) {
+            Logger.getLogger(KruskalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

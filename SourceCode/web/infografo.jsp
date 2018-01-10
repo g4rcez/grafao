@@ -20,19 +20,10 @@
                     <h2 class="text-left">Grafo: ${grafo.id}</h2>
                 </div>
             </div>
-
             <div class="row">
                 <div class="container-fluid">
                     <div class="col-lg-6 col-md-6">
                         <c:if test="${not empty grafo}">
-<!--                            <form action="DownloadGrafo" enctype="multipart/form-data" method="post" class="form-inline">
-                                <a href="inserirGrafo.jsp" class="button button-green">Inserir Grafo</a>
-                                <a href="carregarGrafo.jsp" class="button button-blue">Carregar Grafo</a>
-                                <a href="editarGrafo.jsp" class="button button-orange">Editar Grafo</a>
-                                <input type="hidden" name="idGrafo" value="${grafo.id}" />
-                                <input type="submit" value="Download" class="button button-green"/> 
-                                <a href="visualizaGrafoCanvas.jsp" class="button button-blue">Ver Grafo</a>
-                            </form>-->
                             <div class="espacos"></div>
                             <form action="${path}/infografo" method="post" class="form-inline">
                                 <input type="submit" value="Informações do Grafo" class="button button-cyan" />
@@ -64,11 +55,27 @@
                                 <h2>Algoritmos de Grafo</h2>
                                 <form action="${path}/kruskal" method="post" class="form-inline">
                                     <input type="submit" value="Algoritmo de Kruskal" class="button button-black" />
-                                </form>
+                                </form><br>
                                 <form action="${path}/prim" method="post" class="form-inline">
                                     <input type="submit" value="Algoritmo de Prim" class="button button-black" />
                                 </form>
                             </c:if>
+                            <c:if test="${grafo.tipo == 'directed'}">
+                                <br />
+                                <form action="${path}/malgrange" method="post">
+                                    <input type="submit" value="Algoritmo de Malgrange" class="btn btn-primary" />
+                                </form>
+                            </c:if>
+                                <br>
+                            <form action="${path}/largura" method="post">
+                                <input type="submit" value="Busca em Largura" class="btn btn-primary" />
+                                Nó de Raiz:
+                                <select name="noOrigem" class="bnt">
+                                    <c:forEach items="${grafo.nos}" var="no">
+                                        <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
+                                    </c:forEach>
+                                </select>
+                            </form>
                         </c:if>
                     </div>
                     <div class="col-lg-6 col-sm-6">
@@ -77,6 +84,11 @@
                             ${grafoHTML}
                         </code>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="btn-group-justified">
+
                 </div>
             </div>
         </div>
