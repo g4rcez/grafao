@@ -35,9 +35,7 @@ public class MalgrangeController extends HttpServlet {
         List<String> nosVisitadosTransitivoD = new ArrayList<>();
         List<String> nosVisitadosTransitivoI = new ArrayList<>();
         List<No> nos = grafo.getNos();
-
         Malgrange malgrange = new Malgrange(grafo);
-
         List<String> listaTransitivos = malgrange.malgrangeWithTransitivoDireto(0, nos.get(0).getId(), nosVisitadosTransitivoD, grafo.nodePositionInMatrix(), grafo.getMatrizAdjacencia());
         List<String> listaTransitivosInverso = malgrange.malgrangeWithTransitivoInverso(0, nos.get(0).getId(), nosVisitadosTransitivoI, grafo.nodePositionInMatrix(), grafo.getMatrizAdjacencia());
         Collections.sort(listaTransitivos);
