@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Reveal JS</title>
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab, fork by Allan Garcez">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/font-awesome/css/font/font-awesome.min.css">
+    <link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <link rel="stylesheet" href="plugin/title-footer/title-footer.css">
+    <script>
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <section class="onleft">
+            <h1>Grafo Planar</h1>
+            <img src='img/grafo.png' />
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>O que é?</h3>
+            <ul>
+              <li>Arestas de um plano não se cruzam</li>
+              <li>Não possuir um sugrafo diferente de K5 e K3,3</li>
+            </ul>
+            <img src='img/naoplano.png' alt=''>
+          </section>
+          <section>
+            <h3>Planaridade</h3>
+            <p>Qualquer grafo planar simples pode ter sua representação utilizando apenas retas</p>
+          </section>
+          <section>
+            <h3>Observe K3,3 e K5</h3>
+            <ul>
+              <li>São regulares</li>
+              <li>São não planares</li>
+              <li>Reduzir uma aresta ou vértice os torna planares</li>
+              <li>K5 é o grafo não planar com menor número de vértices</li>
+              <li>K3,3 é o grafo não planar com menor número de arestas</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <h3>Problema Clássico</h3>
+          <p>Forneça os serviços para as casas sem que haja cruzamento de vias</p>
+          <img src='img/servico.png' alt=''>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- Modal Section -->
+    <!-- Your modals here -->
+    <div id="modal-show" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Modal Title</h2>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the Modal Body</p>
+          <p>Some other text...</p>
+        </div>
+        <div class="modal-footer">
+          <h3>Modal Footer</h3>
+        </div>
+      </div>
+    </div>
+    <!-- End of Modal Section -->
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <!-- Use this script to active mouse click -->
+    <script>
+      Reveal.initialize({
+        // Slide aspect ratio
+        width: 1280,
+        height: 720,
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+        // The display mode that will be used to show slides
+        display: 'block',
+        // show controls of slides
+        controls: true,
+        // show progress bar os slides
+        progress: true,
+        // enable a anchor of slide number
+        history: true,
+        // center content of slides
+        center: true,
+        // slide transition type
+        transition: 'convex', // none/fade/slide/convex/concave/zoom
+        // position of controls
+        controlsLayout: 'bottom-right', // edges or bottom-right
+        // accept mouse whell to transition of slides
+        mouseWheel: true,
+        // - (required) your allotted time for presentation
+        allottedTime: 15 * 60 * 1000, // 3 minutes
+        // - (optional) height of page/time progress bar
+        progressBarHeight: 3,
+        // - (optional) bar color
+        barColor: '#1c6079',
+        // - (optional) bar color when timer is paused
+        pausedBarColor: '#334463',
+        keyboard: {
+          // pause/resume time when Enter is pressed
+          13: () => {
+            ElapsedTimeBar.isPaused ? ElapsedTimeBar.resume() : ElapsedTimeBar.pause();
+          },
+          // pause/resume time when Pause/Break is pressed
+          19: () => {
+            ElapsedTimeBar.isPaused ? ElapsedTimeBar.resume() : ElapsedTimeBar.pause();
+          },
+          // reset timer when 'r' is pressed
+          82: () => {
+            ElapsedTimeBar.reset();
+          }
+        },
+        dependencies: [{
+            src: 'lib/js/classList.js',
+            condition: function () {
+              return !document.body.classList;
+            }
+          },
+          {
+            src: 'plugin/elapsed-time-bar/elapsed-time-bar.min.js' //Progress time bar
+          },
+          {
+            src: 'plugin/notes/notes.js',
+            async: true // Slide notes
+          },
+          {
+            src: 'plugin/highlight/highlight.js',
+            async: true,
+            callback: function () {
+              hljs.initHighlightingOnLoad();
+            }
+          },
+          {
+            src: 'plugin/zoom-js/zoom.js',
+            async: true
+          },
+          // { // Mouse click to next slide
+          //   src: 'js/mouse-click.js' 
+          // },
+          { // Modal plugin creator 
+            src: 'plugin/modal/modal.js'
+          },
+          {
+            src: 'plugin/title-footer/title-footer.js',
+            async: true,
+            callback: function () {
+              title_footer.initialize(title = "Awesome Footer", background = "transparent", hrefLink =
+                "https://github.com/vandalvnl/reveal.js");
+            }
+          },
+          {
+            src: 'plugin/chart/chart.min.js'
+          },
+          {
+            src: 'plugin/chart/csv2chart.js'
+          }
+        ],
+      });
+      Reveal.configure({
+        // Horizontal/Vertical slide number
+        slideNumber: 'h.v'
+      });
+    </script>
+  </body>
+
+</html>
