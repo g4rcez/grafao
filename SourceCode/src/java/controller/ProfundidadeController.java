@@ -1,20 +1,22 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
-import model.algoritmos.Prim;
+import model.algoritmos.Profundidade;
 
 /**
  *
  * @author garcez
  */
-@WebServlet(name = "PrimController", urlPatterns = {"/prim"})
-public class PrimController extends HttpServlet {
+@WebServlet(name = "ProfundidadeController", urlPatterns = {"/profundidade"})
+public class ProfundidadeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,10 +30,11 @@ public class PrimController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
-        Prim prim = new Prim(grafo);
-        Grafo subGrafo = prim.prim(grafo);
-        request.setAttribute("grafo", subGrafo);
-        getServletContext().getRequestDispatcher("/grafoco.jsp").forward(request, response);
+        String nomeNoRaiz = request.getParameter("noOrigem");
+        List<String> nosVisitados = new ArrayList();
+        Profundidade profundidade = new Profundidade(grafo);
+        request.setAttribute("buscaProfundidade", profundidade.calculate(nomeNoRaiz, nosVisitados));
+        request.getRequestDispatcher("/resultados.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

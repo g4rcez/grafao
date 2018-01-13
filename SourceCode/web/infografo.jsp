@@ -54,10 +54,10 @@
                             <c:if test="${grafo.tipo == 'undirected' && grafo.tipoAresta}">
                                 <h2>Algoritmos de Grafo</h2>
                                 <form action="${path}/kruskal" method="post" class="form-inline">
-                                    <input type="submit" value="Algoritmo de Kruskal" class="button button-black" />
+                                    <input type="submit" value="Algoritmo de Kruskal" class="btn btn-primary" />
                                 </form><br>
                                 <form action="${path}/prim" method="post" class="form-inline">
-                                    <input type="submit" value="Algoritmo de Prim" class="button button-black" />
+                                    <input type="submit" value="Algoritmo de Prim" class="btn btn-primary" />
                                 </form>
                             </c:if>
                             <c:if test="${grafo.tipo == 'directed'}">
@@ -66,9 +66,18 @@
                                     <input type="submit" value="Algoritmo de Malgrange" class="btn btn-primary" />
                                 </form>
                             </c:if>
-                                <br>
+                            <br>
                             <form action="${path}/largura" method="post">
                                 <input type="submit" value="Busca em Largura" class="btn btn-primary" />
+                                Nó de Raiz:
+                                <select name="noOrigem" class="bnt">
+                                    <c:forEach items="${grafo.nos}" var="no">
+                                        <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
+                                    </c:forEach>
+                                </select>
+                            </form><br>
+                            <form action="${path}/profundidade" method="post">
+                                <input type="submit" value="Busca em Profundidade" class="btn btn-primary" />
                                 Nó de Raiz:
                                 <select name="noOrigem" class="bnt">
                                     <c:forEach items="${grafo.nos}" var="no">

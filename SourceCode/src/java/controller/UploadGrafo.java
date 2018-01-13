@@ -22,7 +22,6 @@ public class UploadGrafo extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         MiscOperations.setPathFiles(this.getServletContext().getRealPath("") + "../../grafos/");
-        String caminho = MiscOperations.getPathFiles();
         String appPath = request.getServletContext().getRealPath("");
         String savePath = appPath + File.separator + saveDirectory;
         String nomeDoArquivo = "";
