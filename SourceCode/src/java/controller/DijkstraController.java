@@ -1,6 +1,5 @@
 package controller;
 
-import br.com.davesmartins.graphviewlib.ViewGraph;
 import br.com.davesmartins.graphviewlib.erro.EGraphViewExcpetion;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,10 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
 import model.No;
-import model.WorkerXml;
 import model.algoritmos.Dijkistra;
-import utils.MiscOperations;
 
+/**
+ *
+ * @author garcez
+ */
 @WebServlet(name = "DijkstraController", urlPatterns = {"/dijkstra"})
 public class DijkstraController extends HttpServlet {
 

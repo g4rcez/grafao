@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Grafo;
 
+/**
+ *
+ * @author garcez
+ */
 public class Profundidade implements TreeAlgos{
 
     Grafo graph = null;

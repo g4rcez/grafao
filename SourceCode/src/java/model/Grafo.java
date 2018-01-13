@@ -9,6 +9,10 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+/**
+ *
+ * @author garcez
+ */
 public class Grafo {
 
     private String id;
@@ -117,6 +121,10 @@ public class Grafo {
             }
         });
         return grausDosNos;
+    }
+
+    public boolean noExiste(String id) {
+        return getArestas().contains(id);
     }
 
     public Map<No, Integer> getGrausDeEmissao() {
@@ -260,7 +268,7 @@ public class Grafo {
         }
         return arestasAdjacentes;
     }
-    
+
     public Map<Integer, String> nodePositionInMatrix() {
         Map<Integer, String> nosDoGrafo = new HashMap<>();
         int i = 0;

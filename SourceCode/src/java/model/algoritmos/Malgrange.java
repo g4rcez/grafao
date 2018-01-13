@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Map;
 import model.Grafo;
 
+/**
+ *
+ * @author garcez
+ */
 public class Malgrange {
     
     // Se o grafo não for fortemente conexo, vai dar pau

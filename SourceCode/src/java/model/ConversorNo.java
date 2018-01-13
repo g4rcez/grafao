@@ -2,6 +2,10 @@ package model;
 
 import com.thoughtworks.xstream.converters.SingleValueConverter;
 
+/**
+ *
+ * @author garcez
+ */
 public class ConversorNo implements SingleValueConverter {
 
     @Override

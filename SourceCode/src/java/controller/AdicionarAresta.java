@@ -11,6 +11,10 @@ import model.Grafo;
 import model.No;
 import model.WorkerXml;
 
+/**
+ *
+ * @author garcez
+ */
 @WebServlet(name = "AdicionarAresta", urlPatterns = {"/novaAresta"})
 public class AdicionarAresta extends HttpServlet {
 

@@ -9,6 +9,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ *
+ * @author garcez
+ */
 public class WorkerXml {
 
     private static XStream workerXml = new XStream(new DomDriver("UTF-8", new XmlFriendlyReplacer("__", "_")));
@@ -61,7 +65,6 @@ public class WorkerXml {
         try {
             File arquivo = new File(pathDoArquivo);
             if (!arquivo.exists()) {
-                System.out.println(arquivo.getCanonicalPath());
                 arquivo.createNewFile();
                 FileWriter writer = new FileWriter(arquivo, true);
                 writer.write(WorkerXml.writeGrafoInXmlString(grafo) + "\n\r\n\r");
@@ -100,7 +103,6 @@ public class WorkerXml {
 
     public static Grafo grafoFromFile(File arquivo) throws IOException {
         constructXml();
-        System.out.println("Path do Arquivo: " + arquivo.getAbsoluteFile());
         Grafo grafo = null;
         String grafoString = "";
         try {
@@ -109,7 +111,6 @@ public class WorkerXml {
                 String linha = lerArq.readLine();
                 while (linha != null) {
                     grafoString += linha;
-                    System.out.println(linha);
                     linha = lerArq.readLine();
                 }
                 arq.close();

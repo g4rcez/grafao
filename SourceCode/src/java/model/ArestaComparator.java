@@ -2,6 +2,10 @@ package model;
 
 import java.util.Comparator;
 
+/**
+ *
+ * @author garcez
+ */
 public class ArestaComparator implements Comparator<Aresta> {
 
     @Override

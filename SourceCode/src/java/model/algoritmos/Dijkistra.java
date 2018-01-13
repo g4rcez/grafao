@@ -9,6 +9,10 @@ import model.Aresta;
 import model.Grafo;
 import model.No;
 
+/**
+ *
+ * @author garcez
+ */
 public class Dijkistra {
 
     private Grafo grafo = null;

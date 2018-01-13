@@ -42,10 +42,10 @@ public class Kruskal {
         while ((subGrafo.getArestas().size() <= numeroVertices - 1) && !arestasDoGrafo.isEmpty()) {
             Aresta aresta = arestasDoGrafo.get(0);
             arestasDoGrafo.remove(aresta);
-            int componente_u = this.getComponenteKruskal(matrizComponentes, nosDoGrafo.get(aresta.getOrigem().getId()));
-            int componente_v = this.getComponenteKruskal(matrizComponentes, nosDoGrafo.get(aresta.getDestino().getId()));
-            if (componente_u != componente_v) {
-                this.mergeComponenteKruskal(matrizComponentes, componente_u, componente_v);
+            int componenteU = this.getComponenteKruskal(matrizComponentes, nosDoGrafo.get(aresta.getOrigem().getId()));
+            int componenteV = this.getComponenteKruskal(matrizComponentes, nosDoGrafo.get(aresta.getDestino().getId()));
+            if (componenteU != componenteV) {
+                this.mergeComponents(matrizComponentes, componenteU, componenteV);
                 subGrafo.adicionarAresta(aresta);
             }
         }
@@ -57,7 +57,7 @@ public class Kruskal {
         return valor;
     }
 
-    public int[][] mergeComponenteKruskal(int[][] matriz, int componente_1, int componente_2) {
+    public int[][] mergeComponents(int[][] matriz, int componente_1, int componente_2) {
         int i, componenteATrocada = matriz[1][componente_2];
         for (i = 0; i < matriz[0].length; i++) {
             if (matriz[1][i] == componenteATrocada) {

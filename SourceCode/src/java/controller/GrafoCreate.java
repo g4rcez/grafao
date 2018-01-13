@@ -1,6 +1,5 @@
 package controller;
 
-import br.com.davesmartins.graphviewlib.ViewGraph;
 import br.com.davesmartins.graphviewlib.erro.EGraphViewExcpetion;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +16,10 @@ import model.No;
 import model.WorkerXml;
 import utils.MiscOperations;
 
+/**
+ *
+ * @author garcez
+ */
 @WebServlet(name = "GrafoCreateController", urlPatterns = "/criar")
 public class GrafoCreate extends HttpServlet {
 

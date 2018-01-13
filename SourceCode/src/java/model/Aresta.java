@@ -2,6 +2,10 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author garcez
+ */
 public class Aresta {
 
     private String id;
@@ -66,6 +70,16 @@ public class Aresta {
 
     public void setOrigem(No origem) {
         this.origem = origem;
+    }
+
+    public No vizinhos(String id) {
+        if (id.equals(this.getOrigem().getId())) {
+            return this.getDestino();
+        } else if (id.equals(this.getDestino().getId())) {
+            return this.getOrigem();
+        } else {
+            return null;
+        }
     }
 
     public No getDestino() {

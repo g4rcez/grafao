@@ -13,6 +13,10 @@ import model.Grafo;
 import model.WorkerXml;
 import utils.MiscOperations;
 
+/**
+ *
+ * @author garcez
+ */
 @WebServlet(urlPatterns = "/upload")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 50)
 public class UploadGrafo extends HttpServlet {
