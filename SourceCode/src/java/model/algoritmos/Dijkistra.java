@@ -3,6 +3,7 @@ package model.algoritmos;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import model.Aresta;
@@ -45,11 +46,12 @@ public class Dijkistra {
                 if (arestasAdjacentes.get(0).getOrigem().getId().equals(noSelecionado)) {
                     menorEstimativa = dijkstraListaEstimativas.get(arestasAdjacentes.get(0).getDestino().getId());
                 }
-
-                for (Aresta arestaAdjacente : arestasAdjacentes) {
+                for (Iterator<Aresta> it = arestasAdjacentes.iterator(); it.hasNext();) {
+                    Aresta arestaAdjacente = it.next();
                     if (arestaAdjacente.getOrigem().getId().equals(noSelecionado)) {
                         dijkstraListaPrecedentes.replace(arestaAdjacente.getDestino().getId(), noSelecionado);
-                        dijkstraListaEstimativas.replace(arestaAdjacente.getDestino().getId(),
+                        dijkstraListaEstimativas.replace(
+                                arestaAdjacente.getDestino().getId(),
                                 arestaAdjacente.getValor()
                                 + dijkstraListaEstimativas.get(noSelecionado));
                     }
@@ -81,7 +83,7 @@ public class Dijkistra {
     }
 
     public List<No> calcularDijkstra(No inicio, No destino) {
-        Map<String, String> listaPrecedentes = calcularDijkstra(inicio);
+        Map<String, String> listaPrecedentes = this.calcularDijkstra(inicio);
         List<No> caminho = new ArrayList<>();
         String noAnterior = destino.getId();
         do {

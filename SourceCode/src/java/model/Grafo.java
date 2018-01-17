@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -111,10 +113,7 @@ public class Grafo {
         this.nos.forEach((no) -> {
             int grau = 0;
             for (Aresta aresta : this.arestas) {
-                if (aresta.getDestino().getId().equals(no.getId())) {
-                    grau++;
-                }
-                if (aresta.getOrigem().getId().equals(no.getId())) {
+                if (aresta.getDestino().getId().equals(no.getId()) || aresta.getOrigem().getId().equals(no.getId())) {
                     grau++;
                 }
                 grausDosNos.put(no, grau);
@@ -194,7 +193,7 @@ public class Grafo {
             nosDoGrafo.put(no.getId(), i);
             i++;
         }
-        this.arestas.stream().map((aresta) -> {
+        this.arestas.stream().map((Aresta aresta) -> {
             matriz[nosDoGrafo.get(aresta.getOrigem().getId())][nosDoGrafo.get(aresta.getDestino().getId())] = 1;
             return aresta;
         }).forEachOrdered((aresta) -> {
@@ -359,17 +358,26 @@ public class Grafo {
         return tipoAresta;
     }
 
+    public boolean linkExists(String idA, String idB) {
+        No v = this.getNo(idA);
+        if (v != null && this.noExiste(idB)) {
+            for (Aresta a = v.primeiraAresta(); a != null; a = v.nextEdge(a.getId())) {
+                return (a.vizinhos(idA).getId() == null ? idB == null : a.vizinhos(idA).getId().equals(idB));
+            }
+        }
+        return false;
+    }
+
     public Map<String, List<String>> mapeamentoVerticesAdjacentes() {
-        Map<Integer, String> posicaoNosDoGrafo = new HashMap<Integer, String>();
+        Map<Integer, String> posicaoNosDoGrafo = new HashMap<>();
         int[][] matrizAdj = this.getMatrizAdjacencia();
         int i = 0, j;
         String nomeNo = null;
-        Map<String, List<String>> mapaVerticesAdj = new HashMap<String, List<String>>();
+        Map<String, List<String>> mapaVerticesAdj = new HashMap<>();
         List<String> nosAdj = null;
-
         for (No no : this.getNos()) {
             posicaoNosDoGrafo.put(i, no.getId());
-            i++;
+            i += 1;
         }
         i = 0;
         while (i < this.getNos().size()) {
@@ -383,7 +391,7 @@ public class Grafo {
             if (!nosAdj.isEmpty()) {
                 mapaVerticesAdj.put(posicaoNosDoGrafo.get(i), nosAdj);
             }
-            i++;
+            i += 1;
         }
         return mapaVerticesAdj;
     }
@@ -422,7 +430,7 @@ public class Grafo {
 
     public Map<String, List<No>> verticesIndependentes() {
         Set<No> gerarNosIndependentes = null;
-        Map<String, List<No>> nosIndependentes = new HashMap<String, List<No>>();
+        Map<String, List<No>> nosIndependentes = new HashMap<>();
         List<No> nosAdjacentes = null;
         List<No> listaNosIndependentes = null;
         Map<String, List<String>> verticesAdjacentes = this.mapeamentoVerticesAdjacentes();
@@ -430,7 +438,7 @@ public class Grafo {
         for (Map.Entry<String, List<String>> entry : verticesAdjacentes.entrySet()) {
             String verticeAtual = entry.getKey();
             List<String> listaVerticesAdjacentes = entry.getValue();
-            gerarNosIndependentes = new HashSet<No>();
+            gerarNosIndependentes = new HashSet<>();
             listaNosIndependentes = new ArrayList();
             nosAdjacentes = new ArrayList();
 
@@ -461,11 +469,11 @@ public class Grafo {
         List<String> nomeNosAdjacentes = new ArrayList();
 
         if (this.getTipo().equals("directed")) {
-            arestasDoNo.forEach((arestaAtual) -> {
-                nosAdjacentes.add(arestaAtual.getDestino());
-                /*if (no.getId().equals(arestaAtual.getOrigem().getId())) {
-                nosAdjacentes.add(arestaAtual.getOrigem());
-                }*/
+            arestasDoNo.forEach(new Consumer<Aresta>() {
+                @Override
+                public void accept(Aresta arestaAtual) {
+                    nosAdjacentes.add(arestaAtual.getDestino());
+                }
             });
         } else {
             arestasDoNo.stream().map((arestaAtual) -> {

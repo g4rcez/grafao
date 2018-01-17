@@ -55,6 +55,7 @@
               <li>Reduzir uma aresta ou vértice os torna planares</li>
               <li>K5 é o grafo não planar com menor número de vértices</li>
               <li>K3,3 é o grafo não planar com menor número de arestas</li>
+              <li>Teorema de Kuratowski</li>
             </ul>
           </section>
         </section>
@@ -62,7 +63,26 @@
         <section>
           <h3>Problema Clássico</h3>
           <p>Forneça os serviços para as casas sem que haja cruzamento de vias</p>
-          <img src='img/servico.png' alt=''>
+          <img src='img/servicos.png' alt=''>
+          <p>
+            O primeiro problema proposto sobre a planaridade de um grafo foi feito por Henry Dudeney, 1913. Conhecido
+            como “problema das três casas”.
+          </p>
+        </section>
+
+        <section>
+          <h3>O Teorema de Kuratowski</h3>
+          <ul>
+            <li>Um grafo com k3,3 ou k5 não pode ser um grafo planar</li>
+            <pre>
+              <code>
+                A - V + 2 = F
+                # V => Vértice
+                # A => Aresta
+                # F => Faces
+              </code>
+            </pre>
+          </ul>
         </section>
 
       </div>
@@ -137,49 +157,46 @@
           }
         },
         dependencies: [{
-            src: 'lib/js/classList.js',
-            condition: function () {
-              return !document.body.classList;
-            }
-          },
-          {
-            src: 'plugin/elapsed-time-bar/elapsed-time-bar.min.js' //Progress time bar
-          },
-          {
-            src: 'plugin/notes/notes.js',
-            async: true // Slide notes
-          },
-          {
-            src: 'plugin/highlight/highlight.js',
-            async: true,
-            callback: function () {
-              hljs.initHighlightingOnLoad();
-            }
-          },
-          {
-            src: 'plugin/zoom-js/zoom.js',
-            async: true
-          },
-          // { // Mouse click to next slide
-          //   src: 'js/mouse-click.js' 
-          // },
-          { // Modal plugin creator 
-            src: 'plugin/modal/modal.js'
-          },
-          {
-            src: 'plugin/title-footer/title-footer.js',
-            async: true,
-            callback: function () {
-              title_footer.initialize(title = "Awesome Footer", background = "transparent", hrefLink =
-                "https://github.com/vandalvnl/reveal.js");
-            }
-          },
-          {
-            src: 'plugin/chart/chart.min.js'
-          },
-          {
-            src: 'plugin/chart/csv2chart.js'
+          src: 'lib/js/classList.js',
+          condition: function () {
+            return !document.body.classList;
           }
+        },
+        {
+          src: 'plugin/elapsed-time-bar/elapsed-time-bar.min.js' //Progress time bar
+        },
+        {
+          src: 'plugin/notes/notes.js',
+          async: true // Slide notes
+        },
+        {
+          src: 'plugin/highlight/highlight.js',
+          async: true,
+          callback: function () {
+            hljs.initHighlightingOnLoad();
+          }
+        },
+        {
+          src: 'plugin/zoom-js/zoom.js',
+          async: true
+        },
+        {
+          src: 'plugin/modal/modal.js'
+        },
+        {
+          src: 'plugin/title-footer/title-footer.js',
+          async: true,
+          callback: function () {
+            title_footer.initialize(title = "Grafo Planar", background = "transparent", hrefLink =
+              "https://github.com/vandalvnl/reveal.js");
+          }
+        },
+        {
+          src: 'plugin/chart/chart.min.js'
+        },
+        {
+          src: 'plugin/chart/csv2chart.js'
+        }
         ],
       });
       Reveal.configure({

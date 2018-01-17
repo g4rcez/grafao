@@ -6,8 +6,8 @@ Disciplina de Grafos, professor: [davesmartins](https://github.com/davesmartins)
 ## Grupos
 
 - Allan Garcez - [@vandalvnl](https://github.com/vandalvnl)
-- Gabriel Beto - [@gabeto](https://github.com/gabeto)
-- João Rocha
+- Gabriel Beto (x_x)
+- João Rocha (x_x)
 - Artur Abrão
 
 ## Especificações
@@ -15,3 +15,10 @@ Disciplina de Grafos, professor: [davesmartins](https://github.com/davesmartins)
 > Criar um sistema para gereciamento de grafos, seja web ou desktop, independente da linguagem.
 
 O grupo optou por desenvolver em Java Web.
+
+## Grafo Planar
+
+A apresentação sobre grafo planar está na pasta "grafo-planar", para visualizar a apresentação
+basta abrir o arquivo main.html.
+
+Os algoritmos de grafos planares estão no diretório: "SourceCode/src/java/planaridade".

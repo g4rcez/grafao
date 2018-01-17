@@ -1,7 +1,0 @@
-<graph id="Novão" edgedefault="undirected" tipoAresta="true">
-  <node id="G"/>
-  <node id="H"/>
-  <edge id="Aresta 1" source="H" target="G" value="50"/>
-</graph>
-
-

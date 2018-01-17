@@ -1,11 +1,16 @@
 package model;
+
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  *
  * @author garcez
  */
 public class No {
+
+    private TreeMap<String, Aresta> edgeList;
 
     private String id;
 
@@ -28,5 +33,20 @@ public class No {
             }
         }
         return null;
+    }
+
+    public Aresta primeiraAresta() {
+        if (edgeList.isEmpty()) {
+            return null;
+        }
+        return edgeList.get(edgeList.firstKey());
+    }
+
+    public Aresta nextEdge(String id) {
+        if (!edgeList.containsKey(id) || (edgeList.lastKey() == null ? id == null : edgeList.lastKey().equals(id))) {
+            return null;
+        }
+        SortedMap<String, Aresta> map = edgeList.tailMap(id);
+        return edgeList.get(map.firstKey());
     }
 }

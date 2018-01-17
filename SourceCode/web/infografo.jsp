@@ -29,28 +29,30 @@
                                 <input type="submit" value="Informações do Grafo" class="button button-cyan" />
                             </form>
                             <div class="espacos"></div>
-                            <form action="${path}/dijkstra" method="post" class="form-inline">
-                                <input type="submit" value="Calcular Dijkstra" class="button button-blue" />
-                                <div class="form-group">
-                                    Nó de Origem:
-                                    <select name="noOrigem" class="form-control-static">
-                                        <c:forEach items="${grafo.nos}" var="no">
-                                            <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    Nó de Destino:
-                                    <select name="noDestino" class="form-control-static">
-                                        <option value="todosNos">Todos os nós</option>
-                                        <c:forEach items="${grafo.nos}" var="no">
-                                            <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </form>
                             <div class="espacos"></div>
                             <div class="espacos"></div>
+                            <c:if test="${grafo.tipoAresta}">
+                                <form action="${path}/dijkstra" method="post" class="form-inline">
+                                    <input type="submit" value="Calcular Dijkstra" class="button button-blue" />
+                                    <div class="form-group">
+                                        Nó de Origem:
+                                        <select name="noOrigem" class="form-control-static">
+                                            <c:forEach items="${grafo.nos}" var="no">
+                                                <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        Nó de Destino:
+                                        <select name="noDestino" class="form-control-static">
+                                            <option value="todosNos">Todos os nós</option>
+                                            <c:forEach items="${grafo.nos}" var="no">
+                                                <option value="<c:out value="${no.id}"></c:out>"><c:out value="${no.id}"></c:out></option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </form>
+                            </c:if>
                             <c:if test="${grafo.tipo == 'undirected' && grafo.tipoAresta}">
                                 <h2>Algoritmos de Grafo</h2>
                                 <form action="${path}/kruskal" method="post" class="form-inline">
@@ -85,7 +87,13 @@
                                     </c:forEach>
                                 </select>
                             </form>
-                        </c:if>
+                        </c:if><br>
+                        <form action="${path}/draw" method="post">
+                            <input type="submit" value="Desenhar grafo" class="btn btn-primary" />
+                        </form><br>
+                        <form action="${path}/planar" method="post">
+                            <input type="submit" value="Grafo planar" class="btn btn-primary" />
+                        </form>
                     </div>
                     <div class="col-lg-6 col-sm-6">
                         <h2>XML do Grafo</h2>

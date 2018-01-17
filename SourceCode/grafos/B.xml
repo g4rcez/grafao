@@ -1,0 +1,20 @@
+<graph id="B" edgedefault="directed" tipoAresta="false">
+  <node id="A"/>
+  <node id="B"/>
+  <node id="C"/>
+  <node id="D"/>
+  <edge id="A1" source="A" target="B">
+    <directed>false</directed>
+  </edge>
+  <edge id="A2" source="A" target="C">
+    <directed>false</directed>
+  </edge>
+  <edge id="A3" source="B" target="D">
+    <directed>false</directed>
+  </edge>
+  <edge id="A4" source="B" target="C">
+    <directed>false</directed>
+  </edge>
+</graph>
+
+

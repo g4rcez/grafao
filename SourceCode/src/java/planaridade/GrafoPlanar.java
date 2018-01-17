@@ -1,24 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package planaridade;
+
+import model.Grafo;
 
 /**
  *
  * @author garcez
  */
 public class GrafoPlanar {
-    
+
     /**
      *
      * @param first
      * @param second
      * @return
      */
-    public boolean isPlanar(boolean first, boolean second){
-        return ((first||second) == true); 
+    private static boolean isPlanar(boolean first, boolean second) {
+        return ((first || second) == true);
+    }
+
+    public static boolean planar(Grafo grafo) {
+        SubGrafoK5 k5 = new SubGrafoK5(grafo);
+        SubGrafoK3 k3x3 = new SubGrafoK3(grafo);
+        return isPlanar(k5.existeK5(), k3x3.existeK3x3());
     }
     
 }

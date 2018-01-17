@@ -1,0 +1,16 @@
+<graph id="Dikstra" edgedefault="undirected" tipoAresta="false">
+  <node id="A"/>
+  <node id="B"/>
+  <node id="C"/>
+  <edge id="A1" source="A" target="B">
+    <directed>false</directed>
+  </edge>
+  <edge id="A2" source="C" target="B">
+    <directed>false</directed>
+  </edge>
+  <edge id="A3" source="A" target="C">
+    <directed>false</directed>
+  </edge>
+</graph>
+
+

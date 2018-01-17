@@ -36,6 +36,16 @@ public class Aresta {
         this.setDirected(directed);
     }
 
+    public No vizinhos(String id) {
+        if (id == null ? this.getOrigem().getId() == null : id.equals(this.getOrigem().getId())) {
+            return this.getDestino();
+        } else if (id == null ? this.getDestino().getId() == null : id.equals(this.getDestino().getId())) {
+            return this.getOrigem();
+        } else {
+            return null;
+        }
+    }
+
     public boolean isDirected() {
         return directed;
     }
@@ -70,16 +80,6 @@ public class Aresta {
 
     public void setOrigem(No origem) {
         this.origem = origem;
-    }
-
-    public No vizinhos(String id) {
-        if (id.equals(this.getOrigem().getId())) {
-            return this.getDestino();
-        } else if (id.equals(this.getDestino().getId())) {
-            return this.getOrigem();
-        } else {
-            return null;
-        }
     }
 
     public No getDestino() {

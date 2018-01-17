@@ -6,22 +6,21 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Grafo;
-import model.algoritmos.Largura;
+import model.WorkerXml;
+import utils.MiscOperations;
 
 /**
  *
  * @author garcez
  */
-@WebServlet(name = "LarguraController", urlPatterns = {"/largura"})
-public class LarguraController extends HttpServlet {
+@WebServlet(name = "ResetGraph", urlPatterns = {"/reset"})
+public class ResetGraph extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,12 +33,8 @@ public class LarguraController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
-        String nomeNoRaiz = request.getParameter("noOrigem");
-        List<String> visitados = new ArrayList();
-        Largura largura = new Largura(grafo);
-        request.setAttribute("buscaProfundidade", largura.calculate(nomeNoRaiz, visitados));
-        request.getRequestDispatcher("/resultados.jsp").forward(request, response);
+        WorkerXml.clearWorkerXml();
+        response.sendRedirect(MiscOperations.newPathGenerator(request, ""));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

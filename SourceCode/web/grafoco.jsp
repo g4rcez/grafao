@@ -59,7 +59,11 @@
             <p>
                 <button id="reorganizar" class="btn btn-info" onclick="redraw();">Reorganizar</button><br><br>
             </p>
-            <p><a href="${path}/view" class="bnt">Voltar</a></p>
+            <p>
+                <c:if test="${planar}">O Grafo é planar</c:if>
+                <c:if test="${!planar}">O Grafo <strong>não</strong> é planar</c:if>
+                </p>
+                <p><a href="${path}/view" class="bnt">Voltar</a></p>
             <div class="row">
                 <div id="canvas"></div> 
             </div>
