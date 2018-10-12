@@ -1,0 +1,26 @@
+<graph id="grafo planar" edgedefault="undirected" tipoAresta="false">
+  <node id="N1"/>
+  <node id="N2"/>
+  <node id="N3"/>
+  <node id="N4"/>
+  <edge id="A1" source="N1" target="N2">
+    <directed>false</directed>
+  </edge>
+  <edge id="A2" source="N2" target="N3">
+    <directed>false</directed>
+  </edge>
+  <edge id="A3" source="N3" target="N4">
+    <directed>false</directed>
+  </edge>
+  <edge id="A4" source="N4" target="N2">
+    <directed>false</directed>
+  </edge>
+  <edge id="A5" source="N4" target="N1">
+    <directed>false</directed>
+  </edge>
+  <edge id="A6" source="N3" target="N1">
+    <directed>false</directed>
+  </edge>
+</graph>
+
+

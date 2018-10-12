@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="java.model">
+  <ClassDiagramComponents>
+    <Class name="Dijkistra" package="model.algoritmos" visibility="public" xPosition="1561.0" yPosition="1703.0">
+      <Fields>
+        <Field name="grafo" type="Grafo" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="calcularDijkstra" returnType="Map&lt;String, String&gt;" visibility="public">
+          <Argument type="No" name="inicio"/>
+        </Method>
+        <Method name="menorEstimativa" returnType="String" visibility="public">
+          <Argument type="Map&lt;String, Integer&gt;" name="listaEstimativas"/>
+          <Argument type="List&lt;String&gt;" name="listaVarridos"/>
+        </Method>
+        <Method name="calcularDijkstra" returnType="List&lt;No&gt;" visibility="public">
+          <Argument type="No" name="inicio"/>
+          <Argument type="No" name="destino"/>
+        </Method>
+        <Method name="arestasSaemNoAtual" returnType="List&lt;Aresta&gt;" visibility="public">
+          <Argument type="No" name="no"/>
+          <Argument type="List&lt;String&gt;" name="listaVarridos"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Kruskal" package="model.algoritmos" visibility="public" xPosition="438.0" yPosition="296.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="kruskal" returnType="Grafo" visibility="public">
+          <Argument type="Grafo" name="grafo"/>
+        </Method>
+        <Method name="getComponenteKruskal" returnType="int" visibility="public">
+          <Argument type="int[][]" name="matriz"/>
+          <Argument type="int" name="componente"/>
+        </Method>
+        <Method name="mergeComponents" returnType="int[][]" visibility="public">
+          <Argument type="int[][]" name="matriz"/>
+          <Argument type="int" name="componente_1"/>
+          <Argument type="int" name="componente_2"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Largura" package="model.algoritmos" visibility="public" xPosition="438.0" yPosition="1703.0">
+      <Fields>
+        <Field name="graph" type="Grafo" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="calculate" returnType="List&lt;String&gt;" visibility="public">
+          <Argument type="String" name="root"/>
+          <Argument type="List&lt;String&gt;" name="visitados"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Malgrange" package="model.algoritmos" visibility="public" xPosition="189.0" yPosition="1390.0">
+      <Fields>
+        <Field name="graph" type="Grafo" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="malgrangeWithTransitivoDireto" returnType="List&lt;String&gt;" visibility="public">
+          <Argument type="int" name="linha"/>
+          <Argument type="String" name="primeiroNo"/>
+          <Argument type="List&lt;String&gt;" name="visitados"/>
+          <Argument type="Map&lt;Integer, String&gt;" name="graphNodes"/>
+          <Argument type="int[][]" name="matrizAdjacencia"/>
+        </Method>
+        <Method name="malgrangeWithTransitivoInverso" returnType="List&lt;String&gt;" visibility="public">
+          <Argument type="int" name="linha"/>
+          <Argument type="String" name="primeiroNo"/>
+          <Argument type="List&lt;String&gt;" name="nosVisitados"/>
+          <Argument type="Map&lt;Integer, String&gt;" name="nosDoGrafo"/>
+          <Argument type="int[][]" name="matrizAdjacencia"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Prim" package="model.algoritmos" visibility="public" xPosition="1810.0" yPosition="1390.0">
+      <Fields>
+        <Field name="grafo" type="Grafo" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="prim" returnType="Grafo" visibility="public">
+          <Argument type="Grafo" name="grafo"/>
+        </Method>
+        <Method name="getArestaPrim" returnType="Aresta" visibility="public">
+          <Argument type="List&lt;String&gt;" name="verticesOriginal"/>
+          <Argument type="List&lt;String&gt;" name="verticesArvore"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Profundidade" package="model.algoritmos" visibility="public" xPosition="1200.0" yPosition="1877.0">
+      <Fields>
+        <Field name="graph" type="Grafo" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="calculate" returnType="List&lt;String&gt;" visibility="public">
+          <Argument type="String" name="root"/>
+          <Argument type="List&lt;String&gt;" name="visitados"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Aresta" package="model" visibility="public" xPosition="189.0" yPosition="609.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="directed" type="boolean" visibility="private"/>
+        <Field name="origem" type="No" visibility="private"/>
+        <Field name="destino" type="No" visibility="private"/>
+        <Field name="valor" type="Integer" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="vizinhos" returnType="No" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+        <Method name="getArestaById" returnType="Aresta" visibility="public" isStatic="true">
+          <Argument type="String" name="id"/>
+          <Argument type="ArrayList&lt;Aresta&gt;" name="arestas"/>
+        </Method>
+        <Method name="getNoAdjacente" returnType="No" visibility="public">
+          <Argument type="No" name="no"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ArestaComparator" package="model" visibility="public" xPosition="799.0" yPosition="122.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="compare" returnType="int" visibility="public">
+          <Argument type="Aresta" name="o1"/>
+          <Argument type="Aresta" name="o2"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ConversorNo" package="model" visibility="public" xPosition="1200.0" yPosition="122.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="toString" returnType="String" visibility="public">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="fromString" returnType="Object" visibility="public">
+          <Argument type="String" name="string"/>
+        </Method>
+        <Method name="canConvert" returnType="boolean" visibility="public">
+          <Argument type="Class" name="type"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Grafo" package="model" visibility="public" xPosition="100.0" yPosition="1000.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="tipo" type="String" visibility="private"/>
+        <Field name="tipoAresta" type="boolean" visibility="private"/>
+        <Field name="nos" type="ArrayList&lt;No&gt;" visibility="private"/>
+        <Field name="arestas" type="ArrayList&lt;Aresta&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="adicionarAresta" returnType="void" visibility="public">
+          <Argument type="No" name="origem"/>
+          <Argument type="No" name="destino"/>
+        </Method>
+        <Method name="adicionarAresta" returnType="void" visibility="public">
+          <Argument type="Aresta" name="aresta"/>
+        </Method>
+        <Method name="adicionaNos" returnType="void" visibility="public">
+          <Argument type="No" name="no"/>
+        </Method>
+        <Method name="noExiste" returnType="boolean" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+        <Method name="getGrausDeEmissao" returnType="Map&lt;No, Integer&gt;" visibility="public"/>
+        <Method name="getGrausDeRecepcao" returnType="Map&lt;No, Integer&gt;" visibility="public"/>
+        <Method name="isAdjacente" returnType="boolean" visibility="public">
+          <Argument type="No" name="no1"/>
+          <Argument type="No" name="no2"/>
+        </Method>
+        <Method name="getArestasDoNoAtual" returnType="List&lt;Aresta&gt;" visibility="public">
+          <Argument type="String" name="no"/>
+        </Method>
+        <Method name="getMatrizAdjacencia" returnType="int[][]" visibility="public"/>
+        <Method name="getMatrizIncidencia" returnType="int[][]" visibility="public"/>
+        <Method name="getMapaArestasAdjacentes" returnType="Map&lt;String, List&lt;String&gt;&gt;" visibility="public"/>
+        <Method name="nodePositionInMatrix" returnType="Map&lt;Integer, String&gt;" visibility="public"/>
+        <Method name="isMultigrafo" returnType="boolean" visibility="public"/>
+        <Method name="isCompleto" returnType="Boolean" visibility="public"/>
+        <Method name="getNo" returnType="No" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+        <Method name="getNosSucessores" returnType="Map&lt;String, List&lt;String&gt;&gt;" visibility="public"/>
+        <Method name="getNosSucessores" returnType="List&lt;String&gt;" visibility="public">
+          <Argument type="No" name="no"/>
+        </Method>
+        <Method name="getNosAntecessores" returnType="List&lt;String&gt;" visibility="public">
+          <Argument type="No" name="no"/>
+        </Method>
+        <Method name="getNosAntecessores" returnType="Map&lt;String, List&lt;String&gt;&gt;" visibility="public"/>
+        <Method name="getTipoAresta" returnType="boolean" visibility="public"/>
+        <Method name="linkExists" returnType="boolean" visibility="public">
+          <Argument type="String" name="idA"/>
+          <Argument type="String" name="idB"/>
+        </Method>
+        <Method name="mapeamentoVerticesAdjacentes" returnType="Map&lt;String, List&lt;String&gt;&gt;" visibility="public"/>
+        <Method name="getGrauNo" returnType="int" visibility="public">
+          <Argument type="No" name="no"/>
+        </Method>
+        <Method name="isRegular" returnType="Boolean" visibility="public"/>
+        <Method name="isFonte" returnType="boolean" visibility="public">
+          <Argument type="No" name="no"/>
+        </Method>
+        <Method name="verticesIndependentes" returnType="Map&lt;String, List&lt;No&gt;&gt;" visibility="public"/>
+        <Method name="possuiElementoRepetido" returnType="boolean" visibility="public">
+          <Argument type="List&lt;String&gt;" name="nosVisitados"/>
+        </Method>
+        <Method name="gerarVerticesAdjacentes" returnType="List&lt;String&gt;" visibility="public">
+          <Argument type="String" name="no"/>
+        </Method>
+        <Method name="adicionarAresta" returnType="void" visibility="public">
+          <Argument type="No" name="origem"/>
+          <Argument type="No" name="destino"/>
+          <Argument type="int" name="valor"/>
+        </Method>
+        <Method name="getOrdem" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="No" package="model" visibility="public" xPosition="799.0" yPosition="1877.0">
+      <Fields>
+        <Field name="edgeList" type="TreeMap&lt;String, Aresta&gt;" visibility="private"/>
+        <Field name="id" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="id"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="String" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+        <Method name="getNoById" returnType="No" visibility="public" isStatic="true">
+          <Argument type="String" name="id"/>
+          <Argument type="List&lt;No&gt;" name="nos"/>
+        </Method>
+        <Method name="primeiraAresta" returnType="Aresta" visibility="public"/>
+        <Method name="nextEdge" returnType="Aresta" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NosComparator" package="model" visibility="public" xPosition="1900.0" yPosition="1000.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="compare" returnType="int" visibility="public">
+          <Argument type="No" name="no1"/>
+          <Argument type="No" name="no2"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="WorkerXml" package="model" visibility="public" xPosition="1561.0" yPosition="296.0">
+      <Fields>
+        <Field name="workerXml" type="XStream" visibility="private" isStatic="true"/>
+        <Field name="grafo" type="Grafo" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getGrafo" returnType="Grafo" visibility="public" isStatic="true"/>
+        <Method name="setGrafo" returnType="void" visibility="public" isStatic="true">
+          <Argument type="Grafo" name="graph"/>
+        </Method>
+        <Method name="constructXml" returnType="void" visibility="public" isStatic="true"/>
+        <Method name="saveFileForGrafo" returnType="boolean" visibility="public" isStatic="true">
+          <Argument type="Grafo" name="grafo"/>
+          <Argument type="String" name="pathDoArquivo"/>
+        </Method>
+        <Method name="writeGrafoInXmlString" returnType="String" visibility="public" isStatic="true">
+          <Argument type="Grafo" name="grafo"/>
+        </Method>
+        <Method name="clearWorkerXml" returnType="void" visibility="public" isStatic="true"/>
+        <Method name="grafoFromFile" returnType="Grafo" visibility="public" isStatic="true">
+          <Argument type="File" name="arquivo"/>
+        </Method>
+        <Method name="grafoToHtmlReadable" returnType="String" visibility="public" isStatic="true">
+          <Argument type="Grafo" name="grafo"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="TreeAlgos" package="model.algoritmos" visibility="public" xPosition="1810.0" yPosition="609.0">
+      <Methods>
+        <Method name="calculate" returnType="List&lt;String&gt;" visibility="public">
+          <Argument type="String" name="root"/>
+          <Argument type="List&lt;String&gt;" name="visitados"/>
+        </Method>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation source="model.NosComparator" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="model.algoritmos.Profundidade" target="model.algoritmos.TreeAlgos"/>
+    <UseRelation source="model.WorkerXml" target="model.Grafo" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.Grafo" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="destino" source="model.Aresta" target="model.No" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.Aresta" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.algoritmos.Dijkistra" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="graph" source="model.algoritmos.Profundidade" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="grafo" source="model.WorkerXml" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="graph" source="model.algoritmos.Malgrange" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.algoritmos.Prim" target="model.Grafo" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.No" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="model.algoritmos.Largura" target="model.algoritmos.TreeAlgos"/>
+    <UseRelation source="model.No" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="origem" source="model.Aresta" target="model.No" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="edgeList" source="model.No" target="model.Aresta" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="TreeMap&lt;String, Aresta&gt;"/>
+    <UseRelation source="model.algoritmos.Kruskal" target="model.Grafo" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="nos" source="model.Grafo" target="model.No" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;No&gt;"/>
+    <HasRelation name="grafo" source="model.algoritmos.Dijkistra" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="graph" source="model.algoritmos.Largura" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="arestas" source="model.Grafo" target="model.Aresta" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Aresta&gt;"/>
+    <HasRelation name="grafo" source="model.algoritmos.Prim" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.ArestaComparator" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.Grafo" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.algoritmos.Prim" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.Aresta" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

@@ -7,6 +7,8 @@ import java.util.ArrayList;
  * @author garcez
  */
 public class Aresta {
+    
+    private Boolean conexo;
 
     private String id;
     private boolean directed;
@@ -27,7 +29,7 @@ public class Aresta {
         this.setOrigem(origem);
         this.setValor(valor);
     }
-
+    
     public Aresta(String id, No origem, No destino, Integer valor, boolean directed) {
         this.setId(id);
         this.setDestino(destino);

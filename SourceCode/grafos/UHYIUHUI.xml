@@ -1,0 +1,10 @@
+<graph id="UHYIUHUI" edgedefault="undirected" tipoAresta="false">
+  <node id="NO1"/>
+  <node id="NO2"/>
+  <node id=""/>
+  <edge id="A1" source="NO1" target="NO2">
+    <directed>false</directed>
+  </edge>
+</graph>
+
+

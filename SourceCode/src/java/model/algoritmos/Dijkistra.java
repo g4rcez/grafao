@@ -37,6 +37,11 @@ public class Dijkistra {
                 dijkstraListaPrecedentes.put(no.getId(), no.getId());
             } else {
                 dijkstraListaEstimativas.put(no.getId(), Integer.MAX_VALUE);
+                if (dijkstraListaEstimativas.get(no.getId()) != Integer.MAX_VALUE) {
+                    noSelecionado = no.getId();
+                    dijkstraListaEstimativas.put(no.getId(), 0);
+                    dijkstraListaPrecedentes.put(no.getId(), no.getId());
+                }
             }
         }
         while (listaVarridos.size() != grafo.getNos().size()) {
