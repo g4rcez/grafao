@@ -8,10 +8,10 @@ import java.util.Comparator;
  * @author garcez
  */
 
-public class NosComparator implements Comparator<No> {
+public class NosComparator implements Comparator<INo> {
 
     @Override
-    public int compare(No no1, No no2) {
+    public int compare(INo no1, INo no2) {
         return no1.getId().compareToIgnoreCase(no2.getId());
     }
 }

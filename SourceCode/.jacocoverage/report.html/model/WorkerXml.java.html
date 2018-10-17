@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>WorkerXml.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;SourceCode&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">WorkerXml.java</span></div><h1>WorkerXml.java</h1><pre class="source lang-java linenums">package model;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+/**
+ *
+ * @author garcez
+ */
+<span class="nc" id="L16">public class WorkerXml {</span>
+
+<span class="nc" id="L18">    private static XStream workerXml = new XStream(new DomDriver(&quot;UTF-8&quot;, new XmlFriendlyReplacer(&quot;__&quot;, &quot;_&quot;)));</span>
+<span class="nc" id="L19">    private static Grafo grafo = null;</span>
+
+    /**
+     * Constrói o XML de acordo com o padrão do GraphML
+     *
+     * @return
+     */
+    public static Grafo getGrafo() {
+<span class="nc" id="L27">        return WorkerXml.grafo;</span>
+    }
+
+    public static void setGrafo(Grafo graph) {
+<span class="nc" id="L31">        WorkerXml.grafo = graph;</span>
+<span class="nc" id="L32">    }</span>
+
+    public static void constructXml() {
+<span class="nc" id="L35">        workerXml.alias(&quot;graph&quot;, Grafo.class);</span>
+<span class="nc" id="L36">        workerXml.useAttributeFor(Grafo.class, &quot;tipo&quot;);</span>
+<span class="nc" id="L37">        workerXml.useAttributeFor(Grafo.class, &quot;tipoAresta&quot;);</span>
+<span class="nc" id="L38">        workerXml.useAttributeFor(Grafo.class, &quot;id&quot;);</span>
+<span class="nc" id="L39">        workerXml.aliasField(&quot;edgedefault&quot;, Grafo.class, &quot;tipo&quot;);</span>
+<span class="nc" id="L40">        workerXml.alias(&quot;node&quot;, No.class);</span>
+<span class="nc" id="L41">        workerXml.alias(&quot;edge&quot;, Aresta.class);</span>
+<span class="nc" id="L42">        workerXml.addImplicitCollection(Grafo.class, &quot;nos&quot;, No.class);</span>
+<span class="nc" id="L43">        workerXml.addImplicitCollection(Grafo.class, &quot;arestas&quot;, Aresta.class);</span>
+<span class="nc" id="L44">        workerXml.useAttributeFor(No.class, &quot;id&quot;);</span>
+<span class="nc" id="L45">        workerXml.useAttributeFor(Aresta.class, &quot;id&quot;);</span>
+<span class="nc" id="L46">        workerXml.useAttributeFor(Aresta.class, &quot;origem&quot;);</span>
+<span class="nc" id="L47">        workerXml.useAttributeFor(Aresta.class, &quot;destino&quot;);</span>
+<span class="nc" id="L48">        workerXml.useAttributeFor(Aresta.class, &quot;valor&quot;);</span>
+<span class="nc" id="L49">        workerXml.registerLocalConverter(Aresta.class, &quot;origem&quot;, new ConversorNo());</span>
+<span class="nc" id="L50">        workerXml.registerLocalConverter(Aresta.class, &quot;destino&quot;, new ConversorNo());</span>
+<span class="nc" id="L51">        workerXml.aliasField(&quot;source&quot;, Aresta.class, &quot;origem&quot;);</span>
+<span class="nc" id="L52">        workerXml.aliasField(&quot;target&quot;, Aresta.class, &quot;destino&quot;);</span>
+<span class="nc" id="L53">        workerXml.aliasField(&quot;value&quot;, Aresta.class, &quot;valor&quot;);</span>
+<span class="nc" id="L54">    }</span>
+
+    /**
+     * Salvar o grafo em um arquivo determinado pelo usuário
+     *
+     * @param grafo
+     * @param pathDoArquivo
+     * @return
+     */
+    public static boolean saveFileForGrafo(Grafo grafo, String pathDoArquivo) {
+<span class="nc" id="L64">        constructXml();</span>
+        try {
+<span class="nc" id="L66">            File arquivo = new File(pathDoArquivo);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            if (!arquivo.exists()) {</span>
+<span class="nc" id="L68">                arquivo.createNewFile();</span>
+<span class="nc" id="L69">                FileWriter writer = new FileWriter(arquivo, true);</span>
+<span class="nc" id="L70">                writer.write(WorkerXml.writeGrafoInXmlString(grafo) + &quot;\n\r\n\r&quot;);</span>
+<span class="nc" id="L71">                writer.flush();</span>
+<span class="nc" id="L72">                setGrafo(grafo);</span>
+<span class="nc" id="L73">                return true;</span>
+            }
+<span class="nc" id="L75">        } catch (IOException error) {</span>
+<span class="nc" id="L76">            System.err.println(&quot;Erro ao abrir arquivo!&quot; + error);</span>
+<span class="nc" id="L77">        }</span>
+<span class="nc" id="L78">        return false;</span>
+    }
+
+    /**
+     *
+     * @param grafo -&gt; Grafo
+     * @return xml -&gt; String
+     */
+    public static String writeGrafoInXmlString(Grafo grafo) {
+        try {
+<span class="nc" id="L88">            constructXml();</span>
+<span class="nc" id="L89">            setGrafo(grafo);</span>
+<span class="nc" id="L90">            return workerXml.toXML(grafo);</span>
+<span class="nc" id="L91">        } catch (Exception error) {</span>
+<span class="nc" id="L92">            return error.getMessage();</span>
+        }
+    }
+
+    /**
+     * Esta função irá limpar todos os dados do WorkerXML para que possam ser
+     * criados novos grafos
+     */
+    public static void clearWorkerXml() {
+<span class="nc" id="L101">        workerXml = new XStream(new DomDriver());</span>
+<span class="nc" id="L102">    }</span>
+
+    public static Grafo grafoFromFile(File arquivo) throws IOException {
+<span class="nc" id="L105">        constructXml();</span>
+<span class="nc" id="L106">        Grafo grafo = null;</span>
+<span class="nc" id="L107">        String grafoString = &quot;&quot;;</span>
+        try {
+<span class="nc" id="L109">            try (FileReader arq = new FileReader(arquivo.getAbsoluteFile())) {</span>
+<span class="nc" id="L110">                BufferedReader lerArq = new BufferedReader(arq);</span>
+<span class="nc" id="L111">                String linha = lerArq.readLine();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">                while (linha != null) {</span>
+<span class="nc" id="L113">                    grafoString += linha;</span>
+<span class="nc" id="L114">                    linha = lerArq.readLine();</span>
+                }
+<span class="nc" id="L116">                arq.close();</span>
+<span class="nc" id="L117">                return (Grafo) workerXml.fromXML(grafoString);</span>
+<span class="nc bnc" id="L118" title="All 8 branches missed.">            }</span>
+<span class="nc" id="L119">        } catch (IOException exception) {</span>
+<span class="nc" id="L120">            System.out.println(exception.getMessage());</span>
+        }
+<span class="nc" id="L122">        setGrafo(grafo);</span>
+<span class="nc" id="L123">        return grafo;</span>
+    }
+    
+    public static String grafoToHtmlReadable(Grafo grafo){
+<span class="nc" id="L127">        return writeGrafoInXmlString(grafo).replaceAll(&quot;&lt;&quot;, &quot;&amp;lt;&quot;).replaceAll(&quot;&gt;&quot;, &quot;&amp;gt;&lt;br&gt;&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

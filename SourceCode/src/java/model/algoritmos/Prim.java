@@ -7,6 +7,7 @@ import java.util.List;
 import model.Aresta;
 import model.ArestaComparator;
 import model.Grafo;
+import model.INo;
 import model.No;
 
 /**
@@ -33,11 +34,11 @@ public class Prim {
             subGrafo.adicionarAresta(aresta);
             verticesDoSubGrafo.add(aresta.getOrigem().getId());
         }
-        List<No> nosDoSubGrafo = new ArrayList<>();
+        List<INo> nosDoSubGrafo = new ArrayList<>();
         verticesDoSubGrafo.forEach((vertice) -> {
             nosDoSubGrafo.add(new No(vertice));
         });
-        subGrafo.setNos((ArrayList<No>) nosDoSubGrafo);
+        subGrafo.setNos((ArrayList<INo>) nosDoSubGrafo);
         return subGrafo;
     }
     

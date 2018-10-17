@@ -12,8 +12,8 @@ public class Aresta {
 
     private String id;
     private boolean directed;
-    private No origem;
-    private No destino;
+    private INo origem;
+    private INo destino;
     private Integer valor;
 
     /**
@@ -23,14 +23,15 @@ public class Aresta {
      * @param destino
      * @param valor
      */
-    public Aresta(String id, No origem, No destino, Integer valor) {
+    public Aresta(String id, INo origem, INo destino, Integer valor) {
         this.setId(id);
         this.setDestino(destino);
         this.setOrigem(origem);
         this.setValor(valor);
     }
+   
     
-    public Aresta(String id, No origem, No destino, Integer valor, boolean directed) {
+    public Aresta(String id, INo origem, INo destino, Integer valor, boolean directed) {
         this.setId(id);
         this.setDestino(destino);
         this.setOrigem(origem);
@@ -38,7 +39,7 @@ public class Aresta {
         this.setDirected(directed);
     }
 
-    public No vizinhos(String id) {
+    public INo vizinhos(String id) {
         if (id == null ? this.getOrigem().getId() == null : id.equals(this.getOrigem().getId())) {
             return this.getDestino();
         } else if (id == null ? this.getDestino().getId() == null : id.equals(this.getDestino().getId())) {
@@ -62,7 +63,7 @@ public class Aresta {
      * @param origem
      * @param destino
      */
-    public Aresta(String id, No origem, No destino) {
+    public Aresta(String id, INo origem, INo destino) {
         this.setId(id);
         this.setDestino(destino);
         this.setOrigem(origem);
@@ -76,19 +77,19 @@ public class Aresta {
         this.id = id;
     }
 
-    public No getOrigem() {
+    public INo getOrigem() {
         return origem;
     }
 
-    public void setOrigem(No origem) {
+    public void setOrigem(INo origem) {
         this.origem = origem;
     }
 
-    public No getDestino() {
+    public INo getDestino() {
         return destino;
     }
 
-    public void setDestino(No destino) {
+    public void setDestino(INo destino) {
         this.destino = destino;
     }
 
@@ -115,7 +116,7 @@ public class Aresta {
         return null;
     }
 
-    public No getNoAdjacente(No no) {
+    public INo getNoAdjacente(INo no) {
         if (no.getId().equals(this.getDestino().getId())) {
             return this.getOrigem();
         }

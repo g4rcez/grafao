@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MiscOperations.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;SourceCode&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">utils</a> &gt; <span class="el_source">MiscOperations.java</span></div><h1>MiscOperations.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package utils;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
+import model.Grafo;
+
+/**
+ *
+ * @author garcez
+ */
+<span class="nc" id="L17">public class MiscOperations {</span>
+
+<span class="nc" id="L19">    public static String pathFiles = &quot;&quot;;</span>
+<span class="nc" id="L20">    public static String graph = &quot;&quot;;</span>
+
+    public static ArrayList&lt;Integer&gt; toInt(String valorArestasString[]) {
+<span class="nc" id="L23">        ArrayList&lt;Integer&gt; lista = new ArrayList&lt;&gt;();</span>
+        int valorInt;
+<span class="nc bnc" id="L25" title="All 2 branches missed.">        for (String valor : valorArestasString) {</span>
+<span class="nc" id="L26">            valorInt = Integer.parseInt(valor);</span>
+<span class="nc" id="L27">            lista.add(valorInt);</span>
+        }
+<span class="nc" id="L29">        return lista;</span>
+    }
+
+    public static String newPathGenerator(HttpServletRequest request, String newPath) throws IOException {
+<span class="nc" id="L33">        return request.getScheme() + &quot;://&quot; + request.getServerName() + &quot;:&quot; + request.getServerPort() + request.getContextPath() + &quot;/&quot; + newPath;</span>
+    }
+
+    public static String getPathFiles() {
+<span class="nc" id="L37">        return pathFiles;</span>
+    }
+
+    public static void setPathFiles(String pathFiles) {
+<span class="nc" id="L41">        MiscOperations.pathFiles = pathFiles;</span>
+<span class="nc" id="L42">    }</span>
+
+    public static String imagesPath(Grafo grafo) {
+<span class="nc" id="L45">        return MiscOperations.pathFiles + grafo.getId().replace(&quot; &quot;, &quot;&quot;) + &quot;.xml&quot;;</span>
+    }
+
+    public static String getGraph() {
+<span class="nc" id="L49">        return graph;</span>
+    }
+
+    public static void setGraph(String graph) {
+<span class="nc" id="L53">        MiscOperations.graph = graph;</span>
+<span class="nc" id="L54">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

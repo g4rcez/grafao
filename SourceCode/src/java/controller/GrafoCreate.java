@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Aresta;
 import model.Grafo;
+import model.INo;
 import model.No;
 import model.WorkerXml;
 import utils.MiscOperations;
@@ -47,7 +48,7 @@ public class GrafoCreate extends HttpServlet {
         String valorado = request.getParameter("valorado");
         String id = request.getParameter("nomeDoGrafo");
         String arestas[] = request.getParameterValues("arestas");
-        ArrayList<No> listaNos = new ArrayList();
+        ArrayList<INo> listaNos = new ArrayList();
         ArrayList<Aresta> listaArestas = new ArrayList();
         No ponto = null;
         String no1 = null;

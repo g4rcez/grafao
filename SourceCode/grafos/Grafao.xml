@@ -1,0 +1,16 @@
+<graph id="grafao" edgedefault="undirected" tipoAresta="false">
+  <node id="A"/>
+  <node id="B"/>
+  <node id="C"/>
+  <edge id="A1" source="A" target="A">
+    <directed>false</directed>
+  </edge>
+  <edge id="A2" source="B" target="B">
+    <directed>false</directed>
+  </edge>
+  <edge id="A3" source="C" target="C">
+    <directed>false</directed>
+  </edge>
+</graph>
+
+

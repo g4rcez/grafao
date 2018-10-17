@@ -8,14 +8,17 @@ import java.util.TreeMap;
  *
  * @author garcez
  */
-public class No {
+public class No implements INo {
 
     private TreeMap<String, Aresta> edgeList;
-
     private String id;
 
     public No(String id) {
         this.id = id;
+    }
+
+    public void setEdgeList(TreeMap<String, Aresta> edgeList) {
+        this.edgeList = edgeList;
     }
 
     public String getId() {
@@ -26,8 +29,8 @@ public class No {
         this.id = id;
     }
 
-    public static No getNoById(String id, List<No> nos) {
-        for (No no : nos) {
+    public static INo getNoById(String id, List<INo> nos) {
+        for (INo no : nos) {
             if (no.getId().equals(id)) {
                 return no;
             }
@@ -43,6 +46,7 @@ public class No {
     }
 
     public Aresta nextEdge(String id) {
+        
         if (!edgeList.containsKey(id) || (edgeList.lastKey() == null ? id == null : edgeList.lastKey().equals(id))) {
             return null;
         }

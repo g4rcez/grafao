@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SubGrafoK5.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;SourceCode&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">planaridade</a> &gt; <span class="el_source">SubGrafoK5.java</span></div><h1>SubGrafoK5.java</h1><pre class="source lang-java linenums">package planaridade;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import model.Aresta;
+import model.Grafo;
+import model.INo;
+import model.No;
+
+/**
+ *
+ * @author garcez
+ */
+public class SubGrafoK5 {
+
+    private Grafo graph;
+
+    public Grafo getGraph() {
+<span class="nc" id="L20">        return graph;</span>
+    }
+
+    public void setGraph(Grafo graph) {
+<span class="nc" id="L24">        this.graph = graph;</span>
+<span class="nc" id="L25">    }</span>
+
+<span class="nc" id="L27">    public SubGrafoK5(Grafo graph) {</span>
+<span class="nc" id="L28">        this.setGraph(graph);</span>
+<span class="nc" id="L29">    }</span>
+
+    public Boolean existeK5() {
+<span class="nc" id="L32">        List&lt;INo&gt; todosOsNos = this.graph.getNos();</span>
+<span class="nc" id="L33">        List&lt;Aresta&gt; edgeList = this.graph.getArestas();</span>
+<span class="nc" id="L34">        List&lt;List&lt;INo&gt;&gt; k2List = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L35">        List&lt;List&lt;INo&gt;&gt; k3List = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L36">        List&lt;List&lt;INo&gt;&gt; k4List = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L37">        List&lt;List&lt;INo&gt;&gt; k5List = new ArrayList&lt;&gt;();</span>
+
+        /*
+         * Preenche a lista k2
+         */
+<span class="nc" id="L42">        edgeList.forEach((Aresta edge) -&gt; {</span>
+<span class="nc" id="L43">            List&lt;INo&gt; k2Aux = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L44" title="All 6 branches missed.">            if (edge.getOrigem().getId() == null ? edge.getDestino().getId() != null : !edge.getOrigem().getId().equals(edge.getDestino().getId())) {</span>
+<span class="nc" id="L45">                k2Aux.add(edge.getOrigem());</span>
+<span class="nc" id="L46">                k2Aux.add(edge.getDestino());</span>
+<span class="nc" id="L47">                k2List.add(k2Aux);</span>
+            }
+<span class="nc" id="L49">        });</span>
+
+<span class="nc" id="L51">        k4List.forEach(new Consumer&lt;List&lt;INo&gt;&gt;() {</span>
+            @Override
+            public void accept(List&lt;INo&gt; k4Aux) {
+<span class="nc" id="L54">                graph.getNos().stream().filter((INo vertexAux) -&gt; {</span>
+<span class="nc bnc" id="L55" title="All 8 branches missed.">                    return (!k4Aux.get(0).getId().equals(vertexAux.getId())) &amp;&amp; (k4Aux.get(1).getId() == null ? vertexAux.getId() != null : !k4Aux.get(1).getId().equals(vertexAux.getId()))</span>
+<span class="nc bnc" id="L56" title="All 12 branches missed.">                            &amp;&amp; (k4Aux.get(2).getId() == null ? vertexAux.getId() != null : !k4Aux.get(2).getId().equals(vertexAux.getId())) &amp;&amp; (k4Aux.get(3).getId() == null ? vertexAux.getId() != null : !k4Aux.get(3).getId().equals(vertexAux.getId()));</span>
+<span class="nc bnc" id="L57" title="All 8 branches missed.">                }).filter((INo vertexAux) -&gt; (graph.linkExists(k4Aux.get(0).getId(), vertexAux.getId()) == true) &amp;&amp; (graph.linkExists(k4Aux.get(1).getId(), vertexAux.getId()) == true) &amp;&amp; (graph.linkExists(k4Aux.get(2).getId(), vertexAux.getId()) == true) &amp;&amp; (graph.linkExists(k4Aux.get(3).getId(), vertexAux.getId()) == true)).map((INo vertexAux) -&gt; {</span>
+<span class="nc" id="L58">                    List&lt;INo&gt; k5Aux = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L59">                    k5Aux.add(k4Aux.get(0));</span>
+<span class="nc" id="L60">                    k5Aux.add(k4Aux.get(1));</span>
+<span class="nc" id="L61">                    k5Aux.add(k4Aux.get(2));</span>
+<span class="nc" id="L62">                    k5Aux.add(k4Aux.get(3));</span>
+<span class="nc" id="L63">                    k5Aux.add(vertexAux);</span>
+<span class="nc" id="L64">                    return k5Aux;</span>
+<span class="nc" id="L65">                }).forEachOrdered((k5Aux) -&gt; {</span>
+<span class="nc" id="L66">                    k5List.add(k5Aux);</span>
+<span class="nc" id="L67">                });</span>
+<span class="nc" id="L68">            }</span>
+        });
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        for (List&lt;INo&gt; k4Aux : k4List) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            for (INo vertexAux : todosOsNos) {</span>
+<span class="nc bnc" id="L73" title="All 4 branches missed.">                if ((k4Aux.get(0).getId() != vertexAux.getId()) &amp;&amp; (k4Aux.get(1).getId() != vertexAux.getId())</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">                        &amp;&amp; (k4Aux.get(2).getId() != vertexAux.getId()) &amp;&amp; (k4Aux.get(3).getId() != vertexAux.getId())) {</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                    if ((this.graph.linkExists(k4Aux.get(0).getId(), vertexAux.getId()) == true)</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">                            &amp;&amp; (this.graph.linkExists(k4Aux.get(1).getId(), vertexAux.getId()) == true)</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">                            &amp;&amp; (this.graph.linkExists(k4Aux.get(2).getId(), vertexAux.getId()) == true)</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                            &amp;&amp; (this.graph.linkExists(k4Aux.get(3).getId(), vertexAux.getId()) == true)) {</span>
+<span class="nc" id="L79">                        List&lt;INo&gt; k5Aux = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L80">                        k5Aux.add(k4Aux.get(0));</span>
+<span class="nc" id="L81">                        k5Aux.add(k4Aux.get(1));</span>
+<span class="nc" id="L82">                        k5Aux.add(k4Aux.get(2));</span>
+<span class="nc" id="L83">                        k5Aux.add(k4Aux.get(3));</span>
+<span class="nc" id="L84">                        k5Aux.add(vertexAux);</span>
+<span class="nc" id="L85">                        k5List.add(k5Aux);</span>
+                    }
+                }
+<span class="nc" id="L88">            }</span>
+<span class="nc" id="L89">        }</span>
+
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        return !k5List.isEmpty();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

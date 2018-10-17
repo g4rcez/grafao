@@ -20,7 +20,7 @@ public class Grafo {
     private String id;
     private String tipo;
     private boolean tipoAresta;
-    private ArrayList<No> nos;
+    private ArrayList<INo> nos;
     private ArrayList<Aresta> arestas;
 
     /**
@@ -31,7 +31,7 @@ public class Grafo {
      * @param nos
      * @param arestas
      */
-    public Grafo(String id, String tipo, boolean tipoAresta, ArrayList<No> nos, ArrayList<Aresta> arestas) {
+    public Grafo(String id, String tipo, boolean tipoAresta, ArrayList<INo> nos, ArrayList<Aresta> arestas) {
         this.setId(id);
         this.setNos(nos);
         this.setTipo(tipo);
@@ -63,11 +63,11 @@ public class Grafo {
         this.tipoAresta = tipoAresta;
     }
 
-    public ArrayList<No> getNos() {
+    public ArrayList<INo> getNos() {
         return nos;
     }
 
-    public void setNos(ArrayList<No> nos) {
+    public void setNos(ArrayList<INo> nos) {
         this.nos = nos;
     }
 
@@ -108,8 +108,8 @@ public class Grafo {
         return this.getArestas().size();
     }
 
-    public Map<No, Integer> getGraus() {
-        Map<No, Integer> grausDosNos = new HashMap<>();
+    public Map<INo, Integer> getGraus() {
+        Map<INo, Integer> grausDosNos = new HashMap<>();
         this.nos.forEach((no) -> {
             int grau = 0;
             for (Aresta aresta : this.arestas) {
@@ -123,11 +123,19 @@ public class Grafo {
     }
 
     public boolean noExiste(String id) {
-        return getArestas().contains(id);
+        
+        for (Aresta aresta : this.arestas) {
+
+            if (aresta.getOrigem().getId().equals(id)
+                    || aresta.getDestino().getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public Map<No, Integer> getGrausDeEmissao() {
-        Map<No, Integer> grausDosNos = new HashMap<>();
+    public Map<INo, Integer> getGrausDeEmissao() {
+        Map<INo, Integer> grausDosNos = new HashMap<>();
         this.nos.forEach((no) -> {
             int grau = 0;
             for (Aresta aresta : this.arestas) {
@@ -140,8 +148,8 @@ public class Grafo {
         return grausDosNos;
     }
 
-    public Map<No, Integer> getGrausDeRecepcao() {
-        Map<No, Integer> grausDosNos = new HashMap<>();
+    public Map<INo, Integer> getGrausDeRecepcao() {
+        Map<INo, Integer> grausDosNos = new HashMap<>();
         this.nos.forEach((no) -> {
             int grau = 0;
             for (Aresta aresta : this.arestas) {
@@ -154,7 +162,7 @@ public class Grafo {
         return grausDosNos;
     }
 
-    public boolean isAdjacente(No no1, No no2) {
+    public boolean isAdjacente(INo no1, INo no2) {
         int i;
         for (i = 0; i < this.getArestas().size(); i++) {
             if (this.getArestas().get(i).isDirected()) {
@@ -189,7 +197,7 @@ public class Grafo {
         int matriz[][] = new int[this.nos.size()][this.nos.size()];
         Map<String, Integer> nosDoGrafo = new HashMap<>();
         int i = 0;
-        for (No no : this.nos) {
+        for (INo no : this.nos) {
             nosDoGrafo.put(no.getId(), i);
             i++;
         }
@@ -207,7 +215,7 @@ public class Grafo {
         Map<String, Integer> nosDoGrafo = new HashMap<>();
         Map<String, Integer> arestasDoGrafo = new HashMap<>();
         int i = 0;
-        for (No no : this.nos) {
+        for (INo no : this.nos) {
             nosDoGrafo.put(no.getId(), i);
             i++;
         }
@@ -271,7 +279,7 @@ public class Grafo {
     public Map<Integer, String> nodePositionInMatrix() {
         Map<Integer, String> nosDoGrafo = new HashMap<>();
         int i = 0;
-        for (No no : this.nos) {
+        for (INo no : this.nos) {
             nosDoGrafo.put(i, no.getId());
             i++;
         }
@@ -318,8 +326,16 @@ public class Grafo {
         return false;
     }
 
-    public No getNo(String id) {
-        return No.getNoById(id, this.getNos());
+    public INo getNo(String id) {
+        for (Aresta aresta : this.arestas) {
+            if (aresta.getDestino().getId() == id) {
+                return aresta.getDestino();
+            }
+            if (aresta.getOrigem().getId() == id) {
+                return aresta.getOrigem();
+            }
+        }
+        return null;
     }
 
     public Map<String, List<String>> getNosSucessores() {
@@ -330,7 +346,7 @@ public class Grafo {
         return listaNosSucessores;
     }
 
-    public List<String> getNosSucessores(No no) {
+    public List<String> getNosSucessores(INo no) {
         List<String> nosSucessores = new ArrayList<>();
         this.getArestas().stream().filter((aresta) -> (aresta.getOrigem().getId().equals(no.getId()))).forEachOrdered((aresta) -> {
             nosSucessores.add(aresta.getDestino().getId());
@@ -338,7 +354,7 @@ public class Grafo {
         return nosSucessores;
     }
 
-    public List<String> getNosAntecessores(No no) {
+    public List<String> getNosAntecessores(INo no) {
         List<String> nosAntecessores = new ArrayList<>();
         this.getArestas().stream().filter((aresta) -> (aresta.getDestino().getId().equals(no.getId()))).forEachOrdered((aresta) -> {
             nosAntecessores.add(aresta.getOrigem().getId());
@@ -359,8 +375,9 @@ public class Grafo {
     }
 
     public boolean linkExists(String idA, String idB) {
-        No v = this.getNo(idA);
-        if (v != null && this.noExiste(idB)) {
+        INo v = this.getNo(idA);
+        if (v != null && this.getNo(idB) != null) {
+
             for (Aresta a = v.primeiraAresta(); a != null; a = v.nextEdge(a.getId())) {
                 return (a.vizinhos(idA).getId() == null ? idB == null : a.vizinhos(idA).getId().equals(idB));
             }
@@ -375,7 +392,7 @@ public class Grafo {
         String nomeNo = null;
         Map<String, List<String>> mapaVerticesAdj = new HashMap<>();
         List<String> nosAdj = null;
-        for (No no : this.getNos()) {
+        for (INo no : this.getNos()) {
             posicaoNosDoGrafo.put(i, no.getId());
             i += 1;
         }
@@ -396,7 +413,7 @@ public class Grafo {
         return mapaVerticesAdj;
     }
 
-    public int getGrauNo(No no) {
+    public int getGrauNo(INo no) {
         int firstGrau = 0;
         int secondGrau = 0;
         int i;
@@ -424,15 +441,15 @@ public class Grafo {
         return true;
     }
 
-    public boolean isFonte(No no) {
+    public boolean isFonte(INo no) {
         return this.getGrauNo(no) == 0;
     }
 
-    public Map<String, List<No>> verticesIndependentes() {
-        Set<No> gerarNosIndependentes = null;
-        Map<String, List<No>> nosIndependentes = new HashMap<>();
-        List<No> nosAdjacentes = null;
-        List<No> listaNosIndependentes = null;
+    public Map<String, List<INo>> verticesIndependentes() {
+        Set<INo> gerarNosIndependentes = null;
+        Map<String, List<INo>> nosIndependentes = new HashMap<>();
+        List<INo> nosAdjacentes = null;
+        List<INo> listaNosIndependentes = null;
         Map<String, List<String>> verticesAdjacentes = this.mapeamentoVerticesAdjacentes();
 
         for (Map.Entry<String, List<String>> entry : verticesAdjacentes.entrySet()) {
@@ -447,7 +464,7 @@ public class Grafo {
             }
             nosAdjacentes.add(this.getNo(verticeAtual));
 
-            for (No noDoGrafo : this.getNos()) {
+            for (INo noDoGrafo : this.getNos()) {
                 if (!nosAdjacentes.contains(noDoGrafo)) {
                     listaNosIndependentes.add(noDoGrafo);
                 }
@@ -465,7 +482,7 @@ public class Grafo {
 
     public List<String> gerarVerticesAdjacentes(String no) {
         List<Aresta> arestasDoNo = this.getArestasDoNoAtual(no);
-        List<No> nosAdjacentes = new ArrayList();
+        List<INo> nosAdjacentes = new ArrayList();
         List<String> nomeNosAdjacentes = new ArrayList();
 
         if (this.getTipo().equals("directed")) {
@@ -483,7 +500,7 @@ public class Grafo {
                 nosAdjacentes.add(arestaAtual.getOrigem());
             });
         }
-        Set<No> semRepeticoes = new TreeSet(new NosComparator());
+        Set<INo> semRepeticoes = new TreeSet(new NosComparator());
         semRepeticoes.addAll(nosAdjacentes);
         nosAdjacentes.clear();
         semRepeticoes.stream().filter((noAtual) -> (!noAtual.getId().equals(no))).forEachOrdered((noAtual) -> {

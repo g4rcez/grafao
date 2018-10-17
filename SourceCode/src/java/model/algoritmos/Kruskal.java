@@ -8,6 +8,7 @@ import java.util.Map;
 import model.Aresta;
 import model.ArestaComparator;
 import model.Grafo;
+import model.INo;
 import model.No;
 
 /**
@@ -24,7 +25,7 @@ public class Kruskal {
         int numeroVertices = grafo.getNos().size(), i = 0;
         int[][] matrizComponentes = new int[2][grafo.getNos().size()];
         Collections.sort(arestasDoGrafo, new ArestaComparator());
-        for (No no : grafo.getNos()) {
+        for (INo no : grafo.getNos()) {
             nosDoGrafo.put(no.getId(), i);
             matrizComponentes[0][i] = i;
             matrizComponentes[1][i] = i;

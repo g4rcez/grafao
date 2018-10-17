@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SubGrafoK3.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;SourceCode&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">planaridade</a> &gt; <span class="el_source">SubGrafoK3.java</span></div><h1>SubGrafoK3.java</h1><pre class="source lang-java linenums">package planaridade;
+
+import java.util.ArrayList;
+import java.util.List;
+import model.Aresta;
+import model.Grafo;
+import model.INo;
+import model.No;
+
+public class SubGrafoK3 {
+
+    private Grafo graph;
+
+<span class="nc" id="L14">    public SubGrafoK3() {</span>
+
+<span class="nc" id="L16">    }</span>
+
+<span class="nc" id="L18">    public SubGrafoK3(Grafo graph) {</span>
+<span class="nc" id="L19">        this.graph = graph;</span>
+<span class="nc" id="L20">    }</span>
+
+    public Grafo getGraph() {
+<span class="nc" id="L23">        return this.graph;</span>
+    }
+
+    public void setGraph(Grafo graph) {
+<span class="nc" id="L27">        this.graph = graph;</span>
+<span class="nc" id="L28">    }</span>
+
+    public Boolean existeK3x3() {
+<span class="nc" id="L31">        List&lt;Aresta&gt; allArestasAux = this.graph.getArestas();</span>
+<span class="nc" id="L32">        List&lt;Aresta&gt; allArestas = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L33">        List&lt;List&lt;INo&gt;&gt; k1x1List = new ArrayList&lt;List&lt;INo&gt;&gt;();</span>
+<span class="nc" id="L34">        List&lt;List&lt;INo&gt;&gt; k2x2List = new ArrayList&lt;List&lt;INo&gt;&gt;();</span>
+<span class="nc" id="L35">        List&lt;List&lt;INo&gt;&gt; k3x3List = new ArrayList&lt;List&lt;INo&gt;&gt;();</span>
+
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        for (Aresta edge : allArestasAux) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">            if (edge.getOrigem().getId() != edge.getDestino().getId()) {</span>
+<span class="nc" id="L39">                allArestas.add(edge);</span>
+            }
+<span class="nc" id="L41">        }</span>
+
+        /*
+		 * Preenche a lista k1x1
+         */
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        for (Aresta edge : allArestas) {</span>
+<span class="nc" id="L47">            List&lt;INo&gt; k1x1Aux = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">            if (edge.getOrigem().getId() != edge.getDestino().getId()) {</span>
+<span class="nc" id="L49">                k1x1Aux.add(edge.getOrigem());</span>
+<span class="nc" id="L50">                k1x1Aux.add(edge.getDestino());</span>
+<span class="nc" id="L51">                k1x1List.add(k1x1Aux);</span>
+            }
+<span class="nc" id="L53">        }</span>
+
+        /*
+		 * Preenche a lista k2x2
+         */
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        for (List&lt;INo&gt; k1x1Aux : k1x1List) {</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">            for (Aresta edgeAux : allArestas) {</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">                if ((k1x1Aux.get(0).getId() != edgeAux.getOrigem().getId())</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">                        &amp;&amp; (k1x1Aux.get(1).getId() != edgeAux.getOrigem().getId())</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">                        &amp;&amp; (k1x1Aux.get(0).getId() != edgeAux.getDestino().getId())</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                        &amp;&amp; (k1x1Aux.get(1).getId() != edgeAux.getDestino().getId())) {</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">                    if (((this.graph.linkExists(edgeAux.getOrigem().getId(), k1x1Aux.get(0).getId())</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">                            &amp;&amp; !this.graph.linkExists(edgeAux.getOrigem().getId(), k1x1Aux.get(1).getId()))</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">                            &amp;&amp; (!this.graph.linkExists(edgeAux.getDestino().getId(), k1x1Aux.get(0).getId())</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">                            &amp;&amp; this.graph.linkExists(edgeAux.getDestino().getId(), k1x1Aux.get(1).getId())))</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">                            || ((!this.graph.linkExists(edgeAux.getOrigem().getId(), k1x1Aux.get(0).getId())</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                            &amp;&amp; this.graph.linkExists(edgeAux.getOrigem().getId(), k1x1Aux.get(1).getId()))</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">                            &amp;&amp; (this.graph.linkExists(edgeAux.getDestino().getId(), k1x1Aux.get(0).getId())</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                            &amp;&amp; !this.graph.linkExists(edgeAux.getDestino().getId(),</span>
+<span class="nc" id="L72">                                    k1x1Aux.get(1).getId())))) {</span>
+<span class="nc" id="L73">                        List&lt;INo&gt; k2x2Aux = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L74">                        k2x2Aux.add(k1x1Aux.get(0));</span>
+<span class="nc" id="L75">                        k2x2Aux.add(k1x1Aux.get(1));</span>
+<span class="nc" id="L76">                        k2x2Aux.add(edgeAux.getOrigem());</span>
+<span class="nc" id="L77">                        k2x2Aux.add(edgeAux.getDestino());</span>
+<span class="nc" id="L78">                        k2x2List.add(k2x2Aux);</span>
+                    }
+                }
+<span class="nc" id="L81">            }</span>
+<span class="nc" id="L82">        }</span>
+
+        /*
+		 * Preenche a lista k3x3
+         */
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        for (List&lt;INo&gt; k2x2Aux : k2x2List) {</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">            for (Aresta edgeAux : allArestas) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">                if ((k2x2Aux.get(0).getId() != edgeAux.getOrigem().getId())</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                        &amp;&amp; (k2x2Aux.get(1).getId() != edgeAux.getOrigem().getId())</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                        &amp;&amp; (k2x2Aux.get(2).getId() != edgeAux.getOrigem().getId())</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">                        &amp;&amp; (k2x2Aux.get(3).getId() != edgeAux.getOrigem().getId())</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">                        &amp;&amp; (k2x2Aux.get(0).getId() != edgeAux.getDestino().getId())</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">                        &amp;&amp; (k2x2Aux.get(1).getId() != edgeAux.getDestino().getId())</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">                        &amp;&amp; (k2x2Aux.get(2).getId() != edgeAux.getDestino().getId())</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">                        &amp;&amp; (k2x2Aux.get(3).getId() != edgeAux.getDestino().getId())) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">                    if (((this.graph.linkExists(edgeAux.getOrigem().getId(), k2x2Aux.get(0).getId())</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                            &amp;&amp; !this.graph.linkExists(edgeAux.getOrigem().getId(), k2x2Aux.get(1).getId()))</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">                            &amp;&amp; (this.graph.linkExists(edgeAux.getOrigem().getId(), k2x2Aux.get(2).getId())</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                            &amp;&amp; !this.graph.linkExists(edgeAux.getOrigem().getId(), k2x2Aux.get(3).getId())))</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                            || ((!this.graph.linkExists(edgeAux.getOrigem().getId(), k2x2Aux.get(0).getId())</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">                            &amp;&amp; this.graph.linkExists(edgeAux.getOrigem().getId(), k2x2Aux.get(1).getId()))</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">                            &amp;&amp; (!this.graph.linkExists(edgeAux.getOrigem().getId(), k2x2Aux.get(2).getId())</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">                            &amp;&amp; this.graph.linkExists(edgeAux.getOrigem().getId(),</span>
+<span class="nc" id="L105">                                    k2x2Aux.get(3).getId())))</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                            &amp;&amp; ((this.graph.linkExists(edgeAux.getDestino().getId(), k2x2Aux.get(0).getId())</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">                            &amp;&amp; !this.graph.linkExists(edgeAux.getDestino().getId(),</span>
+<span class="nc" id="L108">                                    k2x2Aux.get(1).getId()))</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">                            &amp;&amp; (this.graph.linkExists(edgeAux.getDestino().getId(),</span>
+<span class="nc" id="L110">                                    k2x2Aux.get(2).getId())</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                            &amp;&amp; !this.graph.linkExists(edgeAux.getDestino().getId(),</span>
+<span class="nc" id="L112">                                    k2x2Aux.get(3).getId())))</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">                            || ((!this.graph.linkExists(edgeAux.getDestino().getId(), k2x2Aux.get(0).getId())</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">                            &amp;&amp; this.graph.linkExists(edgeAux.getDestino().getId(), k2x2Aux.get(1).getId()))</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">                            &amp;&amp; (!this.graph.linkExists(edgeAux.getDestino().getId(), k2x2Aux.get(2).getId())</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">                            &amp;&amp; this.graph.linkExists(edgeAux.getDestino().getId(),</span>
+<span class="nc" id="L117">                                    k2x2Aux.get(3).getId())))) {</span>
+<span class="nc" id="L118">                        List&lt;INo&gt; k3x3Aux = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L119">                        k3x3Aux.add(k2x2Aux.get(0));</span>
+<span class="nc" id="L120">                        k3x3Aux.add(k2x2Aux.get(1));</span>
+<span class="nc" id="L121">                        k3x3Aux.add(k2x2Aux.get(2));</span>
+<span class="nc" id="L122">                        k3x3Aux.add(k2x2Aux.get(3));</span>
+<span class="nc" id="L123">                        k3x3Aux.add(edgeAux.getOrigem());</span>
+<span class="nc" id="L124">                        k3x3Aux.add(edgeAux.getDestino());</span>
+<span class="nc" id="L125">                        k3x3List.add(k3x3Aux);</span>
+                    }
+                }
+<span class="nc" id="L128">            }</span>
+<span class="nc" id="L129">        }</span>
+
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        return k3x3List.isEmpty() ? false : true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
+import model.INo;
 import model.No;
 import model.algoritmos.Malgrange;
 
@@ -34,7 +35,7 @@ public class MalgrangeController extends HttpServlet {
         Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
         List<String> nosVisitadosTransitivoD = new ArrayList<>();
         List<String> nosVisitadosTransitivoI = new ArrayList<>();
-        List<No> nos = grafo.getNos();
+        List<INo> nos = grafo.getNos();
         Malgrange malgrange = new Malgrange(grafo);
         List<String> listaTransitivos = malgrange.malgrangeWithTransitivoDireto(0, nos.get(0).getId(), nosVisitadosTransitivoD, grafo.nodePositionInMatrix(), grafo.getMatrizAdjacencia());
         List<String> listaTransitivosInverso = malgrange.malgrangeWithTransitivoInverso(0, nos.get(0).getId(), nosVisitadosTransitivoI, grafo.nodePositionInMatrix(), grafo.getMatrizAdjacencia());

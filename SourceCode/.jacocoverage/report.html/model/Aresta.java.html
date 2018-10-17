@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Aresta.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;SourceCode&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">Aresta.java</span></div><h1>Aresta.java</h1><pre class="source lang-java linenums">package model;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author garcez
+ */
+public class Aresta {
+    
+    private Boolean conexo;
+
+    private String id;
+    private boolean directed;
+    private INo origem;
+    private INo destino;
+    private Integer valor;
+
+    /**
+     *
+     * @param id
+     * @param origem
+     * @param destino
+     * @param valor
+     */
+<span class="fc" id="L26">    public Aresta(String id, INo origem, INo destino, Integer valor) {</span>
+<span class="fc" id="L27">        this.setId(id);</span>
+<span class="fc" id="L28">        this.setDestino(destino);</span>
+<span class="fc" id="L29">        this.setOrigem(origem);</span>
+<span class="fc" id="L30">        this.setValor(valor);</span>
+<span class="fc" id="L31">    }</span>
+   
+    
+<span class="fc" id="L34">    public Aresta(String id, INo origem, INo destino, Integer valor, boolean directed) {</span>
+<span class="fc" id="L35">        this.setId(id);</span>
+<span class="fc" id="L36">        this.setDestino(destino);</span>
+<span class="fc" id="L37">        this.setOrigem(origem);</span>
+<span class="fc" id="L38">        this.setValor(valor);</span>
+<span class="fc" id="L39">        this.setDirected(directed);</span>
+<span class="fc" id="L40">    }</span>
+
+    public INo vizinhos(String id) {
+<span class="pc bpc" id="L43" title="4 of 6 branches missed.">        if (id == null ? this.getOrigem().getId() == null : id.equals(this.getOrigem().getId())) {</span>
+<span class="fc" id="L44">            return this.getDestino();</span>
+<span class="nc bnc" id="L45" title="All 6 branches missed.">        } else if (id == null ? this.getDestino().getId() == null : id.equals(this.getDestino().getId())) {</span>
+<span class="nc" id="L46">            return this.getOrigem();</span>
+        } else {
+<span class="nc" id="L48">            return null;</span>
+        }
+    }
+
+    public boolean isDirected() {
+<span class="fc" id="L53">        return directed;</span>
+    }
+
+    public void setDirected(boolean directed) {
+<span class="fc" id="L57">        this.directed = directed;</span>
+<span class="fc" id="L58">    }</span>
+
+    /**
+     *
+     * @param id
+     * @param origem
+     * @param destino
+     */
+<span class="nc" id="L66">    public Aresta(String id, INo origem, INo destino) {</span>
+<span class="nc" id="L67">        this.setId(id);</span>
+<span class="nc" id="L68">        this.setDestino(destino);</span>
+<span class="nc" id="L69">        this.setOrigem(origem);</span>
+<span class="nc" id="L70">    }</span>
+
+    public String getId() {
+<span class="fc" id="L73">        return id;</span>
+    }
+
+    public void setId(String id) {
+<span class="fc" id="L77">        this.id = id;</span>
+<span class="fc" id="L78">    }</span>
+
+    public INo getOrigem() {
+<span class="fc" id="L81">        return origem;</span>
+    }
+
+    public void setOrigem(INo origem) {
+<span class="fc" id="L85">        this.origem = origem;</span>
+<span class="fc" id="L86">    }</span>
+
+    public INo getDestino() {
+<span class="fc" id="L89">        return destino;</span>
+    }
+
+    public void setDestino(INo destino) {
+<span class="fc" id="L93">        this.destino = destino;</span>
+<span class="fc" id="L94">    }</span>
+
+    public Integer getValor() {
+<span class="nc" id="L97">        return valor;</span>
+    }
+
+    public void setValor(Integer valor) {
+<span class="fc" id="L101">        this.valor = valor;</span>
+<span class="fc" id="L102">    }</span>
+
+    /**
+     *
+     * @param id
+     * @param arestas
+     * @return
+     */
+    public static Aresta getArestaById(String id, ArrayList&lt;Aresta&gt; arestas) {
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        for (Aresta aresta : arestas) {</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">            if (aresta.getId().equals(id)) {</span>
+<span class="nc" id="L113">                return aresta;</span>
+            }
+<span class="nc" id="L115">        }</span>
+<span class="nc" id="L116">        return null;</span>
+    }
+
+    public INo getNoAdjacente(INo no) {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if (no.getId().equals(this.getDestino().getId())) {</span>
+<span class="nc" id="L121">            return this.getOrigem();</span>
+        }
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if (no.getId().equals(this.getOrigem().getId())) {</span>
+<span class="fc" id="L124">            return this.getDestino();</span>
+        }
+<span class="nc" id="L126">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

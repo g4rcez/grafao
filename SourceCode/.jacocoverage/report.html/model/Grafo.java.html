@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Grafo.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;SourceCode&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">Grafo.java</span></div><h1>Grafo.java</h1><pre class="source lang-java linenums">package model;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+/**
+ *
+ * @author garcez
+ */
+public class Grafo {
+
+    private String id;
+    private String tipo;
+    private boolean tipoAresta;
+    private ArrayList&lt;INo&gt; nos;
+    private ArrayList&lt;Aresta&gt; arestas;
+
+    /**
+     *
+     * @param id
+     * @param tipo
+     * @param tipoAresta
+     * @param nos
+     * @param arestas
+     */
+<span class="fc" id="L34">    public Grafo(String id, String tipo, boolean tipoAresta, ArrayList&lt;INo&gt; nos, ArrayList&lt;Aresta&gt; arestas) {</span>
+<span class="fc" id="L35">        this.setId(id);</span>
+<span class="fc" id="L36">        this.setNos(nos);</span>
+<span class="fc" id="L37">        this.setTipo(tipo);</span>
+<span class="fc" id="L38">        this.setTipoAresta(tipoAresta);</span>
+<span class="fc" id="L39">        this.setArestas(arestas);</span>
+<span class="fc" id="L40">    }</span>
+
+    public String getId() {
+<span class="nc" id="L43">        return id;</span>
+    }
+
+    public void setId(String id) {
+<span class="fc" id="L47">        this.id = id;</span>
+<span class="fc" id="L48">    }</span>
+
+    public String getTipo() {
+<span class="nc" id="L51">        return tipo;</span>
+    }
+
+    public void setTipo(String tipo) {
+<span class="fc" id="L55">        this.tipo = tipo;</span>
+<span class="fc" id="L56">    }</span>
+
+    public boolean isTipoAresta() {
+<span class="nc" id="L59">        return tipoAresta;</span>
+    }
+
+    public void setTipoAresta(boolean tipoAresta) {
+<span class="fc" id="L63">        this.tipoAresta = tipoAresta;</span>
+<span class="fc" id="L64">    }</span>
+
+    public ArrayList&lt;INo&gt; getNos() {
+<span class="fc" id="L67">        return nos;</span>
+    }
+
+    public void setNos(ArrayList&lt;INo&gt; nos) {
+<span class="fc" id="L71">        this.nos = nos;</span>
+<span class="fc" id="L72">    }</span>
+
+    public ArrayList&lt;Aresta&gt; getArestas() {
+<span class="fc" id="L75">        return arestas;</span>
+    }
+
+    public void setArestas(ArrayList&lt;Aresta&gt; arestas) {
+<span class="fc" id="L79">        this.arestas = arestas;</span>
+<span class="fc" id="L80">    }</span>
+
+    public void adicionarAresta(No origem, No destino, int valor) {
+<span class="nc" id="L83">        Aresta aresta = new Aresta(</span>
+<span class="nc" id="L84">                &quot;A&quot; + this.arestas.size(),</span>
+<span class="nc" id="L85">                origem, destino, valor</span>
+        );
+<span class="nc" id="L87">        this.arestas.add(aresta);</span>
+<span class="nc" id="L88">        this.nos.stream().distinct().collect(Collectors.toList());</span>
+<span class="nc" id="L89">    }</span>
+
+    public void adicionarAresta(No origem, No destino) {
+<span class="nc" id="L92">        Aresta aresta = new Aresta(&quot;A&quot; + this.arestas.size(), origem, destino);</span>
+<span class="nc" id="L93">        this.arestas.add(aresta);</span>
+<span class="nc" id="L94">        this.nos.stream().distinct().collect(Collectors.toList());</span>
+<span class="nc" id="L95">    }</span>
+
+    public void adicionarAresta(Aresta aresta) {
+<span class="nc" id="L98">        List&lt;Aresta&gt; arestasLocal = this.getArestas();</span>
+<span class="nc" id="L99">        arestasLocal.add(aresta);</span>
+<span class="nc" id="L100">        this.setArestas((ArrayList&lt;Aresta&gt;) arestasLocal);</span>
+<span class="nc" id="L101">    }</span>
+
+    public void adicionaNos(No no) {
+<span class="nc" id="L104">        this.nos.add(no);</span>
+<span class="nc" id="L105">    }</span>
+
+    public int getOrdem() {
+<span class="nc" id="L108">        return this.getArestas().size();</span>
+    }
+
+    public Map&lt;INo, Integer&gt; getGraus() {
+<span class="nc" id="L112">        Map&lt;INo, Integer&gt; grausDosNos = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L113">        this.nos.forEach((no) -&gt; {</span>
+<span class="nc" id="L114">            int grau = 0;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">            for (Aresta aresta : this.arestas) {</span>
+<span class="nc bnc" id="L116" title="All 4 branches missed.">                if (aresta.getDestino().getId().equals(no.getId()) || aresta.getOrigem().getId().equals(no.getId())) {</span>
+<span class="nc" id="L117">                    grau++;</span>
+                }
+<span class="nc" id="L119">                grausDosNos.put(no, grau);</span>
+<span class="nc" id="L120">            }</span>
+<span class="nc" id="L121">        });</span>
+<span class="nc" id="L122">        return grausDosNos;</span>
+    }
+
+    public boolean noExiste(String id) {
+        
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        for (Aresta aresta : this.arestas) {</span>
+
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">            if (aresta.getOrigem().getId().equals(id)</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">                    || aresta.getDestino().getId().equals(id)) {</span>
+<span class="fc" id="L131">                return true;</span>
+            }
+<span class="nc" id="L133">        }</span>
+<span class="nc" id="L134">        return false;</span>
+    }
+
+    public Map&lt;INo, Integer&gt; getGrausDeEmissao() {
+<span class="nc" id="L138">        Map&lt;INo, Integer&gt; grausDosNos = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L139">        this.nos.forEach((no) -&gt; {</span>
+<span class="nc" id="L140">            int grau = 0;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">            for (Aresta aresta : this.arestas) {</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">                if (aresta.getOrigem().getId().equals(no.getId())) {</span>
+<span class="nc" id="L143">                    grau++;</span>
+                }
+<span class="nc" id="L145">                grausDosNos.put(no, grau);</span>
+<span class="nc" id="L146">            }</span>
+<span class="nc" id="L147">        });</span>
+<span class="nc" id="L148">        return grausDosNos;</span>
+    }
+
+    public Map&lt;INo, Integer&gt; getGrausDeRecepcao() {
+<span class="nc" id="L152">        Map&lt;INo, Integer&gt; grausDosNos = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L153">        this.nos.forEach((no) -&gt; {</span>
+<span class="nc" id="L154">            int grau = 0;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">            for (Aresta aresta : this.arestas) {</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">                if (aresta.getDestino().getId().equals(no.getId())) {</span>
+<span class="nc" id="L157">                    grau++;</span>
+                }
+<span class="nc" id="L159">                grausDosNos.put(no, grau);</span>
+<span class="nc" id="L160">            }</span>
+<span class="nc" id="L161">        });</span>
+<span class="nc" id="L162">        return grausDosNos;</span>
+    }
+
+    public boolean isAdjacente(INo no1, INo no2) {
+        int i;
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">        for (i = 0; i &lt; this.getArestas().size(); i++) {</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">            if (this.getArestas().get(i).isDirected()) {</span>
+<span class="nc bnc" id="L169" title="All 4 branches missed.">                if (this.getArestas().get(i).getOrigem().getId().equals(no1.getId()) &amp;&amp; this.getArestas().get(i).getDestino().getId().equals(no2.getId())) {</span>
+<span class="nc" id="L170">                    return true;</span>
+                }
+            } else {
+<span class="fc bfc" id="L173" title="All 4 branches covered.">                if (this.getArestas().get(i).getOrigem().getId().equals(no1.getId()) &amp;&amp; this.getArestas().get(i).getDestino().getId().equals(no2.getId())</span>
+<span class="fc bfc" id="L174" title="All 4 branches covered.">                        || this.getArestas().get(i).getOrigem().getId().equals(no2.getId()) &amp;&amp; this.getArestas().get(i).getDestino().getId().equals(no1.getId())) {</span>
+<span class="fc" id="L175">                    return true;</span>
+                }
+            }
+        }
+<span class="nc" id="L179">        return false;</span>
+    }
+
+    public List&lt;Aresta&gt; getArestasDoNoAtual(String no) {
+<span class="nc" id="L183">        List&lt;Aresta&gt; arestasDoNoAtual = new ArrayList();</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">        if (this.getTipo().equals(&quot;undirected&quot;)) {</span>
+<span class="nc bnc" id="L185" title="All 4 branches missed.">            this.getArestas().stream().filter((aresta) -&gt; (aresta.getOrigem().getId().equals(no) || aresta.getDestino().getId().equals(no))).forEachOrdered((aresta) -&gt; {</span>
+<span class="nc" id="L186">                arestasDoNoAtual.add(aresta);</span>
+<span class="nc" id="L187">            });</span>
+        } else {
+<span class="nc" id="L189">            this.getArestas().stream().filter((aresta) -&gt; (aresta.getOrigem().getId().equals(no))).forEachOrdered((aresta) -&gt; {</span>
+<span class="nc" id="L190">                arestasDoNoAtual.add(aresta);</span>
+<span class="nc" id="L191">            });</span>
+        }
+<span class="nc" id="L193">        return arestasDoNoAtual;</span>
+    }
+
+    public int[][] getMatrizAdjacencia() {
+<span class="fc" id="L197">        int matriz[][] = new int[this.nos.size()][this.nos.size()];</span>
+<span class="fc" id="L198">        Map&lt;String, Integer&gt; nosDoGrafo = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L199">        int i = 0;</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        for (INo no : this.nos) {</span>
+<span class="fc" id="L201">            nosDoGrafo.put(no.getId(), i);</span>
+<span class="fc" id="L202">            i++;</span>
+<span class="fc" id="L203">        }</span>
+<span class="fc" id="L204">        this.arestas.stream().map((Aresta aresta) -&gt; {</span>
+<span class="fc" id="L205">            matriz[nosDoGrafo.get(aresta.getOrigem().getId())][nosDoGrafo.get(aresta.getDestino().getId())] = 1;</span>
+<span class="fc" id="L206">            return aresta;</span>
+<span class="fc" id="L207">        }).forEachOrdered((aresta) -&gt; {</span>
+<span class="fc" id="L208">            matriz[nosDoGrafo.get(aresta.getDestino().getId())][nosDoGrafo.get(aresta.getOrigem().getId())] = 1;</span>
+<span class="fc" id="L209">        });</span>
+<span class="fc" id="L210">        return matriz;</span>
+    }
+
+    public int[][] getMatrizIncidencia() {
+<span class="fc" id="L214">        int matriz[][] = new int[this.nos.size()][this.arestas.size()];</span>
+<span class="fc" id="L215">        Map&lt;String, Integer&gt; nosDoGrafo = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L216">        Map&lt;String, Integer&gt; arestasDoGrafo = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L217">        int i = 0;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        for (INo no : this.nos) {</span>
+<span class="fc" id="L219">            nosDoGrafo.put(no.getId(), i);</span>
+<span class="fc" id="L220">            i++;</span>
+<span class="fc" id="L221">        }</span>
+<span class="fc" id="L222">        i = 0;</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">        for (Aresta aresta : this.arestas) {</span>
+<span class="fc" id="L224">            arestasDoGrafo.put(aresta.getId(), i);</span>
+<span class="fc" id="L225">            i++;</span>
+<span class="fc" id="L226">        }</span>
+<span class="fc" id="L227">        this.arestas.stream().map((aresta) -&gt; {</span>
+<span class="fc" id="L228">            matriz[nosDoGrafo.get(aresta.getOrigem().getId())][arestasDoGrafo.get(aresta.getId())] = 1;</span>
+<span class="fc" id="L229">            return aresta;</span>
+<span class="fc" id="L230">        }).forEachOrdered((aresta) -&gt; {</span>
+<span class="fc" id="L231">            matriz[nosDoGrafo.get(aresta.getDestino().getId())][arestasDoGrafo.get(aresta.getId())] = 1;</span>
+<span class="fc" id="L232">        });</span>
+<span class="fc" id="L233">        return matriz;</span>
+    }
+
+    public Map&lt;String, List&lt;String&gt;&gt; getMapaArestasAdjacentes() {
+<span class="fc" id="L237">        int[][] matrizIncidencia = this.getMatrizIncidencia();</span>
+<span class="fc" id="L238">        Map&lt;Integer, String&gt; posicaoArestasDoGrafo = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L239">        Map&lt;String, List&lt;String&gt;&gt; arestasAdjacentes = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L241">        List&lt;Integer&gt; nosAdjacentes = new ArrayList();</span>
+<span class="fc" id="L242">        List&lt;String&gt; listaArestasAdjacentes = new ArrayList();</span>
+<span class="fc" id="L243">        Set&lt;String&gt; listaSemRepeticoes = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L244">        int numeroTotalArestas = this.getArestas().size();</span>
+<span class="fc" id="L245">        int i = 0;</span>
+<span class="fc" id="L246">        int j = 0;</span>
+<span class="fc" id="L247">        int k = 0;</span>
+
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        for (Aresta aresta : this.getArestas()) {</span>
+<span class="fc" id="L250">            posicaoArestasDoGrafo.put(i, aresta.getId());</span>
+<span class="fc" id="L251">            i++;</span>
+<span class="fc" id="L252">        }</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">        for (j = 0; j &lt; numeroTotalArestas; j++) {</span>
+<span class="fc" id="L254">            listaArestasAdjacentes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L255">            nosAdjacentes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L256">            listaSemRepeticoes = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">            for (i = 0; i &lt; this.getNos().size(); i++) {</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">                if (matrizIncidencia[i][j] == 1) { //guardo a posição da linha da matriz</span>
+<span class="fc" id="L259">                    nosAdjacentes.add(i);</span>
+                }
+
+            }
+<span class="fc bfc" id="L263" title="All 2 branches covered.">            for (int linhaAtual : nosAdjacentes) {</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">                for (k = 0; k &lt; numeroTotalArestas; k++) {</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">                    if (matrizIncidencia[linhaAtual][k] == 1) {</span>
+<span class="fc" id="L266">                        listaArestasAdjacentes.add(posicaoArestasDoGrafo.get(k));</span>
+                    }
+                }
+<span class="fc" id="L269">            }</span>
+<span class="fc" id="L270">            listaSemRepeticoes.addAll(listaArestasAdjacentes);</span>
+<span class="fc" id="L271">            listaArestasAdjacentes.clear();</span>
+<span class="fc" id="L272">            listaArestasAdjacentes.addAll(listaSemRepeticoes);</span>
+<span class="fc" id="L273">            listaArestasAdjacentes.remove(posicaoArestasDoGrafo.get(j));</span>
+<span class="fc" id="L274">            arestasAdjacentes.put(posicaoArestasDoGrafo.get(j), listaArestasAdjacentes);</span>
+        }
+<span class="fc" id="L276">        return arestasAdjacentes;</span>
+    }
+
+    public Map&lt;Integer, String&gt; nodePositionInMatrix() {
+<span class="nc" id="L280">        Map&lt;Integer, String&gt; nosDoGrafo = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L281">        int i = 0;</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">        for (INo no : this.nos) {</span>
+<span class="nc" id="L283">            nosDoGrafo.put(i, no.getId());</span>
+<span class="nc" id="L284">            i++;</span>
+<span class="nc" id="L285">        }</span>
+<span class="nc" id="L286">        return nosDoGrafo;</span>
+    }
+
+    public boolean isMultigrafo() {
+        int i, j;
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">        for (i = 0; i &lt; this.getArestas().size(); i++) {</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">            for (j = 0; j &lt; this.getArestas().size(); j++) {</span>
+<span class="pc bpc" id="L293" title="1 of 2 branches missed.">                if (this.getArestas().get(i).getDestino().getId().equals(this.getArestas().get(j).getDestino().getId())) {</span>
+<span class="pc bpc" id="L294" title="1 of 2 branches missed.">                    if (this.getArestas().get(i).getOrigem().getId().equals(this.getNos().get(j).getId())) {</span>
+<span class="fc" id="L295">                        return true;</span>
+                    }
+                }
+            }
+<span class="nc bnc" id="L299" title="All 2 branches missed.">            for (j = 0; j &lt; this.getArestas().size(); j++) {</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">                if (this.getArestas().get(i).getDestino().getId().equals(this.getArestas().get(j).getOrigem().getId())) {</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">                    if (this.getArestas().get(i).getDestino().getId().equals(this.getArestas().get(j).getDestino().getId())) {</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">                        if (!this.getArestas().get(i).getId().equals(this.getArestas().get(j).getId())) {</span>
+<span class="nc" id="L303">                            return true;</span>
+                        }
+                    }
+                }
+            }
+        }
+<span class="nc" id="L309">        return false;</span>
+    }
+
+    public Boolean isCompleto() {
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">        if (this.isRegular()) {</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">            for (int i = 0; i &lt; this.getNos().size(); i++) {</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">                for (int j = 0; j &lt; this.getNos().size(); j++) {</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">                    if (!(this.getNos().get(i).getId().equals(this.getNos().get(j).getId()))) {</span>
+<span class="pc bpc" id="L317" title="1 of 2 branches missed.">                        if (!this.isAdjacente(this.getNos().get(i), this.getNos().get(j))) {</span>
+<span class="nc" id="L318">                            return false;</span>
+                        }
+                    }
+                }
+
+            }
+<span class="fc" id="L324">            return true;</span>
+        }
+<span class="nc" id="L326">        return false;</span>
+    }
+
+    public INo getNo(String id) {
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">        for (Aresta aresta : this.arestas) {</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">            if (aresta.getDestino().getId() == id) {</span>
+<span class="fc" id="L332">                return aresta.getDestino();</span>
+            }
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">            if (aresta.getOrigem().getId() == id) {</span>
+<span class="fc" id="L335">                return aresta.getOrigem();</span>
+            }
+<span class="nc" id="L337">        }</span>
+<span class="nc" id="L338">        return null;</span>
+    }
+
+    public Map&lt;String, List&lt;String&gt;&gt; getNosSucessores() {
+<span class="nc" id="L342">        Map&lt;String, List&lt;String&gt;&gt; listaNosSucessores = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L343">        this.getNos().forEach((no) -&gt; {</span>
+<span class="nc" id="L344">            listaNosSucessores.put(no.getId(), this.getNosSucessores(no));</span>
+<span class="nc" id="L345">        });</span>
+<span class="nc" id="L346">        return listaNosSucessores;</span>
+    }
+
+    public List&lt;String&gt; getNosSucessores(INo no) {
+<span class="nc" id="L350">        List&lt;String&gt; nosSucessores = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L351">        this.getArestas().stream().filter((aresta) -&gt; (aresta.getOrigem().getId().equals(no.getId()))).forEachOrdered((aresta) -&gt; {</span>
+<span class="nc" id="L352">            nosSucessores.add(aresta.getDestino().getId());</span>
+<span class="nc" id="L353">        });</span>
+<span class="nc" id="L354">        return nosSucessores;</span>
+    }
+
+    public List&lt;String&gt; getNosAntecessores(INo no) {
+<span class="nc" id="L358">        List&lt;String&gt; nosAntecessores = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L359">        this.getArestas().stream().filter((aresta) -&gt; (aresta.getDestino().getId().equals(no.getId()))).forEachOrdered((aresta) -&gt; {</span>
+<span class="nc" id="L360">            nosAntecessores.add(aresta.getOrigem().getId());</span>
+<span class="nc" id="L361">        });</span>
+<span class="nc" id="L362">        return nosAntecessores;</span>
+    }
+
+    public Map&lt;String, List&lt;String&gt;&gt; getNosAntecessores() {
+<span class="nc" id="L366">        Map&lt;String, List&lt;String&gt;&gt; listaNosAntecessores = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L367">        this.getNos().forEach((no) -&gt; {</span>
+<span class="nc" id="L368">            listaNosAntecessores.put(no.getId(), this.getNosAntecessores(no));</span>
+<span class="nc" id="L369">        });</span>
+<span class="nc" id="L370">        return listaNosAntecessores;</span>
+    }
+
+    public boolean getTipoAresta() {
+<span class="nc" id="L374">        return tipoAresta;</span>
+    }
+
+    public boolean linkExists(String idA, String idB) {
+<span class="fc" id="L378">        INo v = this.getNo(idA);</span>
+<span class="pc bpc" id="L379" title="2 of 4 branches missed.">        if (v != null &amp;&amp; this.getNo(idB) != null) {</span>
+
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">            for (Aresta a = v.primeiraAresta(); a != null; a = v.nextEdge(a.getId())) {</span>
+<span class="pc bpc" id="L382" title="3 of 4 branches missed.">                return (a.vizinhos(idA).getId() == null ? idB == null : a.vizinhos(idA).getId().equals(idB));</span>
+            }
+        }
+<span class="nc" id="L385">        return false;</span>
+    }
+
+    public Map&lt;String, List&lt;String&gt;&gt; mapeamentoVerticesAdjacentes() {
+<span class="fc" id="L389">        Map&lt;Integer, String&gt; posicaoNosDoGrafo = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L390">        int[][] matrizAdj = this.getMatrizAdjacencia();</span>
+<span class="fc" id="L391">        int i = 0, j;</span>
+<span class="fc" id="L392">        String nomeNo = null;</span>
+<span class="fc" id="L393">        Map&lt;String, List&lt;String&gt;&gt; mapaVerticesAdj = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L394">        List&lt;String&gt; nosAdj = null;</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">        for (INo no : this.getNos()) {</span>
+<span class="fc" id="L396">            posicaoNosDoGrafo.put(i, no.getId());</span>
+<span class="fc" id="L397">            i += 1;</span>
+<span class="fc" id="L398">        }</span>
+<span class="fc" id="L399">        i = 0;</span>
+<span class="fc bfc" id="L400" title="All 2 branches covered.">        while (i &lt; this.getNos().size()) {</span>
+<span class="fc" id="L401">            nosAdj = new ArrayList();</span>
+<span class="fc bfc" id="L402" title="All 2 branches covered.">            for (j = 0; j &lt; this.getNos().size(); j++) {</span>
+<span class="fc bfc" id="L403" title="All 2 branches covered.">                if (matrizAdj[j][i] == 1) {</span>
+<span class="fc" id="L404">                    nomeNo = posicaoNosDoGrafo.get(j);</span>
+<span class="fc" id="L405">                    nosAdj.add(nomeNo);</span>
+                }
+            }
+<span class="pc bpc" id="L408" title="1 of 2 branches missed.">            if (!nosAdj.isEmpty()) {</span>
+<span class="fc" id="L409">                mapaVerticesAdj.put(posicaoNosDoGrafo.get(i), nosAdj);</span>
+            }
+<span class="fc" id="L411">            i += 1;</span>
+        }
+<span class="fc" id="L413">        return mapaVerticesAdj;</span>
+    }
+
+    public int getGrauNo(INo no) {
+<span class="fc" id="L417">        int firstGrau = 0;</span>
+<span class="fc" id="L418">        int secondGrau = 0;</span>
+        int i;
+<span class="fc bfc" id="L420" title="All 2 branches covered.">        for (i = 0; i &lt; this.arestas.size(); i++) {</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">            if (this.arestas.get(i).getDestino() == no) {</span>
+<span class="fc" id="L422">                firstGrau++;</span>
+            }
+        }
+<span class="fc bfc" id="L425" title="All 2 branches covered.">        for (i = 0; i &lt; this.arestas.size(); i++) {</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">            if (this.arestas.get(i).getOrigem().getId().equals(no.getId())) {</span>
+<span class="fc" id="L427">                secondGrau++;</span>
+            }
+        }
+<span class="fc" id="L430">        return firstGrau + secondGrau;</span>
+    }
+
+    public Boolean isRegular() {
+        int counter;
+<span class="fc" id="L435">        int grauTotal = this.getGrauNo(this.getNos().get(0));</span>
+<span class="fc bfc" id="L436" title="All 2 branches covered.">        for (counter = 0; counter &lt; this.getNos().size(); counter++) {</span>
+<span class="pc bpc" id="L437" title="1 of 2 branches missed.">            if (this.getGrauNo(this.getNos().get(counter)) != grauTotal) {</span>
+<span class="nc" id="L438">                return false;</span>
+            }
+        }
+<span class="fc" id="L441">        return true;</span>
+    }
+
+    public boolean isFonte(INo no) {
+<span class="nc bnc" id="L445" title="All 2 branches missed.">        return this.getGrauNo(no) == 0;</span>
+    }
+
+    public Map&lt;String, List&lt;INo&gt;&gt; verticesIndependentes() {
+<span class="nc" id="L449">        Set&lt;INo&gt; gerarNosIndependentes = null;</span>
+<span class="nc" id="L450">        Map&lt;String, List&lt;INo&gt;&gt; nosIndependentes = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L451">        List&lt;INo&gt; nosAdjacentes = null;</span>
+<span class="nc" id="L452">        List&lt;INo&gt; listaNosIndependentes = null;</span>
+<span class="nc" id="L453">        Map&lt;String, List&lt;String&gt;&gt; verticesAdjacentes = this.mapeamentoVerticesAdjacentes();</span>
+
+<span class="nc bnc" id="L455" title="All 2 branches missed.">        for (Map.Entry&lt;String, List&lt;String&gt;&gt; entry : verticesAdjacentes.entrySet()) {</span>
+<span class="nc" id="L456">            String verticeAtual = entry.getKey();</span>
+<span class="nc" id="L457">            List&lt;String&gt; listaVerticesAdjacentes = entry.getValue();</span>
+<span class="nc" id="L458">            gerarNosIndependentes = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L459">            listaNosIndependentes = new ArrayList();</span>
+<span class="nc" id="L460">            nosAdjacentes = new ArrayList();</span>
+
+<span class="nc bnc" id="L462" title="All 2 branches missed.">            for (String vertice : listaVerticesAdjacentes) {</span>
+<span class="nc" id="L463">                nosAdjacentes.add(this.getNo(vertice));</span>
+<span class="nc" id="L464">            }</span>
+<span class="nc" id="L465">            nosAdjacentes.add(this.getNo(verticeAtual));</span>
+
+<span class="nc bnc" id="L467" title="All 2 branches missed.">            for (INo noDoGrafo : this.getNos()) {</span>
+<span class="nc bnc" id="L468" title="All 2 branches missed.">                if (!nosAdjacentes.contains(noDoGrafo)) {</span>
+<span class="nc" id="L469">                    listaNosIndependentes.add(noDoGrafo);</span>
+                }
+<span class="nc" id="L471">            }</span>
+
+<span class="nc" id="L473">            nosIndependentes.put(verticeAtual, listaNosIndependentes);</span>
+<span class="nc" id="L474">        }</span>
+<span class="nc" id="L475">        return nosIndependentes;</span>
+    }
+
+    public boolean possuiElementoRepetido(List&lt;String&gt; nosVisitados) {
+<span class="nc" id="L479">        List&lt;String&gt; novaLista = new ArrayList(new HashSet(nosVisitados));</span>
+<span class="nc bnc" id="L480" title="All 2 branches missed.">        return novaLista.size() &lt; nosVisitados.size();</span>
+    }
+
+    public List&lt;String&gt; gerarVerticesAdjacentes(String no) {
+<span class="nc" id="L484">        List&lt;Aresta&gt; arestasDoNo = this.getArestasDoNoAtual(no);</span>
+<span class="nc" id="L485">        List&lt;INo&gt; nosAdjacentes = new ArrayList();</span>
+<span class="nc" id="L486">        List&lt;String&gt; nomeNosAdjacentes = new ArrayList();</span>
+
+<span class="nc bnc" id="L488" title="All 2 branches missed.">        if (this.getTipo().equals(&quot;directed&quot;)) {</span>
+<span class="nc" id="L489">            arestasDoNo.forEach(new Consumer&lt;Aresta&gt;() {</span>
+                @Override
+                public void accept(Aresta arestaAtual) {
+<span class="nc" id="L492">                    nosAdjacentes.add(arestaAtual.getDestino());</span>
+<span class="nc" id="L493">                }</span>
+            });
+        } else {
+<span class="nc" id="L496">            arestasDoNo.stream().map((arestaAtual) -&gt; {</span>
+<span class="nc" id="L497">                nosAdjacentes.add(arestaAtual.getDestino());</span>
+<span class="nc" id="L498">                return arestaAtual;</span>
+<span class="nc bnc" id="L499" title="All 4 branches missed.">            }).filter((arestaAtual) -&gt; (no.equals(arestaAtual.getOrigem().getId()) || no.equals(arestaAtual.getDestino().getId()))).forEachOrdered((arestaAtual) -&gt; {</span>
+<span class="nc" id="L500">                nosAdjacentes.add(arestaAtual.getOrigem());</span>
+<span class="nc" id="L501">            });</span>
+        }
+<span class="nc" id="L503">        Set&lt;INo&gt; semRepeticoes = new TreeSet(new NosComparator());</span>
+<span class="nc" id="L504">        semRepeticoes.addAll(nosAdjacentes);</span>
+<span class="nc" id="L505">        nosAdjacentes.clear();</span>
+<span class="nc bnc" id="L506" title="All 2 branches missed.">        semRepeticoes.stream().filter((noAtual) -&gt; (!noAtual.getId().equals(no))).forEachOrdered((noAtual) -&gt; {</span>
+<span class="nc" id="L507">            nosAdjacentes.add(noAtual);</span>
+<span class="nc" id="L508">        });</span>
+<span class="nc" id="L509">        nosAdjacentes.forEach((noAtual) -&gt; {</span>
+<span class="nc" id="L510">            nomeNosAdjacentes.add(noAtual.getId());</span>
+<span class="nc" id="L511">        });</span>
+<span class="nc" id="L512">        return nomeNosAdjacentes;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

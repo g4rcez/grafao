@@ -1,0 +1,10 @@
+<graph id="Grafo" edgedefault="undirected" tipoAresta="false">
+  <node id="A"/>
+  <node id="B"/>
+  <node id="C"/>
+  <edge id="A1" source="B" target="C">
+    <directed>false</directed>
+  </edge>
+</graph>
+
+

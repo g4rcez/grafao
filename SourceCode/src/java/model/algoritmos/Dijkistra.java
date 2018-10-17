@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import model.Aresta;
 import model.Grafo;
+import model.INo;
 import model.No;
 
 /**
@@ -22,14 +23,14 @@ public class Dijkistra {
         this.grafo = givenGrafo;
     }
 
-    public Map<String, String> calcularDijkstra(No inicio) {
+    public Map<String, String> calcularDijkstra(INo inicio) {
         Map<String, Integer> dijkstraListaEstimativas = new HashMap<>();
         Map<String, String> dijkstraListaPrecedentes = new HashMap<>();
         List<String> listaVarridos = new ArrayList<>();
         List<Aresta> arestasAdjacentes = null;
         String noSelecionado = null;
-        int menorEstimativa = 0;
-        for (No no : grafo.getNos()) {
+        int menorEstimativa = 0;  //
+        for (INo no : grafo.getNos()) {
             dijkstraListaPrecedentes.put(no.getId(), "0");
             if (inicio.getId().equals(no.getId())) {
                 noSelecionado = no.getId();
@@ -87,9 +88,9 @@ public class Dijkistra {
         return verticeMenor;
     }
 
-    public List<No> calcularDijkstra(No inicio, No destino) {
+    public List<INo> calcularDijkstra(INo inicio, INo destino) {
         Map<String, String> listaPrecedentes = this.calcularDijkstra(inicio);
-        List<No> caminho = new ArrayList<>();
+        List<INo> caminho = new ArrayList<>();
         String noAnterior = destino.getId();
         do {
             caminho.add(grafo.getNo(noAnterior));
@@ -100,7 +101,7 @@ public class Dijkistra {
         return caminho;
     }
 
-    public List<Aresta> arestasSaemNoAtual(No no, List<String> listaVarridos) {
+    public List<Aresta> arestasSaemNoAtual(INo no, List<String> listaVarridos) {
         List<Aresta> arestasDoNoAtual = new ArrayList();
         grafo.getArestas().stream().filter((aresta) -> ((aresta.getOrigem().getId().equals(no.getId())) && !listaVarridos.contains(aresta.getDestino().getId()))).forEachOrdered((aresta) -> {
             arestasDoNoAtual.add(aresta);

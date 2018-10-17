@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>No.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;SourceCode&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">No.java</span></div><h1>No.java</h1><pre class="source lang-java linenums">package model;
+
+import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+/**
+ *
+ * @author garcez
+ */
+public class No implements INo {
+
+    private TreeMap&lt;String, Aresta&gt; edgeList;
+    private String id;
+
+<span class="fc" id="L16">    public No(String id) {</span>
+<span class="fc" id="L17">        this.id = id;</span>
+<span class="fc" id="L18">    }</span>
+
+    public void setEdgeList(TreeMap&lt;String, Aresta&gt; edgeList) {
+<span class="fc" id="L21">        this.edgeList = edgeList;</span>
+<span class="fc" id="L22">    }</span>
+
+    public String getId() {
+<span class="fc" id="L25">        return id;</span>
+    }
+
+    public void setId(String id) {
+<span class="nc" id="L29">        this.id = id;</span>
+<span class="nc" id="L30">    }</span>
+
+    public static INo getNoById(String id, List&lt;INo&gt; nos) {
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        for (INo no : nos) {</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">            if (no.getId().equals(id)) {</span>
+<span class="fc" id="L35">                return no;</span>
+            }
+<span class="nc" id="L37">        }</span>
+<span class="nc" id="L38">        return null;</span>
+    }
+
+    public Aresta primeiraAresta() {
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (edgeList.isEmpty()) {</span>
+<span class="nc" id="L43">            return null;</span>
+        }
+<span class="fc" id="L45">        return edgeList.get(edgeList.firstKey());</span>
+    }
+
+    public Aresta nextEdge(String id) {
+        
+<span class="nc bnc" id="L50" title="All 8 branches missed.">        if (!edgeList.containsKey(id) || (edgeList.lastKey() == null ? id == null : edgeList.lastKey().equals(id))) {</span>
+<span class="nc" id="L51">            return null;</span>
+        }
+<span class="nc" id="L53">        SortedMap&lt;String, Aresta&gt; map = edgeList.tailMap(id);</span>
+<span class="nc" id="L54">        return edgeList.get(map.firstKey());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

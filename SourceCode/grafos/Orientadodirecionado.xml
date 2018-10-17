@@ -1,0 +1,25 @@
+<graph id="Orientado direcionado" edgedefault="directed" tipoAresta="false">
+  <node id="A"/>
+  <node id="B"/>
+  <node id="C"/>
+  <edge id="A1" source="A" target="B">
+    <directed>false</directed>
+  </edge>
+  <edge id="A2" source="A" target="C">
+    <directed>false</directed>
+  </edge>
+  <edge id="A3" source="B" target="A">
+    <directed>false</directed>
+  </edge>
+  <edge id="A4" source="B" target="C">
+    <directed>false</directed>
+  </edge>
+  <edge id="A5" source="C" target="A">
+    <directed>false</directed>
+  </edge>
+  <edge id="A6" source="C" target="B">
+    <directed>false</directed>
+  </edge>
+</graph>
+
+

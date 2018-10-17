@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Grafo;
+import model.INo;
 import model.No;
 import model.algoritmos.Dijkistra;
 import utils.MiscOperations;
@@ -35,17 +36,17 @@ public class DijkstraController extends HttpServlet {
             Grafo grafo = (Grafo) request.getSession().getAttribute("grafo");
             String nomeNoOrigem = request.getParameter("noOrigem");
             String nomeNoDestino = request.getParameter("noDestino");
-            No noOrigem = grafo.getNo(nomeNoOrigem);
+            INo noOrigem = grafo.getNo(nomeNoOrigem);
             Dijkistra dijkistra = new Dijkistra(grafo);
             if ("todosNos".equals(nomeNoDestino)) {
-                List<List<No>> caminhosDaOrigem = new ArrayList<>();
+                List<List<INo>> caminhosDaOrigem = new ArrayList<>();
                 grafo.getNos().stream().map((no) -> dijkistra.calcularDijkstra(noOrigem, no)).forEachOrdered((caminho) -> {
                     caminhosDaOrigem.add(caminho);
                 });
                 request.setAttribute("caminhosDaOrigem", caminhosDaOrigem);
             } else {
-                No noDestino = grafo.getNo(nomeNoDestino);
-                List<No> caminho = dijkistra.calcularDijkstra(noOrigem, noDestino);
+                INo noDestino = grafo.getNo(nomeNoDestino);
+                List<INo> caminho = dijkistra.calcularDijkstra(noOrigem, noDestino);
                 request.setAttribute("caminho", caminho);
                 request.setAttribute("noDestino", nomeNoDestino);
             }
