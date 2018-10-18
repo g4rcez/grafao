@@ -2,7 +2,7 @@
 
 <ClassDiagram name="java.model">
   <ClassDiagramComponents>
-    <Class name="Dijkistra" package="model.algoritmos" visibility="public" xPosition="1561.0" yPosition="1703.0">
+    <Class name="Dijkistra" package="model.algoritmos" visibility="public" xPosition="1279.0" yPosition="1262.0">
       <Fields>
         <Field name="grafo" type="Grafo" visibility="private"/>
       </Fields>
@@ -25,7 +25,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Kruskal" package="model.algoritmos" visibility="public" xPosition="438.0" yPosition="296.0">
+    <Class name="Kruskal" package="model.algoritmos" visibility="public" xPosition="192.0" yPosition="354.0">
       <Fields/>
       <Constructors/>
       <Methods>
@@ -43,7 +43,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Largura" package="model.algoritmos" visibility="public" xPosition="438.0" yPosition="1703.0">
+    <Class name="Largura" package="model.algoritmos" visibility="public" xPosition="401.0" yPosition="1167.0">
       <Fields>
         <Field name="graph" type="Grafo" visibility="package"/>
       </Fields>
@@ -55,7 +55,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Malgrange" package="model.algoritmos" visibility="public" xPosition="189.0" yPosition="1390.0">
+    <Class name="Malgrange" package="model.algoritmos" visibility="public" xPosition="136.0" yPosition="947.0">
       <Fields>
         <Field name="graph" type="Grafo" visibility="package"/>
       </Fields>
@@ -77,7 +77,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Prim" package="model.algoritmos" visibility="public" xPosition="1810.0" yPosition="1390.0">
+    <Class name="Prim" package="model.algoritmos" visibility="public" xPosition="1350.0" yPosition="647.0">
       <Fields>
         <Field name="grafo" type="Grafo" visibility="private"/>
       </Fields>
@@ -92,7 +92,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Profundidade" package="model.algoritmos" visibility="public" xPosition="1200.0" yPosition="1877.0">
+    <Class name="Profundidade" package="model.algoritmos" visibility="public" xPosition="794.0" yPosition="1167.0">
       <Fields>
         <Field name="graph" type="Grafo" visibility="package"/>
       </Fields>
@@ -104,7 +104,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Aresta" package="model" visibility="public" xPosition="189.0" yPosition="609.0">
+    <Class name="Aresta" package="model" visibility="public" xPosition="1738.0" yPosition="382.0">
       <Fields>
         <Field name="id" type="String" visibility="private"/>
         <Field name="directed" type="boolean" visibility="private"/>
@@ -126,7 +126,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="ArestaComparator" package="model" visibility="public" xPosition="799.0" yPosition="122.0">
+    <Class name="ArestaComparator" package="model" visibility="public" xPosition="1350.0" yPosition="332.0">
       <Fields/>
       <Constructors/>
       <Methods>
@@ -136,7 +136,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="ConversorNo" package="model" visibility="public" xPosition="1200.0" yPosition="122.0">
+    <Class name="ConversorNo" package="model" visibility="public" xPosition="778.0" yPosition="179.0">
       <Fields/>
       <Constructors/>
       <Methods>
@@ -151,7 +151,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Grafo" package="model" visibility="public" xPosition="100.0" yPosition="1000.0">
+    <Class name="Grafo" package="model" visibility="public" xPosition="778.0" yPosition="354.0">
       <Fields>
         <Field name="id" type="String" visibility="private"/>
         <Field name="tipo" type="String" visibility="private"/>
@@ -228,7 +228,7 @@
         <Method name="getOrdem" returnType="int" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="No" package="model" visibility="public" xPosition="799.0" yPosition="1877.0">
+    <Class name="No" package="model" visibility="public" xPosition="1790.0" yPosition="867.0">
       <Fields>
         <Field name="edgeList" type="TreeMap&lt;String, Aresta&gt;" visibility="private"/>
         <Field name="id" type="String" visibility="private"/>
@@ -253,7 +253,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="NosComparator" package="model" visibility="public" xPosition="1900.0" yPosition="1000.0">
+    <Class name="NosComparator" package="model" visibility="public" xPosition="1441.0" yPosition="1043.0">
       <Fields/>
       <Constructors/>
       <Methods>
@@ -263,7 +263,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="WorkerXml" package="model" visibility="public" xPosition="1561.0" yPosition="296.0">
+    <Class name="WorkerXml" package="model" visibility="public" xPosition="192.0" yPosition="592.0">
       <Fields>
         <Field name="workerXml" type="XStream" visibility="private" isStatic="true"/>
         <Field name="grafo" type="Grafo" visibility="private" isStatic="true"/>
@@ -291,7 +291,7 @@
         </Method>
       </Methods>
     </Class>
-    <Interface name="TreeAlgos" package="model.algoritmos" visibility="public" xPosition="1810.0" yPosition="609.0">
+    <Interface name="TreeAlgos" package="model.algoritmos" visibility="public" xPosition="590.0" yPosition="1375.0">
       <Methods>
         <Method name="calculate" returnType="List&lt;String&gt;" visibility="public">
           <Argument type="String" name="root"/>
@@ -301,31 +301,31 @@
     </Interface>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <UseRelation source="model.NosComparator" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="model.algoritmos.Profundidade" target="model.algoritmos.TreeAlgos"/>
-    <UseRelation source="model.WorkerXml" target="model.Grafo" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="model.Grafo" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="destino" source="model.Aresta" target="model.No" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="model.Aresta" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="model.algoritmos.Dijkistra" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="graph" source="model.algoritmos.Profundidade" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="grafo" source="model.WorkerXml" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="graph" source="model.algoritmos.Malgrange" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="model.algoritmos.Prim" target="model.Grafo" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="model.No" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="model.algoritmos.Largura" target="model.algoritmos.TreeAlgos"/>
-    <UseRelation source="model.No" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="origem" source="model.Aresta" target="model.No" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="edgeList" source="model.No" target="model.Aresta" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="TreeMap&lt;String, Aresta&gt;"/>
-    <UseRelation source="model.algoritmos.Kruskal" target="model.Grafo" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="nos" source="model.Grafo" target="model.No" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;No&gt;"/>
-    <HasRelation name="grafo" source="model.algoritmos.Dijkistra" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="graph" source="model.algoritmos.Largura" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="arestas" source="model.Grafo" target="model.Aresta" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Aresta&gt;"/>
     <HasRelation name="grafo" source="model.algoritmos.Prim" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="graph" source="model.algoritmos.Malgrange" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="model.ArestaComparator" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="model.Grafo" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="model.algoritmos.Prim" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.No" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="graph" source="model.algoritmos.Largura" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.algoritmos.Dijkistra" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.algoritmos.Kruskal" target="model.Grafo" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="model.algoritmos.Profundidade" target="model.algoritmos.TreeAlgos"/>
     <UseRelation source="model.Aresta" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="origem" source="model.Aresta" target="model.No" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="grafo" source="model.algoritmos.Dijkistra" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="grafo" source="model.WorkerXml" target="model.Grafo" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.Grafo" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.algoritmos.Prim" target="model.Grafo" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.WorkerXml" target="model.Grafo" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.No" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.NosComparator" target="model.No" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="model.algoritmos.Largura" target="model.algoritmos.TreeAlgos"/>
+    <HasRelation name="destino" source="model.Aresta" target="model.No" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="nos" source="model.Grafo" target="model.No" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;No&gt;"/>
+    <HasRelation name="arestas" source="model.Grafo" target="model.Aresta" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Aresta&gt;"/>
+    <HasRelation name="edgeList" source="model.No" target="model.Aresta" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="TreeMap&lt;String, Aresta&gt;"/>
+    <UseRelation source="model.algoritmos.Prim" target="model.Aresta" sourceCardinality="1..1" targetCardinality="1..1"/>
   </ClassDiagramRelations>
 </ClassDiagram>

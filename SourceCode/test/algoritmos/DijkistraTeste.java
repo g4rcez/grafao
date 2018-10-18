@@ -76,7 +76,6 @@ public class DijkistraTeste {
         respostaEsperada.put("5", "1");
         
         Assert.assertEquals(respostaEsperada, dijkistra.calcularDijkstra(no1));
-        
     }
 
 }
